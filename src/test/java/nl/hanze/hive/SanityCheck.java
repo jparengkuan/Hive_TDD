@@ -74,14 +74,23 @@ public class SanityCheck {
 
     // (1c)
     @Test
-    void testDeck(){
+    void whenStartOfGameCheckDeckForPlayerWhite(){
+
+        //Arrange maak een nieuwe deck aan voor player white
         Main main = new Main();
+
+        // Act de methode aan roepen die moet worden getest
+        // ! Deck moet een nieuwe klasse worden met een getter
+        // Doen we morgen tijdens de refactor
+
+        // Assert controleren van de uitvoer
         assertEquals(1, main.countTiles(QUEEN_BEE, WHITE));
         assertEquals(2, main.countTiles(SPIDER, WHITE));
         assertEquals(2, main.countTiles(BEETLE, WHITE));
         assertEquals(3, main.countTiles(SOLDIER_ANT, WHITE));
         assertEquals(3, main.countTiles(GRASSHOPPER, WHITE));
     }
+
 
     // (2a)
     /*@Test
