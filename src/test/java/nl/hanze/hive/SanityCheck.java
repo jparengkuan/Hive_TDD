@@ -10,11 +10,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Enumeration;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.fail;
+import static nl.hanze.hive.Hive.Player.BLACK;
+import static nl.hanze.hive.Hive.Player.WHITE;
+import static nl.hanze.hive.Hive.Tile.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SanityCheck {
     static Class<? extends Hive> hiveClass;
@@ -62,10 +65,32 @@ public class SanityCheck {
 
     @Test
     void testSanityCheck() throws Hive.IllegalMove {
-        hive.play(Hive.Tile.QUEEN_BEE, 1, 2);
-        assertThrows(Hive.IllegalMove.class, () -> hive.play(Hive.Tile.QUEEN_BEE, 1, 2));
-        hive.play(Hive.Tile.QUEEN_BEE, 1, 1);
+        hive.play(QUEEN_BEE, 1, 2);
+        assertThrows(Hive.IllegalMove.class, () -> hive.play(QUEEN_BEE, 1, 2));
+        hive.play(QUEEN_BEE, 1, 1);
         assertThrows(Hive.IllegalMove.class, () -> hive.move(1, 2, 1, 3));
         hive.move(1, 2, 2, 1);
     }
+
+    // (1c)
+    @Test
+    void testDeck(){
+        Main main = new Main();
+        assertEquals(1, main.countTiles(QUEEN_BEE, WHITE));
+        assertEquals(2, main.countTiles(SPIDER, WHITE));
+        assertEquals(2, main.countTiles(BEETLE, WHITE));
+        assertEquals(3, main.countTiles(SOLDIER_ANT, WHITE));
+        assertEquals(3, main.countTiles(GRASSHOPPER, WHITE));
+    }
+
+    // (2a)
+    /*@Test
+    void testBoard(){
+        Board board = new Board();
+        for(int i = 0; i < board.getSpots().size(); i++){
+            for(int j = 0; j < board.getSpots().size(); j++){
+                assertNotNull(board.get(i))
+            }
+        }
+    }*/
 }
