@@ -72,7 +72,7 @@ public class SanityCheck {
         hive.move(1, 2, 2, 1);
     }
 
-    // (1c)
+    // (1c) Check if each deck got the right amounts of the tiles from the requirement.
     @Test
     void testDeck(){
         Main main = new Main();
@@ -83,7 +83,7 @@ public class SanityCheck {
         assertEquals(3, main.countTiles(GRASSHOPPER, WHITE));
     }
 
-    // (2a)
+    // (2a) Check if the board has (q,r) coordinates
     /*@Test
     void testBoard(){
         Board board = new Board();
