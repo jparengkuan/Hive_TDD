@@ -22,7 +22,7 @@ public class Deck {
         this.decks = new HashMap<>();
     }
 
-    public void createDeck(Player, Player) {
+    public void createDeck(Player player) {
 
 
     }

@@ -2,6 +2,7 @@ package nl.hanze.hive;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Stack;
 
 import static nl.hanze.hive.Hive.Player.BLACK;
 import static nl.hanze.hive.Hive.Player.WHITE;
@@ -9,10 +10,12 @@ import static nl.hanze.hive.Hive.Player.WHITE;
 public class Main implements Hive {
 
     private HashMap<Player, ArrayList<Tile>> decks;
+    private Board board;
 
     // Default constructor, used to set decks of both players.
     // Decks will be saved in a HashMap: key = player; value = deck.
     public Main(){
+        this.board = new Board(100);
         this.decks = new HashMap<>();
         setDeck(BLACK);
         setDeck(WHITE);
@@ -27,7 +30,8 @@ public class Main implements Hive {
      */
     @Override
     public void play(Tile tile, int q, int r) throws IllegalMove {
-
+        Stack<Tile> cell = board.getCell(q, r);
+        cell.add(tile);
     }
 
     /**
@@ -74,6 +78,10 @@ public class Main implements Hive {
         return count;
     }
 
+    public Board getBoard(){
+        return board;
+    }
+
     /**
      * Move an existing tile.
      * @param fromQ Q coordinate of the tile to move
@@ -84,7 +92,13 @@ public class Main implements Hive {
      */
     @Override
     public void move(int fromQ, int fromR, int toQ, int toR) throws IllegalMove {
-
+        Stack<Tile> moveFromCell = board.getCell(fromQ, fromR);
+        if(moveFromCell.isEmpty()){
+            throw new IllegalMove();
+        }
+        Tile toMove = moveFromCell.pop();
+        Stack<Tile> moveToCell = board.getCell(toQ, toR);
+        moveToCell.push(toMove);
     }
 
     /**

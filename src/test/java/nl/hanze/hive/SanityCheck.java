@@ -3,19 +3,18 @@ package nl.hanze.hive;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.Enumeration;
+import java.util.*;
 
 import static nl.hanze.hive.Hive.Player.BLACK;
 import static nl.hanze.hive.Hive.Player.WHITE;
+import static nl.hanze.hive.Hive.IllegalMove;
 import static nl.hanze.hive.Hive.Tile.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -91,14 +90,61 @@ public class SanityCheck {
         assertEquals(3, main.countTiles(GRASSHOPPER, WHITE));
     }
 
-    // (2a) Check if the board has (q,r) coordinates
+    // (2a) Test if the cells on the board have (q,r) coordinates
+    @Test
+    void whenBoarcCheckCellCoordinates(){
+        Board board = new Board(100);
+        HashMap<Cell, Stack<Hive.Tile>> cells = board.getCells();
+        for (Cell cell : cells.keySet()) {
+            assertNotNull(cell.q);
+            assertNotNull(cell.r);
+        }
+    }
+
+    // (2b) Test if a tile has six adjacent cells
     /*@Test
-    void testBoard(){
-        Board board = new Board();
-        for(int i = 0; i < board.getSpots().size(); i++){
-            for(int j = 0; j < board.getSpots().size(); j++){
-                assertNotNull(board.get(i))
-            }
+    void testAdjacentCells(){
+        Board board = new Board(100);
+        Cell cell = board.getCell(0,0);
+        int[][] directions = new int[][] {{1,0}, {0,1}, {-1,1}, {-1,0}, {0,-1}, {1,-1}};
+        for(int[] direction : directions){
+            assertNotNull();
         }
     }*/
+
+    // (2c) Test if board is empty at the start
+    @Test
+    void whenGameStartThenBoardEmpty(){
+        Board board = new Board(100);
+        for(Cell cell : board.getCells().keySet()){
+            assertEquals(0, board.getCells().get(cell).size());
+        }
+    }
+
+    // (2e) Test if tiles can be played
+    @Test
+    void whenTilePlayed() throws IllegalMove {
+        Main main = new Main();
+        main.play(BEETLE, 0, 0);
+        assertEquals(BEETLE, main.getBoard().getCell(0,0).peek());
+    }
+
+    // (2e) Test if tiles can be moved
+    @Test
+    void whenTileMoved() throws IllegalMove {
+        Main main = new Main();
+        main.play(BEETLE, 0, 0);
+        main.move(0, 0, 1, 0);
+        assertEquals(BEETLE, main.getBoard().getCell(1, 0).peek());
+        assertThrows(IllegalMove.class, () -> main.move(6, -4, 5, 3));
+    }
+
+    // (2f) Test if tiles can be on top of each other
+    @Test
+    void whenTileOnTopOfAnotherTile() throws IllegalMove {
+        Main main = new Main();
+        main.play(SPIDER, 0, 0);
+        main.play(GRASSHOPPER, 0, 0);
+        assertEquals(2, main.getBoard().getCell(0,0).size());
+    }
 }
