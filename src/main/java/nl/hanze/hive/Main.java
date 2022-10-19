@@ -11,18 +11,20 @@ public class Main implements Hive {
 
     private HashMap<Player, ArrayList<Tile>> decks;
     private Board board;
+    private Player turn;
 
     // Default constructor, used to set decks of both players.
     // Decks will be saved in a HashMap: key = player; value = deck.
     public Main(){
         this.board = new Board(100);
         this.decks = new HashMap<>();
+        this.turn = WHITE;
         setDeck(BLACK);
         setDeck(WHITE);
     }
 
     /**
-     * Play a new tile.
+     * Play a new tile, and change turn after.
      * @param tile Tile to play
      * @param q Q coordinate of hexagon to play to
      * @param r R coordinate of hexagon to play to
@@ -32,6 +34,7 @@ public class Main implements Hive {
     public void play(Tile tile, int q, int r) throws IllegalMove {
         Stack<Tile> cell = board.getCell(q, r);
         cell.add(tile);
+        setTurn();
     }
 
     /**
@@ -50,6 +53,14 @@ public class Main implements Hive {
             deck.add(Tile.GRASSHOPPER);
         }
         decks.put(player, deck);
+    }
+
+    public void setTurn() {
+        this.turn = turn == WHITE ? BLACK : WHITE;
+    }
+
+    public Player getTurn(){
+        return turn;
     }
 
     /**
@@ -83,7 +94,7 @@ public class Main implements Hive {
     }
 
     /**
-     * Move an existing tile.
+     * Move an existing tile, and change turn after.
      * @param fromQ Q coordinate of the tile to move
      * @param fromR R coordinate of the tile to move
      * @param toQ Q coordinate of the hexagon to move to
@@ -99,6 +110,7 @@ public class Main implements Hive {
         Tile toMove = moveFromCell.pop();
         Stack<Tile> moveToCell = board.getCell(toQ, toR);
         moveToCell.push(toMove);
+        setTurn();
     }
 
     /**

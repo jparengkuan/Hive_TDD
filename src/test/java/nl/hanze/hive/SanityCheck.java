@@ -71,6 +71,8 @@ public class SanityCheck {
         hive.move(1, 2, 2, 1);
     }
 
+    // Bij refactoren code in een andere testklasse doen.
+
     // (1c) Check if each deck got the right amounts of the tiles from the requirement.
     @Test
     void whenStartOfGameCheckDeckForPlayerWhite(){
@@ -129,6 +131,8 @@ public class SanityCheck {
         assertEquals(BEETLE, main.getBoard().getCell(0,0).peek());
     }
 
+    // (2d) is a bit difficult to test if tiles can already be in one place only
+
     // (2e) Test if tiles can be moved
     @Test
     void whenTileMoved() throws IllegalMove {
@@ -146,5 +150,29 @@ public class SanityCheck {
         main.play(SPIDER, 0, 0);
         main.play(GRASSHOPPER, 0, 0);
         assertEquals(2, main.getBoard().getCell(0,0).size());
+    }
+
+    // (3a) Test to make sure white has the first turn
+    @Test
+    void whenGameStartThenWhiteHasFirstTurn(){
+        Main main = new Main();
+        assertEquals(WHITE, main.getTurn());
+    }
+
+    // (3b) Test to make sure turn changes after player plays tile
+    @Test
+    void whenPlayerDoesPlayThenOtherPlayerHasTurn() throws IllegalMove {
+        Main main = new Main();
+        main.play(GRASSHOPPER, 0, 0);
+        assertEquals(BLACK, main.getTurn());
+    }
+
+    // (3b) Test to make sure turn changes after player moves tile
+    @Test
+    void whenPlayerDoesMoveThenOtherPlayerHasTurn() throws IllegalMove {
+        Main main = new Main();
+        main.play(BEETLE, 0, 0);
+        main.move(0, 0, 1, 0);
+        assertEquals(WHITE, main.getTurn());
     }
 }
