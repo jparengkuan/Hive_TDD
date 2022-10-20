@@ -129,14 +129,25 @@ public class Main implements Hive {
         return false;
     }
 
+    /**
+     * Return the board that is used in this game.
+     * @return the gameboard.
+     */
     public Board getBoard() {
         return board;
     }
 
+    /**
+     * Change the turn in the game.
+     */
     public void setTurn() {
         this.turn = turn == WHITE ? BLACK : WHITE;
     }
 
+    /**
+     * Returns whose turn it is.
+     * @return BLACK if it's the black player's turn, WHITE if it's the white player's turn.
+     */
     public Player getTurn() {
         return turn;
     }
