@@ -9,10 +9,7 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.Enumeration;
+import java.util.*;
 
 import static nl.hanze.hive.Hive.Player.BLACK;
 import static nl.hanze.hive.Hive.Player.WHITE;
@@ -124,7 +121,7 @@ public class SanityCheck {
 
     // (2e) Test if tiles can be played
     @Test
-    void whenTilePlayed() throws IllegalMove {
+    void whenTilePlayed() throws Hive.IllegalMove {
         Main main = new Main();
         main.play(BEETLE, 0, 0);
         assertEquals(BEETLE, main.getBoard().getCell(0,0).peek());
@@ -134,17 +131,17 @@ public class SanityCheck {
 
     // (2e) Test if tiles can be moved
     @Test
-    void whenTileMoved() throws IllegalMove {
+    void whenTileMoved() throws Hive.IllegalMove {
         Main main = new Main();
         main.play(BEETLE, 0, 0);
         main.move(0, 0, 1, 0);
         assertEquals(BEETLE, main.getBoard().getCell(1, 0).peek());
-        assertThrows(IllegalMove.class, () -> main.move(6, -4, 5, 3));
+        assertThrows(Hive.IllegalMove.class, () -> main.move(6, -4, 5, 3));
     }
 
     // (2f) Test if tiles can be on top of each other
     @Test
-    void whenTileOnTopOfAnotherTile() throws IllegalMove {
+    void whenTileOnTopOfAnotherTile() throws Hive.IllegalMove {
         Main main = new Main();
         main.play(SPIDER, 0, 0);
         main.play(GRASSHOPPER, 0, 0);
@@ -160,7 +157,7 @@ public class SanityCheck {
 
     // (3b) Test to make sure turn changes after player plays tile
     @Test
-    void whenPlayerDoesPlayThenOtherPlayerHasTurn() throws IllegalMove {
+    void whenPlayerDoesPlayThenOtherPlayerHasTurn() throws Hive.IllegalMove {
         Main main = new Main();
         main.play(GRASSHOPPER, 0, 0);
         assertEquals(BLACK, main.getTurn());
@@ -168,7 +165,7 @@ public class SanityCheck {
 
     // (3b) Test to make sure turn changes after player moves tile
     @Test
-    void whenPlayerDoesMoveThenOtherPlayerHasTurn() throws IllegalMove {
+    void whenPlayerDoesMoveThenOtherPlayerHasTurn() throws Hive.IllegalMove {
         Main main = new Main();
         main.play(BEETLE, 0, 0);
         main.move(0, 0, 1, 0);

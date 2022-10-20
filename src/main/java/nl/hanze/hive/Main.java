@@ -128,4 +128,16 @@ public class Main implements Hive {
     public boolean isDraw() {
         return false;
     }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public void setTurn() {
+        this.turn = turn == WHITE ? BLACK : WHITE;
+    }
+
+    public Player getTurn() {
+        return turn;
+    }
 }
