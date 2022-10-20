@@ -24,6 +24,9 @@ public class Deck {
 
         // Create the starters deck for player white
         createDeck(Player.WHITE);
+
+        // Create the starters deck for player black
+        createDeck(Player.BLACK);
     }
 
     /**
