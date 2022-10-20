@@ -34,6 +34,9 @@ public class Deck {
         // Create an arraylist that holds the titles for the players deck
         ArrayList<Hive.Tile> deck = new ArrayList<>();
 
+        // Add one queen bee title to the deck
+        deck.add(Hive.Tile.QUEEN_BEE);
+
         // Add two spider and beetle titles to the deck
         for(int i=0; i<2; i++){
             deck.add(Hive.Tile.SPIDER);
@@ -49,6 +52,42 @@ public class Deck {
         // Add the deck to the player
         decks.put(player, deck);
     }
+
+    /**
+     * Get the deck from a player.
+     * @param player The player whose deck is being returned
+     * @return the deck from the player.
+     */
+    private ArrayList<Hive.Tile> getDeck(Player player){
+        return decks.get(player);
+    }
+
+    /**
+     * Count the occurrences of a specific tile in a specific player's deck.
+     * @param specificTile The tile that is being counted.
+     * @param player The player whose deck is being iterated on.
+     * @return the amount of occurrences of specificTile.
+     */
+    public int countTiles(Hive.Tile specificTile, Player player){
+
+        // Get the deck from the player
+        ArrayList<Hive.Tile> deck = getDeck(player);
+
+        // Init titles count set to zero
+        int count = 0;
+
+        // Loop through the tiles in the deck
+        for(Hive.Tile tile : deck){
+
+            // If the tile is in the players deck increment the count
+            if(tile == specificTile){
+                count++;
+            }
+        }
+        return count;
+    }
+
+
 
 
 

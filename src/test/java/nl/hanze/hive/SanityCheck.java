@@ -14,8 +14,6 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.Enumeration;
 
-import static nl.hanze.hive.Hive.Player.BLACK;
-import static nl.hanze.hive.Hive.Player.WHITE;
 import static nl.hanze.hive.Hive.Tile.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -72,24 +70,7 @@ public class SanityCheck {
         hive.move(1, 2, 2, 1);
     }
 
-    // (1c) Check if each deck got the right amounts of the tiles from the requirement.
-    @Test
-    void whenStartOfGameCheckDeckForPlayerWhite(){
 
-        //Arrange maak een nieuwe deck aan voor player white
-        Main main = new Main();
-
-        // Act de methode aan roepen die moet worden getest
-        // ! Deck moet een nieuwe klasse worden met een getter
-        // Doen we morgen tijdens de refactor
-
-        // Assert controleren van de uitvoer
-        assertEquals(1, main.countTiles(QUEEN_BEE, WHITE));
-        assertEquals(2, main.countTiles(SPIDER, WHITE));
-        assertEquals(2, main.countTiles(BEETLE, WHITE));
-        assertEquals(3, main.countTiles(SOLDIER_ANT, WHITE));
-        assertEquals(3, main.countTiles(GRASSHOPPER, WHITE));
-    }
 
     // (2a) Check if the board has (q,r) coordinates
     /*@Test

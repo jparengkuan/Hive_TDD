@@ -1,21 +1,12 @@
 package nl.hanze.hive;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import static nl.hanze.hive.Hive.Player.BLACK;
-import static nl.hanze.hive.Hive.Player.WHITE;
-
 public class Main implements Hive {
 
-    private HashMap<Player, ArrayList<Tile>> decks;
+    /**
+     * Default constructor for the game
+     */
+    public Main() {
 
-    // Default constructor, used to set decks of both players.
-    // Decks will be saved in a HashMap: key = player; value = deck.
-    public Main(){
-        this.decks = new HashMap<>();
-        setDeck(BLACK);
-        setDeck(WHITE);
     }
 
     /**
@@ -28,50 +19,6 @@ public class Main implements Hive {
     @Override
     public void play(Tile tile, int q, int r) throws IllegalMove {
 
-    }
-
-    /**
-     * Add the game tiles to a specific player's deck.
-     * @param player The player whose deck is being set
-     */
-    public void setDeck(Player player){
-        ArrayList<Tile> deck = new ArrayList<>();
-        deck.add(Tile.QUEEN_BEE);
-        for(int i=0; i<2; i++){
-            deck.add(Tile.SPIDER);
-            deck.add(Tile.BEETLE);
-        }
-        for(int i=0; i<3; i++){
-            deck.add(Tile.SOLDIER_ANT);
-            deck.add(Tile.GRASSHOPPER);
-        }
-        decks.put(player, deck);
-    }
-
-    /**
-     * Get the deck from a player.
-     * @param player The player whose deck is being returned
-     * @return the deck from the player.
-     */
-    public ArrayList<Tile> getDeck(Player player){
-        return decks.get(player);
-    }
-
-    /**
-     * Count the occurrences of a specific tile in a specific player's deck.
-     * @param specificTile The tile that is being counted.
-     * @param player The player whose deck is being iterated on.
-     * @return the amount of occurrences of specificTile.
-     */
-    public int countTiles(Tile specificTile, Player player){
-        ArrayList<Tile> deck = getDeck(player);
-        int count = 0;
-        for(Tile tile : deck){
-            if(tile == specificTile){
-                count++;
-            }
-        }
-        return count;
     }
 
     /**
