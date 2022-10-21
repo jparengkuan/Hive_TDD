@@ -31,11 +31,12 @@ public class Main implements Hive {
     @Override
     public void play(Tile tile, int q, int r) throws IllegalMove {
 
+        // Get the player
         Player player = getTurn();
 
         //TODO De gametile moet nog uit de playersdeck klasse komen
+        // Create a gametile object with the player and tile information
         Gametile gametile = new Gametile(player, tile);
-
         Stack<Gametile> cell = board.getCell(q, r);
 
         cell.add(gametile);
