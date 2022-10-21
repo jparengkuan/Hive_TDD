@@ -1,8 +1,6 @@
 package nl.hanze.hive;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Stack;
+import java.util.*;
 
 import static nl.hanze.hive.Hive.Player.BLACK;
 import static nl.hanze.hive.Hive.Player.WHITE;
@@ -32,8 +30,15 @@ public class Main implements Hive {
      */
     @Override
     public void play(Tile tile, int q, int r) throws IllegalMove {
-        Stack<Tile> cell = board.getCell(q, r);
-        cell.add(tile);
+
+        Player player = getTurn();
+
+        //TODO De gametile moet nog uit de playersdeck klasse komen
+        Gametile gametile = new Gametile(player, tile);
+
+        Stack<Gametile> cell = board.getCell(q, r);
+
+        cell.add(gametile);
         setTurn();
     }
 
@@ -91,12 +96,12 @@ public class Main implements Hive {
      */
     @Override
     public void move(int fromQ, int fromR, int toQ, int toR) throws IllegalMove {
-        Stack<Tile> moveFromCell = board.getCell(fromQ, fromR);
+        Stack<Gametile> moveFromCell = board.getCell(fromQ, fromR);
         if(moveFromCell.isEmpty()){
             throw new IllegalMove();
         }
-        Tile toMove = moveFromCell.pop();
-        Stack<Tile> moveToCell = board.getCell(toQ, toR);
+        Gametile toMove = moveFromCell.pop();
+        Stack<Gametile> moveToCell = board.getCell(toQ, toR);
         moveToCell.push(toMove);
         setTurn();
     }

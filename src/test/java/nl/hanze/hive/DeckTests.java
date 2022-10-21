@@ -3,6 +3,8 @@ package nl.hanze.hive;
 import org.junit.jupiter.api.Test;
 import nl.hanze.hive.Hive.Player;
 
+import java.util.ArrayList;
+
 import static nl.hanze.hive.Hive.Tile.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -44,16 +46,5 @@ public class DeckTests {
         assertEquals(3, deckPlayerBlack.countTiles(SOLDIER_ANT, playerBlack));
     }
 
-    @Test
-    void whenStartOfGameGetDeckFromPlayerWhite() {
-
-        // Arrange
-        Deck deckPlayerWhite = new Deck();
-        Player playerWhite = Player.WHITE;
-
-        // Assert
-
-
-    }
 
 }

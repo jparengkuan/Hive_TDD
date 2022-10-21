@@ -92,7 +92,7 @@ public class SanityCheck {
     @Test
     void whenBoarcCheckCellCoordinates(){
         Board board = new Board(100);
-        HashMap<Cell, Stack<Hive.Tile>> cells = board.getCells();
+        HashMap<Cell, Stack<Gametile>> cells = board.getCells();
         for (Cell cell : cells.keySet()) {
             assertNotNull(cell.q);
             assertNotNull(cell.r);
@@ -124,7 +124,9 @@ public class SanityCheck {
     void whenTilePlayed() throws Hive.IllegalMove {
         Main main = new Main();
         main.play(BEETLE, 0, 0);
-        assertEquals(BEETLE, main.getBoard().getCell(0,0).peek());
+        Gametile tilePlayed = main.getBoard().getCell(0,0).peek();
+        assertEquals(BEETLE, tilePlayed.getTileName());
+
     }
 
     // (2d) is a bit difficult to test if tiles can already be in one place only

@@ -1,6 +1,5 @@
 package nl.hanze.hive;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 import nl.hanze.hive.Hive.Tile;
@@ -8,7 +7,7 @@ import nl.hanze.hive.Hive.Tile;
 public class Board {
 
     // A HashMap with the board cells as keys and a stack of tiles as values.
-    private HashMap<Cell, Stack<Tile>> cells;
+    private HashMap<Cell, Stack<Gametile>> cells;
 
     /**
      * Initialize the game board with cells.
@@ -33,19 +32,21 @@ public class Board {
 
     /**
      * Returns the cells on a game board.
+     *
      * @return the HashMap with cells and tiles.
      */
-    public HashMap<Cell, Stack<Tile>> getCells(){
+    public HashMap<Cell, Stack<Gametile>> getCells(){
         return cells;
     }
 
     /**
      * Returns a cell with the given coordinates.
+     *
      * @param q the q coordinate.
      * @param r the r coordinate.
      * @return the cell if a cell with given coordinates exists, null if the cell does not exist.
      */
-    public Stack<Tile> getCell(int q, int r){
+    public Stack<Gametile> getCell(int q, int r){
         for(Cell cell : cells.keySet()){
             if(cell.q == q && cell.r == r){
                 return cells.get(cell);
