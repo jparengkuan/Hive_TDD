@@ -44,4 +44,16 @@ public class DeckTests {
         assertEquals(3, deckPlayerBlack.countTiles(SOLDIER_ANT, playerBlack));
     }
 
+    @Test
+    whenStartOfGameGetDeckFromPlayerWhite() {
+
+        // Arrange
+        Deck deckPlayerWhite = new Deck();
+        Player playerWhite = Player.WHITE;
+
+        // Assert
+
+
+    }
+
 }
