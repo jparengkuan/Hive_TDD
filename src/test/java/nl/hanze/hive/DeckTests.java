@@ -45,7 +45,7 @@ public class DeckTests {
     }
 
     @Test
-    whenStartOfGameGetDeckFromPlayerWhite() {
+    void whenStartOfGameGetDeckFromPlayerWhite() {
 
         // Arrange
         Deck deckPlayerWhite = new Deck();
