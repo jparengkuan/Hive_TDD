@@ -10,11 +10,18 @@ public class Main implements Hive {
     private HashMap<Player, ArrayList<Tile>> decks;
     private Board board;
     private Player turn;
+    public static final int[] NORTH_WEST = new int[]{0, -1};
+    public static final int[] WEST = new int[]{-1, 0};
+    public static final int[] SOUTH_WEST = new int[]{-1, 1};
+    public static final int[] NORTH_EAST = new int[]{1, -1};
+    public static final int[] EAST = new int[]{1, 0};
+    public static final int[] SOUTH_EAST = new int[]{0, 1};
+    public int[][] directions = new int[][]{NORTH_WEST, NORTH_EAST, WEST, SOUTH_WEST, EAST, SOUTH_EAST};
 
     // Default constructor, used to set decks of both players.
     // Decks will be saved in a HashMap: key = player; value = deck.
     public Main(){
-        this.board = new Board(100);
+        this.board = new Board();
         this.decks = new HashMap<>();
         this.turn = WHITE;
         setDeck(BLACK);
@@ -37,9 +44,11 @@ public class Main implements Hive {
         //TODO De gametile moet nog uit de playersdeck klasse komen
         // Create a gametile object with the player and tile information
         Gametile gametile = new Gametile(player, tile);
-        Stack<Gametile> cell = board.getCell(q, r);
-
-        cell.add(gametile);
+        if(!board.cellExists(q, r)){
+            board.getCells().add(new Cell(q, r));
+        }
+        Cell cell = board.getCell(q, r);
+        cell.getTiles().add(gametile);
         setTurn();
     }
 
@@ -97,13 +106,16 @@ public class Main implements Hive {
      */
     @Override
     public void move(int fromQ, int fromR, int toQ, int toR) throws IllegalMove {
-        Stack<Gametile> moveFromCell = board.getCell(fromQ, fromR);
-        if(moveFromCell.isEmpty()){
+        Cell moveFromCell = board.getCell(fromQ, fromR);
+        if(moveFromCell == null || moveFromCell.getTiles().isEmpty()){
             throw new IllegalMove();
         }
-        Gametile toMove = moveFromCell.pop();
-        Stack<Gametile> moveToCell = board.getCell(toQ, toR);
-        moveToCell.push(toMove);
+        Gametile toMove = moveFromCell.getTiles().pop();
+        if(!board.cellExists(toQ, toR)){
+            board.getCells().add(new Cell(toQ, toR));
+        }
+        Cell moveToCell = board.getCell(toQ, toR);
+        moveToCell.getTiles().push(toMove);
         setTurn();
     }
 
@@ -123,7 +135,25 @@ public class Main implements Hive {
      */
     @Override
     public boolean isWinner(Player player) {
-        return false;
+        // haal eerst QUEEN BEE op van tegenstander
+        int tiles_with_contents_count = 0;
+        Cell queen_bee = null;
+        for(Cell cell : board.getCells()){
+            Gametile tile = cell.getTiles().peek();
+            if(tile.getTileName() == Tile.QUEEN_BEE && tile.getOwner() != player){
+                queen_bee = cell;
+                for(int[] direction : directions){
+                    Cell nCell = board.getCell(queen_bee.q + direction[0], queen_bee.r + direction[1]);
+                    if(nCell != null){
+                        if(!nCell.getTiles().isEmpty()){
+                            tiles_with_contents_count++;
+                        }
+                    }
+                }
+            }
+        }
+        // check of alle aangrenzende velden van de QUEEN_BEE van de tegenstander gevuld zijn met stenen.
+        return tiles_with_contents_count == 6;
     }
 
     /**
