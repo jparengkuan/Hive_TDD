@@ -54,4 +54,13 @@ public class Board {
     public void addCell(int q, int r){
         cells.add(new Cell(q, r));
     }
+
+    /**
+     * Returns a boolean if the board is empty
+     *
+     * @return boolean True/False
+     */
+    public boolean isEmpty(){
+        return getCells().size() == 0;
+    }
 }
