@@ -69,7 +69,24 @@ public class Board {
      *
      * @return boolean True/False
      */
-    public void GetNeighboursFromCell(Cell cell){
+    ArrayList<Cell> GetNeighboursFromCell(Cell cell){
+
+        // Maak arraylist aan hier slaan we alle neighbours in op
+        ArrayList<Cell> neighbours = new ArrayList<Cell>();
+
+        int[][] directions = new int[][] {Main.NORTH_WEST, Main.WEST, Main.NORTH_EAST, Main.SOUTH_WEST, Main.SOUTH_EAST, Main.EAST};
+
+        // Loop door elke alle zes aangrenzende velden
+        for(int[] direction : directions){
+
+            // Maak een nieuwe neighbourcell aan
+           Cell neighboursCell = new Cell(cell.q + direction[0], cell.r + direction[1]);
+
+           // Voeg de cell toe aan neighbours arraylist
+           neighbours.add(neighboursCell);
+        }
+
+        return neighbours;
 
     }
 }
