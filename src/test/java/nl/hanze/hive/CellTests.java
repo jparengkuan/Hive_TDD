@@ -6,8 +6,7 @@ import java.util.ArrayList;
 
 import static nl.hanze.hive.Hive.Tile.GRASSHOPPER;
 import static nl.hanze.hive.Hive.Tile.QUEEN_BEE;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CellTests {
 
@@ -49,12 +48,35 @@ public class CellTests {
         // Speel de de grashopper naar pos 0,0
         main.play(GRASSHOPPER, 0, 0);
 
-        //
-        ArrayList<Cell> neighbours = new ArrayList<Cell>();
+        // Maak een nieuwe arraylist aan met aangrenzende velden (neighbours)
+        ArrayList<Cell> actualNeighbours = new ArrayList<Cell>();
+
+        // Haal de cell op met pos 0,0
         Cell cell = main.getBoard().getCell(0,0);
 
+        // NORTH_WEST
+        actualNeighbours.add(new Cell(0, -1));
+        // WEST
+        actualNeighbours.add(new Cell(-1, 0));
+        // NORTH_EAST
+        actualNeighbours.add(new Cell(+1, -1));
+        // SOUTH_WEST
+        actualNeighbours.add(new Cell(-1, +1));
+        // SOUTH_EAST
+        actualNeighbours.add(new Cell(0, +1));
+        // EAST
+        actualNeighbours.add(new Cell(+1, -0));
+
+        // We halen de arrayList op met de berekende neighbours
+        ArrayList<Cell> calculatedNeighbours = main.getBoard().GetNeighboursFromCell(cell);
+
         // Assert
-        assertEquals(neighbours, main.getBoard().GetNeighboursFromCell(cell));
+        assertEquals(actualNeighbours.get(0), calculatedNeighbours.get(0));
+        assertEquals(actualNeighbours.get(1), calculatedNeighbours.get(1));
+        assertEquals(actualNeighbours.get(2), calculatedNeighbours.get(2));
+        assertEquals(actualNeighbours.get(3), calculatedNeighbours.get(3));
+        assertEquals(actualNeighbours.get(4), calculatedNeighbours.get(4));
+        assertEquals(actualNeighbours.get(5), calculatedNeighbours.get(5));
 
     }
 
