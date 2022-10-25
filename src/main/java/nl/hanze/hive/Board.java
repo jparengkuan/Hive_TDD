@@ -63,4 +63,13 @@ public class Board {
     public boolean isEmpty(){
         return getCells().size() == 0;
     }
+
+    /**
+     * Get all the Neighbours from a cell
+     *
+     * @return boolean True/False
+     */
+    public void GetNeighboursFromCell(Cell cell){
+
+    }
 }
