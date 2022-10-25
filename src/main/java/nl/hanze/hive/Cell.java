@@ -22,7 +22,10 @@ public class Cell {
         return tiles;
     }
 
+    /**
+     * @returns a boolean if the cell has a tile or tiles stacked on top
+     */
     boolean isEmpty() {
-
+        return tiles.isEmpty();
     }
 }

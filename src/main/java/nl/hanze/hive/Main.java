@@ -50,13 +50,20 @@ public class Main implements Hive {
             board.getCells().add(new Cell(q, r));
         }
 
-
-
-
         Cell cell = board.getCell(q, r);
 
-        cell.getTiles().add(gametile);
-        setTurn();
+        // Check of er al een tile op de coordinaten is geplaatst
+        if(!cell.isEmpty())
+        {
+            throw new IllegalMove("cell has already a tile");
+        }
+        else {
+
+            cell.getTiles().add(gametile);
+            setTurn();
+
+        }
+
     }
 
     /**
