@@ -93,6 +93,9 @@ public class CellTests {
         // Maak een nieuwe arraylist aan met aangrenzende velden (neighbours) met geen tiles
         ArrayList<Cell> actualNeighboursWithNoTiles = new ArrayList<Cell>();
 
+        // Haal de cell op met pos 0,1
+        Cell cell = main.getBoard().getCell(0,-1);
+
         // WEST
         actualNeighboursWithNoTiles.add(new Cell(-1, 0));
         // NORTH_EAST
@@ -113,7 +116,6 @@ public class CellTests {
         assertEquals(actualNeighboursWithNoTiles.get(2), neighboursWithNoTiles.get(2));
         assertEquals(actualNeighboursWithNoTiles.get(3), neighboursWithNoTiles.get(3));
         assertEquals(actualNeighboursWithNoTiles.get(4), neighboursWithNoTiles.get(4));
-        assertEquals(actualNeighboursWithNoTiles.get(5), neighboursWithNoTiles.get(5));
 
     }
 

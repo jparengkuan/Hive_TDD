@@ -80,7 +80,7 @@ public class Board {
         // Loop door elke alle zes aangrenzende velden
         for(int[] direction : directions){
 
-            // Maak een nieuwe neighbourcell aan
+            // Maak een nieuwe neighbourcell
            Cell neighboursCell = new Cell(cell.q + direction[0], cell.r + direction[1]);
 
            // Voeg de cell toe aan neighbours arraylist
@@ -89,5 +89,27 @@ public class Board {
 
         // return the arraylist filled with neighbour cells
         return neighbours;
+    }
+
+    ArrayList<Cell> GetNeighboursFromCellWithNoTiles(Cell cell) {
+
+        ArrayList<Cell> neighbours = GetNeighboursFromCell(cell);
+        ArrayList<Cell> neighboursWithNoTiles = new ArrayList<>();
+
+        for(Cell neighbour : neighbours) {
+           if (cellExists(neighbour.q, neighbour.r)) {
+               Cell existingCell = getCell(neighbour.q, neighbour.r);
+               if (existingCell.isEmpty()){
+                   neighboursWithNoTiles.add(neighbour);
+               }
+            }
+           else {
+               neighboursWithNoTiles.add(neighbour);
+           }
+
+        }
+
+        return neighboursWithNoTiles;
+
     }
 }
