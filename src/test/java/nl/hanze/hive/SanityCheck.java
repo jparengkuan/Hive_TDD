@@ -122,12 +122,6 @@ public class SanityCheck {
         }
     }
 
-    // (2c) Test if board is empty at the start
-    @Test
-    void whenGameStartThenBoardEmpty(){
-        Board board = new Board();
-        assertEquals(0, board.getCells().size());
-    }
 
     // (2e) Test if tiles can be played
     @Test
