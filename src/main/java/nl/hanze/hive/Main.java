@@ -159,7 +159,7 @@ public class Main implements Hive {
                 for(int[] direction : directions){
                     Cell nCell = board.getCell(queen_bee.q + direction[0], queen_bee.r + direction[1]);
                     if(nCell != null){
-                        if(!nCell.getTiles().isEmpty()){
+                        if(!nCell.isEmpty()){
                             tiles_with_contents_count++;
                         }
                     }
@@ -176,7 +176,12 @@ public class Main implements Hive {
      */
     @Override
     public boolean isDraw() {
-        return false;
+        for(Player player: Player.values()){
+            if(!isWinner(player)){
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

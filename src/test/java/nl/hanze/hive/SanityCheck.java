@@ -213,6 +213,34 @@ public class SanityCheck {
     // (3d) Test to make sure it's a draw if both players win at the same time.
     @Test
     void givenPlayersWhenBothQueenBeesSurroundedAtSameTimeThenDraw() throws Hive.IllegalMove {
-
+        Main main = new Main();
+        Board board = main.getBoard();
+        board.addCell(1,-1);
+        board.getCell(1,-1).getTiles().add(new Gametile(WHITE, QUEEN_BEE));
+        board.addCell(-1, 1);
+        board.getCell(-1,1).getTiles().add(new Gametile(BLACK, QUEEN_BEE));
+        board.addCell(0, 1);
+        board.getCell(0,1).getTiles().add(new Gametile(BLACK, GRASSHOPPER));
+        board.addCell(1, 0);
+        board.getCell(1,0).getTiles().add(new Gametile(WHITE, SOLDIER_ANT));
+        board.addCell(2,-1);
+        board.getCell(2,-1).getTiles().add(new Gametile(BLACK, SOLDIER_ANT));
+        board.addCell(2, -2);
+        board.getCell(2, -2).getTiles().add(new Gametile(BLACK, GRASSHOPPER));
+        board.addCell(1, -2);
+        board.getCell(1, -2).getTiles().add(new Gametile(BLACK, BEETLE));
+        board.addCell(0, -1);
+        board.getCell(0, -1).getTiles().add(new Gametile(WHITE, BEETLE));
+        board.addCell(-1,0);
+        board.getCell(-1,0).getTiles().add(new Gametile(WHITE, BEETLE));
+        board.addCell(-2,1);
+        board.getCell(-2,1).getTiles().add(new Gametile(BLACK, BEETLE));
+        board.addCell(-2, 2);
+        board.getCell(-2,2).getTiles().add(new Gametile(WHITE, SPIDER));
+        board.addCell(-1, 2);
+        board.getCell(-1,2).getTiles().add(new Gametile(WHITE, SPIDER));
+        board.addCell(0,0);
+        board.getCell(0,0).getTiles().add(new Gametile(BLACK, SPIDER));
+        assertTrue(main.isDraw());
     }
 }
