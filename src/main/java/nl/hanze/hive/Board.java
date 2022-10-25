@@ -91,24 +91,44 @@ public class Board {
         return neighbours;
     }
 
+    /**
+     * Get all the surrounding neighbour cells for a given cell that has no tiles
+     *
+     * @param Cell cell The target cell
+     * @return ArrayList<Cell> Arraylist with all cells that have no tiles
+     */
     ArrayList<Cell> GetNeighboursFromCellWithNoTiles(Cell cell) {
 
+        // Maak arraylist aan hier slaan we alle neighbours in op voor de gegeven cell
         ArrayList<Cell> neighbours = GetNeighboursFromCell(cell);
+
+        // Maak een arraylist waar we alle cellen opslaan die geen tile bevatten
         ArrayList<Cell> neighboursWithNoTiles = new ArrayList<>();
 
+        // Loop door elke mogelijke neighbour van de cell
         for(Cell neighbour : neighbours) {
+
+            // Check of de cell bestaat op het bord
            if (cellExists(neighbour.q, neighbour.r)) {
+               // Haal het cell object op voor met de coördinaten
                Cell existingCell = getCell(neighbour.q, neighbour.r);
+
+               // Als de cell bestaat op het bord en niet leeg is dan voegen we de cell toe
+               // aan de array neighboursWithNoTiles
                if (existingCell.isEmpty()){
                    neighboursWithNoTiles.add(neighbour);
                }
             }
            else {
+               // De cell bestaat niet op het bord, omdat er nog niet op is gespeeld
+               // We kunnen er daarom vanuit gaan dat de cell geen tiles bevat en slaan
+               // hem daarop in de neighboursWithNoTiles arraylist
                neighboursWithNoTiles.add(neighbour);
            }
 
         }
 
+        // Geef de arraylist terug met de cellen die geen tiles bevatten
         return neighboursWithNoTiles;
 
     }
