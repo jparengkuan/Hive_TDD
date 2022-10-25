@@ -21,4 +21,8 @@ public class Cell {
     public Stack<Gametile> getTiles(){
         return tiles;
     }
+
+    boolean isEmpty() {
+
+    }
 }

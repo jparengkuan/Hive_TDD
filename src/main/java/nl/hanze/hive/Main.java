@@ -44,10 +44,17 @@ public class Main implements Hive {
         //TODO De gametile moet nog uit de playersdeck klasse komen
         // Create a gametile object with the player and tile information
         Gametile gametile = new Gametile(player, tile);
+
+        // Als de cell nog niet bestaat maak dan een nieuwe aan
         if(!board.cellExists(q, r)){
             board.getCells().add(new Cell(q, r));
         }
+
+
+
+
         Cell cell = board.getCell(q, r);
+
         cell.getTiles().add(gametile);
         setTurn();
     }
