@@ -65,9 +65,10 @@ public class Board {
     }
 
     /**
-     * Get all the Neighbours from a cell
+     * Get all the surrounding neighbour cells for a given cell
      *
-     * @return boolean True/False
+     * @param Cell cell The target cell
+     * @return ArrayList<Cell> Arraylist with all the six neighbour cells
      */
     ArrayList<Cell> GetNeighboursFromCell(Cell cell){
 
@@ -86,7 +87,7 @@ public class Board {
            neighbours.add(neighboursCell);
         }
 
+        // return the arraylist filled with neighbour cells
         return neighbours;
-
     }
 }
