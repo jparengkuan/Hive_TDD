@@ -213,8 +213,10 @@ public class SanityCheck {
     // (3d) Test to make sure it's a draw if both players win at the same time.
     @Test
     void givenPlayersWhenBothQueenBeesSurroundedAtSameTimeThenDraw() throws Hive.IllegalMove {
+        // Arrange
         Main main = new Main();
         Board board = main.getBoard();
+        // Act
         board.addCell(1,-1);
         board.getCell(1,-1).getTiles().add(new Gametile(WHITE, QUEEN_BEE));
         board.addCell(-1, 1);
@@ -241,6 +243,7 @@ public class SanityCheck {
         board.getCell(-1,2).getTiles().add(new Gametile(WHITE, SPIDER));
         board.addCell(0,0);
         board.getCell(0,0).getTiles().add(new Gametile(BLACK, SPIDER));
+        // Assert
         assertTrue(main.isDraw());
     }
 }

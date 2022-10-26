@@ -58,10 +58,23 @@ public class Main implements Hive {
             throw new IllegalMove("cell has already a tile");
         }
         else {
-
-            cell.getTiles().add(gametile);
-            setTurn();
-
+            ArrayList<Cell> neighbors = board.GetNeighboursFromCell(cell);
+            boolean adjacentTiles = false;
+            for(Cell neighbor : neighbors){
+                Cell actualNeighbor = board.getCell(neighbor.q, neighbor.r);
+                if(actualNeighbor != null){
+                    if(!actualNeighbor.isEmpty()){
+                        adjacentTiles = true;
+                    }
+                }
+            }
+            if(board.getCells().size() <= 1 || adjacentTiles){
+                cell.getTiles().add(gametile);
+                setTurn();
+            }
+            else{
+                throw new IllegalMove("cell must be played next to another tile");
+            }
         }
 
     }
@@ -121,7 +134,7 @@ public class Main implements Hive {
     @Override
     public void move(int fromQ, int fromR, int toQ, int toR) throws IllegalMove {
         Cell moveFromCell = board.getCell(fromQ, fromR);
-        if(moveFromCell == null || moveFromCell.getTiles().isEmpty()){
+        if(moveFromCell == null || moveFromCell.isEmpty()){
             throw new IllegalMove();
         }
         Gametile toMove = moveFromCell.getTiles().pop();

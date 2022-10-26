@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static nl.hanze.hive.Hive.Tile.GRASSHOPPER;
-import static nl.hanze.hive.Hive.Tile.QUEEN_BEE;
+import static nl.hanze.hive.Hive.Tile.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CellTests {
@@ -80,4 +79,11 @@ public class CellTests {
 
     }
 
+    @Test
+    void givenNonEmptyBoardWhenTileNotPlayedNextToOtherTileThenIllegalMove() throws Hive.IllegalMove {
+        Main main = new Main();
+        main.play(GRASSHOPPER, 0, 0);
+        main.play(QUEEN_BEE, 0, 1);
+        assertThrows(Hive.IllegalMove.class, () -> main.play(SOLDIER_ANT, -3, -5));
+    }
 }

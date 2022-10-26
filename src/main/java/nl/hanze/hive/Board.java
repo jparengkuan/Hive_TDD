@@ -69,10 +69,10 @@ public class Board {
      *
      * @return boolean True/False
      */
-    ArrayList<Cell> GetNeighboursFromCell(Cell cell){
+    public ArrayList<Cell> GetNeighboursFromCell(Cell cell){
 
         // Maak arraylist aan hier slaan we alle neighbours in op
-        ArrayList<Cell> neighbours = new ArrayList<Cell>();
+        ArrayList<Cell> neighbours = new ArrayList<>();
 
         int[][] directions = new int[][] {Main.NORTH_WEST, Main.WEST, Main.NORTH_EAST, Main.SOUTH_WEST, Main.SOUTH_EAST, Main.EAST};
 
