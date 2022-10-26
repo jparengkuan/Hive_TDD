@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CellTests {
 
+    // (4b)
     @Test
     public void checkIfCellHasNoTiles() {
 
@@ -22,9 +23,10 @@ public class CellTests {
         Cell cell = board.getCell(1,1);
 
         // Assert
-        assertEquals(true, cell.isEmpty());
+        assertTrue(cell.isEmpty());
     }
 
+    // (4b)
     @Test void whenTileAlreadyPlacedOnCellPlayerCannotMakeAPlay() throws Hive.IllegalMove {
 
         // Maak een nieuw spel aan
@@ -120,6 +122,7 @@ public class CellTests {
 
     }
 
+    // (4c)
     @Test
     void givenNonEmptyBoardWhenTileNotPlayedNextToOtherTileThenIllegalMove() throws Hive.IllegalMove {
         Main main = new Main();
@@ -129,6 +132,7 @@ public class CellTests {
         assertThrows(Hive.IllegalMove.class, () -> main.play(SOLDIER_ANT, -3, -5));
     }
 
+    // (4d)
     @Test
     void givenNonEmptyBoardWhenPlayerTilePlayedNextToOpponentTileThenIllegalMove() throws Hive.IllegalMove {
         Main main = new Main();
@@ -137,6 +141,7 @@ public class CellTests {
         assertThrows(Hive.IllegalMove.class, () -> main.play(SOLDIER_ANT, 0, 1));
     }
 
+    // (4e)
     @Test
     void whenPlayerHasPlayedThreeTilesThenPlayerMustPlayQueenBee() throws Hive.IllegalMove {
         Main main = new Main();
@@ -150,12 +155,33 @@ public class CellTests {
         assertThrows(Hive.IllegalMove.class, () -> main.play(GRASSHOPPER, 1,0));
     }
 
+    // (5a)
     @Test
-    void whenTilesPlayedThenOnlyMoveThoseTiles() throws Hive.IllegalMove {
+    void whenTilesPlayedThenOnlyMoveOwnPlayerTiles() throws Hive.IllegalMove {
         Main main = new Main();
         main.play(GRASSHOPPER, 0, 0);
         main.play(QUEEN_BEE, 2, 1);
         // (assert) When WHITE tries to move BLACK's tile, throw IllegalMove.
         assertThrows(Hive.IllegalMove.class, () -> main.move(2, 1, 4, 5));
+    }
+
+    // (5b)
+    @Test
+    void whenQueenBeePlayedOnlyThenMoveTiles() throws Hive.IllegalMove {
+        Main main = new Main();
+        main.play(GRASSHOPPER, 0, 9);
+        main.play(QUEEN_BEE, 3, -15);
+        // (assert) When WHITE has not yet played QUEEN_BEE, but tries to move a tile, throw IllegalMove.
+        assertThrows(Hive.IllegalMove.class, () -> main.move(0, 9, 5, 3));
+    }
+
+    // (5b)
+    @Test
+    void whenQueenBeePlayedDoNotThrowIllegalMoveUponMovingTile() throws Hive.IllegalMove {
+        Main main = new Main();
+        main.play(QUEEN_BEE, 0, 0);
+        main.play(GRASSHOPPER, 2, 4);
+        // (assert) When WHITE has played QUEEN_BEE and tries to move a tile, do NOT throw IllegalMove.
+        assertDoesNotThrow(() -> main.move(0, 0, 1, 0));
     }
 }
