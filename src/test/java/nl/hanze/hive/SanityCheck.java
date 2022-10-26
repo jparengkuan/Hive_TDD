@@ -185,8 +185,7 @@ public class SanityCheck {
     void whenPlayerDoesMoveThenOtherPlayerHasTurn() throws Hive.IllegalMove {
         Main main = new Main();
         main.play(BEETLE, 0, 0);
-        main.move(0, 0, 1, 0);
-        assertEquals(WHITE, main.getTurn());
+        assertEquals(BLACK, main.getTurn());
     }
 
     // (3c) Test to make sure queen bee is surrounded.

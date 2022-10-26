@@ -111,8 +111,12 @@ public class Main implements Hive {
     @Override
     public void move(int fromQ, int fromR, int toQ, int toR) throws IllegalMove {
         Cell moveFromCell = board.getCell(fromQ, fromR);
+        Player player = getTurn();
         if(moveFromCell == null || moveFromCell.isEmpty()){
             throw new IllegalMove();
+        }
+        if(moveFromCell.getTiles().peek().getOwner() != player){
+            throw new IllegalMove("player can't move opponent's tiles");
         }
         Gametile toMove = moveFromCell.getTiles().pop();
         if(!board.cellExists(toQ, toR)){
