@@ -118,26 +118,47 @@ public class Main implements Hive {
             throw new IllegalMove("tried to move from this cell, but cell doesn't exist");
         }
 
-        // If cell player tries to move is an opponent's tile
-        if(moveFromCell.getTiles().peek().getOwner() != player){
-            throw new IllegalMove("player can't move opponent's tiles");
-        }
-        Gametile toMove = moveFromCell.getTiles().pop();
-
         // if player has not played queen bee yet
         if(decks.getDeck(player).contains(Tile.QUEEN_BEE)){
             throw new IllegalMove("player needs to play queen bee before moving any tiles");
         }
+
+        // If cell player tries to move is an opponent's tile
+        if(moveFromCell.getTiles().peek().getOwner() != player){
+            throw new IllegalMove("player can't move opponent's tiles");
+        }
+
+        Gametile toMove = moveFromCell.getTiles().pop();
 
         // If cell does not exist yet, add cell to board
         if(!board.cellExists(toQ, toR)){
             board.getCells().add(new Cell(toQ, toR));
         }
 
-        // Add tile to cell and change turn
-        Cell moveToCell = board.getCell(toQ, toR);
-        moveToCell.getTiles().push(toMove);
-        setTurn();
+        // test if the cell has any neighbors containing tiles (later to be refactored into a different method)
+        ArrayList<Cell> neighbors = board.GetNeighboursFromCell(board.getCell(toQ, toR));
+        boolean hasAdjacentCells = false;
+        for(Cell neighbor : neighbors){
+            Cell actualNeighbor = board.getCell(neighbor.q, neighbor.r);
+            if(actualNeighbor != null){
+                if(!actualNeighbor.isEmpty()){
+                    if(actualNeighbor.getTiles().peek().getOwner() != player){
+                        throw new Hive.IllegalMove("can't move tile next to opponent");
+                    }
+                    hasAdjacentCells = true;
+                }
+            }
+        }
+
+        if(hasAdjacentCells){
+            // Add tile to cell and change turn
+            Cell moveToCell = board.getCell(toQ, toR);
+            moveToCell.getTiles().push(toMove);
+            setTurn();
+        }
+        else{
+            throw new IllegalMove("the tile must be played next to another of the player's tiles.");
+        }
     }
 
     /**
