@@ -112,16 +112,29 @@ public class Main implements Hive {
     public void move(int fromQ, int fromR, int toQ, int toR) throws IllegalMove {
         Cell moveFromCell = board.getCell(fromQ, fromR);
         Player player = getTurn();
+
+        // If cell does not exist or is empty
         if(moveFromCell == null || moveFromCell.isEmpty()){
-            throw new IllegalMove();
+            throw new IllegalMove("tried to move from this cell, but cell doesn't exist");
         }
+
+        // If cell player tries to move is an opponent's tile
         if(moveFromCell.getTiles().peek().getOwner() != player){
             throw new IllegalMove("player can't move opponent's tiles");
         }
         Gametile toMove = moveFromCell.getTiles().pop();
+
+        // if player has not played queen bee yet
+        if(decks.getDeck(player).contains(Tile.QUEEN_BEE)){
+            throw new IllegalMove("player needs to play queen bee before moving any tiles");
+        }
+
+        // If cell does not exist yet, add cell to board
         if(!board.cellExists(toQ, toR)){
             board.getCells().add(new Cell(toQ, toR));
         }
+
+        // Add tile to cell and change turn
         Cell moveToCell = board.getCell(toQ, toR);
         moveToCell.getTiles().push(toMove);
         setTurn();
