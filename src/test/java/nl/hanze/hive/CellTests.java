@@ -124,7 +124,38 @@ public class CellTests {
     void givenNonEmptyBoardWhenTileNotPlayedNextToOtherTileThenIllegalMove() throws Hive.IllegalMove {
         Main main = new Main();
         main.play(GRASSHOPPER, 0, 0);
-        main.play(QUEEN_BEE, 0, 1);
+        main.play(QUEEN_BEE, 2, 1);
+        // (assert) When the board is not empty, and WHITE tries to play a tile not adjacent to another WHITE tile, throw IllegalMove.
         assertThrows(Hive.IllegalMove.class, () -> main.play(SOLDIER_ANT, -3, -5));
+    }
+
+    @Test
+    void givenNonEmptyBoardWhenPlayerTilePlayedNextToOpponentTileThenIllegalMove() throws Hive.IllegalMove {
+        Main main = new Main();
+        main.play(GRASSHOPPER, 0, 0);
+        // (assert) When BLACK tries to place tile next to WHITE's tile, throw IllegalMove. (needs refactor)
+        assertThrows(Hive.IllegalMove.class, () -> main.play(SOLDIER_ANT, 0, 1));
+    }
+
+    @Test
+    void whenPlayerHasPlayedThreeTilesThenPlayerMustPlayQueenBee() throws Hive.IllegalMove {
+        Main main = new Main();
+        main.play(GRASSHOPPER, 0, 0);
+        main.play(SOLDIER_ANT, 1, 5);
+        main.play(GRASSHOPPER, 0, 1);
+        main.play(BEETLE, 2, 5);
+        main.play(SOLDIER_ANT, 0, 2);
+        main.play(QUEEN_BEE, 3, 5);
+        // (assert) When WHITE tries to play a tile other than QUEEN_BEE after three turns, throw IllegalMove.
+        assertThrows(Hive.IllegalMove.class, () -> main.play(GRASSHOPPER, 1,0));
+    }
+
+    @Test
+    void whenTilesPlayedThenOnlyMoveThoseTiles() throws Hive.IllegalMove {
+        Main main = new Main();
+        main.play(GRASSHOPPER, 0, 0);
+        main.play(QUEEN_BEE, 2, 1);
+        // (assert) When WHITE tries to move BLACK's tile, throw IllegalMove.
+        assertThrows(Hive.IllegalMove.class, () -> main.move(2, 1, 4, 5));
     }
 }

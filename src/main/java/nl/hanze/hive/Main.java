@@ -7,7 +7,7 @@ import static nl.hanze.hive.Hive.Player.WHITE;
 
 public class Main implements Hive {
 
-    private HashMap<Player, ArrayList<Tile>> decks;
+    private Deck decks;
     private Board board;
     private Player turn;
     public static final int[] NORTH_WEST = new int[]{0, -1};
@@ -22,10 +22,8 @@ public class Main implements Hive {
     // Decks will be saved in a HashMap: key = player; value = deck.
     public Main(){
         this.board = new Board();
-        this.decks = new HashMap<>();
+        this.decks = new Deck();
         this.turn = WHITE;
-        setDeck(BLACK);
-        setDeck(WHITE);
     }
 
     /**
@@ -43,7 +41,7 @@ public class Main implements Hive {
 
         //TODO De gametile moet nog uit de playersdeck klasse komen
         // Create a gametile object with the player and tile information
-        Gametile gametile = new Gametile(player, tile);
+        Gametile gametile = new Gametile(player, decks.getTilefromDeck(tile, player));
 
         // Als de cell nog niet bestaat maak dan een nieuwe aan
         if(!board.cellExists(q, r)){
@@ -59,16 +57,22 @@ public class Main implements Hive {
         }
         else {
             ArrayList<Cell> neighbors = board.GetNeighboursFromCell(cell);
-            boolean adjacentTiles = false;
+            boolean hasAdjacentTiles = false;
             for(Cell neighbor : neighbors){
                 Cell actualNeighbor = board.getCell(neighbor.q, neighbor.r);
                 if(actualNeighbor != null){
                     if(!actualNeighbor.isEmpty()){
-                        adjacentTiles = true;
+                        if(actualNeighbor.getTiles().peek().getOwner() != player){
+                            throw new IllegalMove("player cannot play tile next to opponent tile");
+                        }
+                        hasAdjacentTiles = true;
                     }
                 }
             }
-            if(board.getCells().size() <= 1 || adjacentTiles){
+            if(decks.getDeck(player).size() < Deck.DECK_SIZE - 3 && decks.countTiles(Tile.QUEEN_BEE, player) > 0){
+                throw new IllegalMove("after 3 tiles player must play queen bee");
+            }
+            if(board.getCells().size() <= 2 || hasAdjacentTiles){
                 cell.getTiles().add(gametile);
                 setTurn();
             }
@@ -80,40 +84,13 @@ public class Main implements Hive {
     }
 
     /**
-     * Add the game tiles to a specific player's deck.
-     * @param player The player whose deck is being set
-     */
-    public void setDeck(Player player){
-        ArrayList<Tile> deck = new ArrayList<>();
-        deck.add(Tile.QUEEN_BEE);
-        for(int i=0; i<2; i++){
-            deck.add(Tile.SPIDER);
-            deck.add(Tile.BEETLE);
-        }
-        for(int i=0; i<3; i++){
-            deck.add(Tile.SOLDIER_ANT);
-            deck.add(Tile.GRASSHOPPER);
-        }
-        decks.put(player, deck);
-    }
-
-    /**
-     * Get the deck from a player.
-     * @param player The player whose deck is being returned
-     * @return the deck from the player.
-     */
-    public ArrayList<Tile> getDeck(Player player){
-        return decks.get(player);
-    }
-
-    /**
      * Count the occurrences of a specific tile in a specific player's deck.
      * @param specificTile The tile that is being counted.
      * @param player The player whose deck is being iterated on.
      * @return the amount of occurrences of specificTile.
      */
     public int countTiles(Tile specificTile, Player player){
-        ArrayList<Tile> deck = getDeck(player);
+        ArrayList<Tile> deck = decks.getDeck(player);
         int count = 0;
         for(Tile tile : deck){
             if(tile == specificTile){

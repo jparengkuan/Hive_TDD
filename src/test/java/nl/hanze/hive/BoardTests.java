@@ -3,6 +3,7 @@ package nl.hanze.hive;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class BoardTests {
 
@@ -10,7 +11,7 @@ public class BoardTests {
     @Test
     void whenGameStartThenBoardIsEmpty(){
         Board board = new Board();
-        assertEquals(true, board.isEmpty());
+        assertTrue(board.isEmpty());
     }
 
 

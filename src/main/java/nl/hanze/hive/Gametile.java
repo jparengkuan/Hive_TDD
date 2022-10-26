@@ -5,15 +5,17 @@ public class Gametile {
     // Information about the gametile
     private Hive.Player owner;
     private Hive.Tile tileName;
+    private boolean played;
 
     /**
      * Constructor of a Gametile
-     * @param Hive.Player the player that is the owner of the tile
-     * @param Hive.Tile The type of title
+     * @param owner the player that is the owner of the tile
+     * @param tile The type of title
      */
     public Gametile(Hive.Player owner, Hive.Tile tile) {
         this.owner = owner;
         this.tileName = tile;
+        this.played = false;
     }
 
     /**
@@ -22,6 +24,14 @@ public class Gametile {
      */
     public Hive.Player getOwner() {
         return owner;
+    }
+
+    public boolean isPlayed(){
+        return played;
+    }
+
+    public void setTileState(boolean status){
+        this.played = status;
     }
 
     /**

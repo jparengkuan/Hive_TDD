@@ -13,6 +13,7 @@ public class Deck {
 
     // Hashmap to keep track of the players titles
     private HashMap<Hive.Player, ArrayList<Hive.Tile>> decks;
+    public static final int DECK_SIZE = 11;
 
 
     /**
@@ -61,8 +62,19 @@ public class Deck {
      * @param player The player whose deck is being returned
      * @return the deck from the player.
      */
-    private ArrayList<Hive.Tile> getDeck(Player player){
+    public ArrayList<Hive.Tile> getDeck(Player player){
         return decks.get(player);
+    }
+
+    public Hive.Tile getTilefromDeck(Hive.Tile tile, Hive.Player player){
+        ArrayList<Hive.Tile> deck = decks.get(player);
+        for(Hive.Tile playerTile : deck){
+            if(playerTile.equals(tile)){
+                deck.remove(tile);
+                return tile;
+            }
+        }
+        return tile;
     }
 
     /**
