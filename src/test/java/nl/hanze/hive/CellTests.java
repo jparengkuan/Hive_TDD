@@ -184,4 +184,15 @@ public class CellTests {
         // (assert) When WHITE has played QUEEN_BEE and tries to move a tile, do NOT throw IllegalMove.
         assertDoesNotThrow(() -> main.move(0, 0, 1, 0));
     }
+
+    // (5c)
+    @Test
+    void whenTileMovedThenTileInContactWithAtLeastOneOtherTile() throws Hive.IllegalMove {
+        Main main = new Main();
+        main.play(QUEEN_BEE, 1, 3);
+        main.play(GRASSHOPPER, 2, 5);
+        main.play(SOLDIER_ANT, 1, 4);
+        main.play(SPIDER, 2, 6);
+        assertThrows(Hive.IllegalMove.class, () -> main.move(1, 4, 7, -29));
+    }
 }
