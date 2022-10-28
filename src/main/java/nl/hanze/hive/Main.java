@@ -158,7 +158,7 @@ public class Main implements Hive {
         }
         else{
             // Deze klopt niet lees 4d! nog even goed (Alleen tijdens het spelen niet moven)
-            throw new IllegalMove("the tile must be played next to another of the player's tiles.");
+            //throw new IllegalMove("the tile must be played next to another of the player's tiles.");
         }
     }
 

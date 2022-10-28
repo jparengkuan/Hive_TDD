@@ -212,6 +212,6 @@ public class CellTests {
         //white
         main.move(-2, 0,-3,0);
 
-        assertThrows(Hive.IllegalMove.class, () -> main.move(-2, 0, -3, 0);
+        assertThrows(Hive.IllegalMove.class, () -> main.move(-2, 0, -3, 0));
     }
 }
