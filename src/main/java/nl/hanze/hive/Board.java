@@ -139,9 +139,23 @@ public class Board {
      * @param Cell cell The target cell
      * @return Boolean true or false
      */
-    public boolean checkIfChainWillBeBroken() {
+    public boolean checkIfChainWillBeBroken(ArrayList<Cell> cellsArray) {
 
+        // Zet backup terug
+        this.setCells(cellsArray);
         return true;
     }
+
+    /**
+     * Setter to set all the cells
+     *
+     * @param ArrayList<Cell> cell The target cell
+     * @return Boolean true or false
+     */
+    private void setCells(ArrayList<Cell> cellsArray)
+    {
+        this.cells = cellsArray;
+    }
+
 
 }

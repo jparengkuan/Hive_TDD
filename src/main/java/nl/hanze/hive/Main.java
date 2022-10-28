@@ -113,6 +113,9 @@ public class Main implements Hive {
         Cell moveFromCell = board.getCell(fromQ, fromR);
         Player player = getTurn();
 
+        // Maak een backup van de state van het board om deze later terug te kunnen zetten
+        ArrayList<Cell> backupCellArrayList = (ArrayList<Cell>) board.getCells().clone();
+
         // If cell does not exist or is empty
         if(moveFromCell == null || moveFromCell.isEmpty()){
             throw new IllegalMove("tried to move from this cell, but cell doesn't exist");
@@ -163,7 +166,7 @@ public class Main implements Hive {
 
         // Test if the chain will be broken after a certain move
 
-        if (board.checkIfChainWillBeBroken()){
+        if (board.checkIfChainWillBeBroken(backupCellArrayList)){
             throw new Hive.IllegalMove("Can't move the tile chain will be broken");
         }
     }

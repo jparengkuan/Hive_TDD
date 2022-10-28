@@ -212,4 +212,19 @@ public class CellTests {
 
         assertThrows(Hive.IllegalMove.class, () -> main.move(-2, 0, -3, 0));
     }
+
+    @Test
+    void whenPlayerMakesAMoveCountTotalTileChains() throws Hive.IllegalMove  {
+        Main main = new Main();
+        //white
+        main.play(QUEEN_BEE, -2,0);
+        //black
+        main.play(QUEEN_BEE, +1,0);
+        //white
+        main.play(GRASSHOPPER, -1,0);
+        //black
+        main.play(GRASSHOPPER, +2,0);
+
+        assertEquals(main.getBoard().CountTotalTileChains(), 2);
+    }
 }
