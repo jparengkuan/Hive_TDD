@@ -225,6 +225,8 @@ public class CellTests {
         //black
         main.play(GRASSHOPPER, +2,0);
 
+        main.move(-2, 0, -3, 0);
+
         assertEquals(main.getBoard().CountTotalTileChains(), 2);
     }
 }
