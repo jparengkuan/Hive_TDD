@@ -1,5 +1,6 @@
 package nl.hanze.hive;
 
+import com.sun.source.tree.NewArrayTree;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -194,5 +195,23 @@ public class CellTests {
         main.play(SOLDIER_ANT, 1, 4);
         main.play(SPIDER, 2, 6);
         assertThrows(Hive.IllegalMove.class, () -> main.move(1, 4, 7, -29));
+    }
+
+    // (5d)
+    @Test
+    void whenTitleIsMovedAndChainIsBrokenThrowIlligalMoveException() throws Hive.IllegalMove {
+        Main main = new Main();
+        //white
+        main.play(QUEEN_BEE, -2,0);
+        //black
+        main.play(QUEEN_BEE, +1,0);
+        //white
+        main.play(GRASSHOPPER, -1,0);
+        //black
+        main.play(GRASSHOPPER, +2,0);
+        //white
+        main.move(-2, 0,-3,0);
+
+        assertThrows(Hive.IllegalMove.class, () -> main.move(-2, 0, -3, 0);
     }
 }
