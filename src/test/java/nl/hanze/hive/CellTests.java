@@ -1,6 +1,5 @@
 package nl.hanze.hive;
 
-import com.sun.source.tree.NewArrayTree;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -210,6 +209,8 @@ public class CellTests {
         //black
         main.play(GRASSHOPPER, +2,0);
 
+        main.move(-2, 0, -3, 0);
+
         assertThrows(Hive.IllegalMove.class, () -> main.move(-2, 0, -3, 0));
     }
 
@@ -228,6 +229,6 @@ public class CellTests {
         // Werkelijk aantal chains
         int actualNumberOfChains = 2;
 
-        assertEquals(main.getBoard().CountTotalTileChains(), actualNumberOfChains);
+        assertEquals(main.getBoard().countTotalTileChains(), actualNumberOfChains);
     }
 }

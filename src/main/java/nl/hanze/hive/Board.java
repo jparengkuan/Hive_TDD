@@ -1,11 +1,6 @@
 package nl.hanze.hive;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Stack;
-
-import nl.hanze.hive.Hive.Tile;
 
 public class Board {
 
@@ -172,14 +167,24 @@ public class Board {
     /**
      * Check if the chain will be broken if a player makes a certain move
      *
-     * @param Cell cell The target cell
+     * @param ArrayList<Cell> cellsArray for backup purposes
+     * @param int amountOfChainsBeforeMove
      * @return Boolean true or false
      */
-    public boolean checkIfChainWillBeBroken(ArrayList<Cell> cellsArray) {
+    public boolean checkIfChainWillBeBroken(ArrayList<Cell> cellsArray, int amountOfChainsBeforeMove) {
 
-        // Zet backup terug
-        this.setCells(cellsArray);
-        return true;
+        // Aantal chains op het bord voordat een player een move doet
+        int amountOfChainsAfterMove = countTotalTileChains();
+
+        // Check of er een chain is gebroken
+        if (amountOfChainsAfterMove > amountOfChainsBeforeMove)
+        {
+            // Zet backup terug
+            this.setCells(cellsArray);
+
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -187,7 +192,7 @@ public class Board {
      *
      * @return int number of chains
      */
-    public int CountTotalTileChains() {
+    public int countTotalTileChains() {
 
         // Bijhouden hoeveel chains er zijn
         int tileChainCounter = 0;
@@ -201,14 +206,14 @@ public class Board {
             // We zijn alleen geeintreseerd in de cellen met tiles en de cellen die we nog niet hebben gehad
             if (!cell.isEmpty() && !cellVisistedList.contains(cell)) {
 
-                // Increment de tileChainCounter
-                tileChainCounter += 1;
-
                 // Haal de buren van de cell op
                 ArrayList<Cell> neighboursCellsWithTiles = GetNeighboursFromCellWithTiles(cell);
 
                 // Check of de cell buren heeft
                 if (neighboursCellsWithTiles.size() > 0) {
+
+                    // Increment de tileChainCounter
+                    tileChainCounter += 1;
 
                     // Loop door alle buren van de cell heen
                     for (Cell neighbourCell : neighboursCellsWithTiles) {
