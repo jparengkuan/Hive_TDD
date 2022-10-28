@@ -228,6 +228,6 @@ public class CellTests {
         // Werkelijk aantal chains
         int actualNumberOfChains = 2;
 
-        assertEquals(main.getBoard().CountTotalTileChains(), 2);
+        assertEquals(main.getBoard().CountTotalTileChains(), actualNumberOfChains);
     }
 }
