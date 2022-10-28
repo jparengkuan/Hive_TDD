@@ -209,8 +209,6 @@ public class CellTests {
         main.play(GRASSHOPPER, -1,0);
         //black
         main.play(GRASSHOPPER, +2,0);
-        //white
-        main.move(-2, 0,-3,0);
 
         assertThrows(Hive.IllegalMove.class, () -> main.move(-2, 0, -3, 0));
     }

@@ -132,4 +132,16 @@ public class Board {
         return neighboursWithNoTiles;
 
     }
+
+    /**
+     * Check if the chain will be broken if a player makes a certain move
+     *
+     * @param Cell cell The target cell
+     * @return Boolean true or false
+     */
+    public boolean checkIfChainWillBeBroken() {
+
+        return true;
+    }
+
 }

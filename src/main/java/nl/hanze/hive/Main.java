@@ -160,6 +160,12 @@ public class Main implements Hive {
             // Deze klopt niet lees 4d! nog even goed (Alleen tijdens het spelen niet moven)
             //throw new IllegalMove("the tile must be played next to another of the player's tiles.");
         }
+
+        // Test if the chain will be broken after a certain move
+
+        if (board.checkIfChainWillBeBroken()){
+            throw new Hive.IllegalMove("Can't move the tile chain will be broken");
+        }
     }
 
     /**
