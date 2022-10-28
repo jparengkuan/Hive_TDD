@@ -225,7 +225,8 @@ public class CellTests {
         //black
         main.play(GRASSHOPPER, +2,0);
 
-        int test = main.getBoard().CountTotalTileChains();
+        // Werkelijk aantal chains
+        int actualNumberOfChains = 2;
 
         assertEquals(main.getBoard().CountTotalTileChains(), 2);
     }
