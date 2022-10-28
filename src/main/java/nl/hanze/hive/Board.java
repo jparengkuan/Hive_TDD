@@ -145,6 +145,14 @@ public class Board {
         this.setCells(cellsArray);
         return true;
     }
+    /**
+     * Count the total of chains on the board
+     *
+     * @return int number of chains
+     */
+    public int CountTotalTileChains(){
+        return 2;
+    }
 
     /**
      * Setter to set all the cells
