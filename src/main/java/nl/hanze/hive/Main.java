@@ -41,7 +41,11 @@ public class Main implements Hive {
 
         //TODO De gametile moet nog uit de playersdeck klasse komen
         // Create a gametile object with the player and tile information
-        Gametile gametile = new Gametile(player, decks.getTilefromDeck(tile, player));
+        Tile tileFromDeck = decks.getTilefromDeck(tile, player);
+        Gametile gametile = new Gametile(player, tileFromDeck);
+        if(tileFromDeck == null){
+            throw new IllegalMove("Player has already played the tile.");
+        }
 
         // Als de cell nog niet bestaat maak dan een nieuwe aan
         if(!board.cellExists(q, r)){
@@ -157,7 +161,7 @@ public class Main implements Hive {
             setTurn();
         }
         else{
-            throw new IllegalMove("the tile must be played next to another of the player's tiles.");
+            throw new IllegalMove("the tile must be moved to a cell next to another of the player's tiles.");
         }
     }
 

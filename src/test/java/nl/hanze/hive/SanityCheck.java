@@ -152,8 +152,8 @@ public class SanityCheck {
         // Maak een nieuw spel aan
         Main main = new Main();
 
-        // Player white speelt spider naar pos 0,0
-        main.play(SPIDER, 0, 0);
+        // Player white speelt queen bee naar pos 0,0
+        main.play(QUEEN_BEE, 0, 0);
 
         // Player black speelt grashopper naar 1,1
         main.play(GRASSHOPPER, 1, 1);

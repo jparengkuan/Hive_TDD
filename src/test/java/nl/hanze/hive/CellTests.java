@@ -9,6 +9,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CellTests {
 
+    // (4a)
+    @Test
+    void playerCanOnlyPlayOwnUnplayedTiles() throws Hive.IllegalMove {
+        Main main = new Main();
+
+        //white
+        main.play(QUEEN_BEE, 2, 1);
+
+        //black
+        main.play(GRASSHOPPER, 3, 5);
+
+        assertThrows(Hive.IllegalMove.class, () -> main.play(QUEEN_BEE, 2, 3));
+
+    }
+
     // (4b)
     @Test
     public void checkIfCellHasNoTiles() {
@@ -135,6 +150,7 @@ public class CellTests {
     // (4d)
     @Test
     void givenNonEmptyBoardWhenPlayerTilePlayedNextToOpponentTileThenIllegalMove() throws Hive.IllegalMove {
+        //TODO refactor
         Main main = new Main();
         main.play(GRASSHOPPER, 0, 0);
         // (assert) When BLACK tries to place tile next to WHITE's tile, throw IllegalMove. (needs refactor)

@@ -74,7 +74,7 @@ public class Deck {
                 return tile;
             }
         }
-        return tile;
+        return null;
     }
 
     /**
