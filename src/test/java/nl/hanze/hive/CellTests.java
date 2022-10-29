@@ -211,4 +211,40 @@ public class CellTests {
         main.play(SPIDER, 2, 6);
         assertThrows(Hive.IllegalMove.class, () -> main.move(1, 4, 7, -29));
     }
+
+    // (5d)
+    @Test
+    void whenTitleIsMovedAndChainIsBrokenThrowIlligalMoveException() throws Hive.IllegalMove {
+        Main main = new Main();
+        //white
+        main.play(QUEEN_BEE, -2,0);
+        //black
+        main.play(QUEEN_BEE, +1,0);
+        //white
+        main.play(GRASSHOPPER, -1,0);
+        //black
+        main.play(GRASSHOPPER, +2,0);
+
+        main.move(-2, 0, -3, 0);
+
+        assertThrows(Hive.IllegalMove.class, () -> main.move(-2, 0, -3, 0));
+    }
+
+    @Test
+    void countTheTotalOfTileChains() throws Hive.IllegalMove  {
+        Main main = new Main();
+        //white
+        main.play(QUEEN_BEE, -2,0);
+        //black
+        main.play(QUEEN_BEE, +1,0);
+        //white
+        main.play(GRASSHOPPER, -1,0);
+        //black
+        main.play(GRASSHOPPER, +2,0);
+
+        // Werkelijk aantal chains
+        int actualNumberOfChains = 2;
+
+        assertEquals(main.getBoard().countTotalTileChains(), actualNumberOfChains);
+    }
 }
