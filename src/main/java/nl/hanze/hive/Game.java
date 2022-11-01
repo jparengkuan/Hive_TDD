@@ -5,7 +5,7 @@ import java.util.*;
 import static nl.hanze.hive.Hive.Player.BLACK;
 import static nl.hanze.hive.Hive.Player.WHITE;
 
-public class Main implements Hive {
+public class Game implements Hive {
 
     private Deck decks;
     private Board board;
@@ -20,7 +20,7 @@ public class Main implements Hive {
 
     // Default constructor, used to set decks of both players.
     // Decks will be saved in a HashMap: key = player; value = deck.
-    public Main() {
+    public Game() {
         this.board = new Board();
         this.decks = new Deck();
         this.turn = WHITE;

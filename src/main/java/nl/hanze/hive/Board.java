@@ -72,7 +72,7 @@ public class Board {
         // Maak arraylist aan hier slaan we alle neighbours in op
         ArrayList<Cell> neighbours = new ArrayList<>();
 
-        int[][] directions = new int[][]{Main.NORTH_WEST, Main.WEST, Main.NORTH_EAST, Main.SOUTH_WEST, Main.SOUTH_EAST, Main.EAST};
+        int[][] directions = new int[][]{Game.NORTH_WEST, Game.WEST, Game.NORTH_EAST, Game.SOUTH_WEST, Game.SOUTH_EAST, Game.EAST};
 
         // Loop door elke alle zes aangrenzende velden
         for (int[] direction : directions) {
@@ -203,7 +203,7 @@ public class Board {
         // Loop door elke cell in het bord
         for (Cell cell : this.cells) {
 
-            // We zijn alleen geeintreseerd in de cellen met tiles en de cellen die we nog niet hebben gehad
+            // We zijn alleen geïnteresseerd in de cellen met tiles en de cellen die we nog niet hebben gehad
             if (!cell.isEmpty() && !cellVisistedList.contains(cell)) {
 
                 // Haal de buren van de cell op

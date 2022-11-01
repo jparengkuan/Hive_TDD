@@ -74,18 +74,18 @@ public class SanityCheck {
     void whenStartOfGameCheckDeckForPlayerWhite(){
 
         //Arrange maak een nieuwe deck aan voor player white
-        Main main = new Main();
+        Game game = new Game();
 
         // Act de methode aan roepen die moet worden getest
         // ! Deck moet een nieuwe klasse worden met een getter
         // Doen we morgen tijdens de refactor
 
         // Assert controleren van de uitvoer
-        assertEquals(1, main.countTiles(QUEEN_BEE, WHITE));
-        assertEquals(2, main.countTiles(SPIDER, WHITE));
-        assertEquals(2, main.countTiles(BEETLE, WHITE));
-        assertEquals(3, main.countTiles(SOLDIER_ANT, WHITE));
-        assertEquals(3, main.countTiles(GRASSHOPPER, WHITE));
+        assertEquals(1, game.countTiles(QUEEN_BEE, WHITE));
+        assertEquals(2, game.countTiles(SPIDER, WHITE));
+        assertEquals(2, game.countTiles(BEETLE, WHITE));
+        assertEquals(3, game.countTiles(SOLDIER_ANT, WHITE));
+        assertEquals(3, game.countTiles(GRASSHOPPER, WHITE));
     }
 
     // (2a) Test if the cells on the board have (q,r) coordinates
@@ -103,7 +103,7 @@ public class SanityCheck {
     @Test
     void testAdjacentCells(){
         Board board = new Board();
-        int[][] directions = new int[][] {Main.NORTH_WEST, Main.WEST, Main.NORTH_EAST, Main.SOUTH_WEST, Main.SOUTH_EAST, Main.EAST};
+        int[][] directions = new int[][] {Game.NORTH_WEST, Game.WEST, Game.NORTH_EAST, Game.SOUTH_WEST, Game.SOUTH_EAST, Game.EAST};
         board.addCell(0, 0);
         board.addCell(1,0);
         board.addCell(0,1);
@@ -126,9 +126,9 @@ public class SanityCheck {
     // (2e) Test if tiles can be played
     @Test
     void whenTilePlayed() throws Hive.IllegalMove {
-        Main main = new Main();
-        main.play(BEETLE, 0, 0);
-        Gametile tilePlayed = main.getBoard().getCell(0,0).getTiles().peek();
+        Game game = new Game();
+        game.play(BEETLE, 0, 0);
+        Gametile tilePlayed = game.getBoard().getCell(0,0).getTiles().peek();
         assertEquals(BEETLE, tilePlayed.getTileName());
 
     }
@@ -138,11 +138,11 @@ public class SanityCheck {
     // (2e) Test if tiles can be moved
     @Test
     void whenTileMoved() throws Hive.IllegalMove {
-        Main main = new Main();
-        main.play(BEETLE, 0, 0);
+        Game game = new Game();
+        game.play(BEETLE, 0, 0);
       //  main.move(0, 0, 1, 0);
       //  assertEquals(BEETLE, main.getBoard().getCell(1, 0).getTiles().peek().getTileName());
-        assertThrows(Hive.IllegalMove.class, () -> main.move(6, -4, 5, 3));
+        assertThrows(Hive.IllegalMove.class, () -> game.move(6, -4, 5, 3));
     }
 
     // (2f) Test if tiles can be on top of each other
@@ -150,50 +150,50 @@ public class SanityCheck {
     void whenTileOnTopOfAnotherTile() throws Hive.IllegalMove {
 
         // Maak een nieuw spel aan
-        Main main = new Main();
+        Game game = new Game();
 
         // Player white speelt queen bee naar pos 0,0
-        main.play(QUEEN_BEE, 0, 0);
+        game.play(QUEEN_BEE, 0, 0);
 
         // Player black speelt grashopper naar 1,1
-        main.play(GRASSHOPPER, 1, 1);
+        game.play(GRASSHOPPER, 1, 1);
 
         // Player white verplaasts zijn spider bovenop de grashopper van player black
-        main.move(0,0,1,1);
+        game.move(0,0,1,1);
 
         // Check of er nu twee stenen staan op pos 1,1
-        assertEquals(2, main.getBoard().getCell(1,1).getTiles().size());
+        assertEquals(2, game.getBoard().getCell(1,1).getTiles().size());
     }
 
     // (3a) Test to make sure white has the first turn
     @Test
     void whenGameStartThenWhiteHasFirstTurn(){
-        Main main = new Main();
-        assertEquals(WHITE, main.getTurn());
+        Game game = new Game();
+        assertEquals(WHITE, game.getTurn());
     }
 
     // (3b) Test to make sure turn changes after player plays tile
     @Test
     void whenPlayerDoesPlayThenOtherPlayerHasTurn() throws Hive.IllegalMove {
-        Main main = new Main();
-        main.play(GRASSHOPPER, 0, 0);
-        assertEquals(BLACK, main.getTurn());
+        Game game = new Game();
+        game.play(GRASSHOPPER, 0, 0);
+        assertEquals(BLACK, game.getTurn());
     }
 
     // (3b) Test to make sure turn changes after player moves tile
     @Test
     void whenPlayerDoesMoveThenOtherPlayerHasTurn() throws Hive.IllegalMove {
-        Main main = new Main();
-        main.play(BEETLE, 0, 0);
-        assertEquals(BLACK, main.getTurn());
+        Game game = new Game();
+        game.play(BEETLE, 0, 0);
+        assertEquals(BLACK, game.getTurn());
     }
 
     // (3c) Test to make sure queen bee is surrounded.
    @Test
     void givenQueenBeeWhenSurroundedByTilesThenOpponentWins() throws Hive.IllegalMove {
-        Main main = new Main();
-        Board board = main.getBoard();
-        main.play(QUEEN_BEE, 0, 0);
+        Game game = new Game();
+        Board board = game.getBoard();
+        game.play(QUEEN_BEE, 0, 0);
         board.addCell(0, -1);
         board.getCell(0, -1).getTiles().add(new Gametile(BLACK, SPIDER));
         board.addCell(0, 1);
@@ -206,15 +206,15 @@ public class SanityCheck {
         board.getCell(-1, 1).getTiles().add(new Gametile(BLACK, SOLDIER_ANT));
         board.addCell(1, -1);
         board.getCell(1, -1).getTiles().add(new Gametile(BLACK, GRASSHOPPER));
-        assertTrue(main.isWinner(BLACK));
+        assertTrue(game.isWinner(BLACK));
     }
 
     // (3d) Test to make sure it's a draw if both players win at the same time.
     @Test
     void givenPlayersWhenBothQueenBeesSurroundedAtSameTimeThenDraw() throws Hive.IllegalMove {
         // Arrange
-        Main main = new Main();
-        Board board = main.getBoard();
+        Game game = new Game();
+        Board board = game.getBoard();
         // Act
         board.addCell(1,-1);
         board.getCell(1,-1).getTiles().add(new Gametile(WHITE, QUEEN_BEE));
@@ -243,6 +243,6 @@ public class SanityCheck {
         board.addCell(0,0);
         board.getCell(0,0).getTiles().add(new Gametile(BLACK, SPIDER));
         // Assert
-        assertTrue(main.isDraw());
+        assertTrue(game.isDraw());
     }
 }
