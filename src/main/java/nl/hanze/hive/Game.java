@@ -65,14 +65,14 @@ public class Game implements Hive {
                 Cell actualNeighbor = board.getCell(neighbor.q, neighbor.r);
                 if (actualNeighbor != null) {
                     if (!actualNeighbor.isEmpty()) {
-                        if (actualNeighbor.getTiles().peek().getOwner() != player) {
+                        if (actualNeighbor.getTiles().peek().getOwner() != player && board.hasTilesFromBothPlayers()) {
                             throw new IllegalMove("player cannot play tile next to opponent tile");
                         }
                         hasAdjacentTiles = true;
                     }
                 }
             }
-            if (decks.getDeck(player).size() < Deck.DECK_SIZE - 3 && decks.countTiles(Tile.QUEEN_BEE, player) > 0) {
+            if (decks.getDeck(player).size() <= Deck.DECK_SIZE - 3 && decks.countTiles(Tile.QUEEN_BEE, player) > 0) {
                 throw new IllegalMove("after 3 tiles player must play queen bee");
             }
             if (board.getCells().size() <= 2 || hasAdjacentTiles) {

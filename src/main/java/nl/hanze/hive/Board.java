@@ -39,6 +39,12 @@ public class Board {
         return null;
     }
 
+    /**
+     * Check if cell exists on the board.
+     * @param q the q coordinate.
+     * @param r the r coordinate.
+     * @return true if cell exists, false if cell does not exist.
+     */
     public boolean cellExists(int q, int r) {
         for (Cell cell : cells) {
             if (cell.q == q && cell.r == r) {
@@ -185,6 +191,27 @@ public class Board {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Check if board has tiles from both players.
+     * @return true if the board has tiles from both players, false if board has tiles from one or no players.
+     */
+    public boolean hasTilesFromBothPlayers(){
+        int black_count = 0;
+        int white_count = 0;
+        for(Cell cell : cells){
+            for(Gametile tile : cell.getTiles()){
+                if(tile.getOwner() == Hive.Player.BLACK){
+                    black_count++;
+                }
+                if(tile.getOwner() == Hive.Player.WHITE){
+                    white_count++;
+                }
+            }
+        }
+
+        return black_count > 0 && white_count > 0;
     }
 
     /**
