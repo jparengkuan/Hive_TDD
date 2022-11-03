@@ -70,11 +70,15 @@ public class Deck {
         ArrayList<Hive.Tile> deck = decks.get(player);
         for(Hive.Tile playerTile : deck){
             if(playerTile.equals(tile)){
-                deck.remove(tile);
                 return tile;
             }
         }
         return null;
+    }
+
+    public void removeTile(Hive.Tile tile, Hive.Player player){
+        ArrayList<Hive.Tile> deck = decks.get(player);
+        deck.remove(tile);
     }
 
     /**

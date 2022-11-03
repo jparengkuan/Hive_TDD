@@ -156,13 +156,16 @@ public class SanityCheck {
         game.play(QUEEN_BEE, 0, 0);
 
         // Player black speelt grashopper naar 1,1
-        game.play(GRASSHOPPER, 1, 1);
+        game.play(QUEEN_BEE, 1, 1);
 
-        // Player white verplaasts zijn spider bovenop de grashopper van player black
-        game.move(0,0,1,1);
+        // Player white speelt soldier ant naar -1,1
+        game.play(SOLDIER_ANT, -1, 1);
+
+        // Player black verplaasts zijn grasshopper bovenop de soldier ant van player white
+        game.move(1,1,-1,1);
 
         // Check of er nu twee stenen staan op pos 1,1
-        assertEquals(2, game.getBoard().getCell(1,1).getTiles().size());
+        assertEquals(2, game.getBoard().getCell(-1,1).getTiles().size());
     }
 
     // (3a) Test to make sure white has the first turn

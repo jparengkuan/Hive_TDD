@@ -177,7 +177,7 @@ public class Board {
         int amountOfChainsAfterMove = countTotalTileChains();
 
         // Check of er een chain is gebroken
-        if (amountOfChainsAfterMove > amountOfChainsBeforeMove)
+        if (amountOfChainsAfterMove < amountOfChainsBeforeMove)
         {
             // Zet backup terug
             this.setCells(cellsArray);

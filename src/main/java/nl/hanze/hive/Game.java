@@ -77,6 +77,7 @@ public class Game implements Hive {
             }
             if (board.getCells().size() <= 2 || hasAdjacentTiles) {
                 cell.getTiles().add(gametile);
+                decks.removeTile(tile, player);
                 setTurn();
             } else {
                 throw new IllegalMove("cell must be played next to another tile");
@@ -152,9 +153,6 @@ public class Game implements Hive {
             Cell actualNeighbor = board.getCell(neighbor.q, neighbor.r);
             if (actualNeighbor != null) {
                 if (!actualNeighbor.isEmpty()) {
-                    if (actualNeighbor.getTiles().peek().getOwner() != player) {
-                        throw new Hive.IllegalMove("can't move tile next to opponent");
-                    }
                     hasAdjacentCells = true;
                 }
             }
@@ -167,7 +165,7 @@ public class Game implements Hive {
             setTurn();
         } else {
             // Deze klopt niet lees 4d! nog even goed (Alleen tijdens het spelen niet moven)
-            //throw new IllegalMove("the tile must be played next to another of the player's tiles.");
+            throw new IllegalMove("the tile must be moved next to another of the player's tiles.");
         }
 
         // Test if the chain will be broken after a certain move

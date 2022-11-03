@@ -101,27 +101,28 @@ public class CellTests {
         Game game = new Game();
 
         // Speel de grashopper tile van player white naar pos 0,0
-        game.play(GRASSHOPPER, 0, 0);
+        game.play(GRASSHOPPER, -2, 0);
 
         // Speel de queen bee tile van player black naar pos 1,0 (NORTH_WEST) TOV grashopper
-        game.play(QUEEN_BEE, 0, -1);
+        game.play(QUEEN_BEE, 1, 0);
+        game.play(GRASSHOPPER, -3, 0);
 
         // Maak een nieuwe arraylist aan met aangrenzende velden (neighbours) met geen tiles
         ArrayList<Cell> actualNeighboursWithNoTiles = new ArrayList<Cell>();
 
         // Haal de cell op met pos 0,0 van de grashopper
-        Cell cell = game.getBoard().getCell(0,0);
+        Cell cell = game.getBoard().getCell(1,0);
 
         // WEST
-        actualNeighboursWithNoTiles.add(new Cell(-1, 0));
+        actualNeighboursWithNoTiles.add(new Cell(0, 0));
         // NORTH_EAST
-        actualNeighboursWithNoTiles.add(new Cell(+1, -1));
+        actualNeighboursWithNoTiles.add(new Cell(2, -1));
         // SOUTH_WEST
-        actualNeighboursWithNoTiles.add(new Cell(-1, +1));
-        // SOUTH_EAST
         actualNeighboursWithNoTiles.add(new Cell(0, +1));
+        // SOUTH_EAST
+        actualNeighboursWithNoTiles.add(new Cell(1, +1));
         // EAST
-        actualNeighboursWithNoTiles.add(new Cell(+1, -0));
+        actualNeighboursWithNoTiles.add(new Cell(+2, -0));
 
         // We halen de arrayList op met alle neighbours zonder tiles
         ArrayList<Cell> neighboursWithNoTiles = game.getBoard().GetNeighboursFromCellWithNoTiles(cell);
@@ -198,7 +199,7 @@ public class CellTests {
         game.play(QUEEN_BEE, 0, 0);
         game.play(GRASSHOPPER, 2, 4);
         // (assert) When WHITE has played QUEEN_BEE and tries to move a tile, do NOT throw IllegalMove.
-        assertDoesNotThrow(() -> game.move(0, 0, 1, 0));
+        assertDoesNotThrow(() -> game.move(0, 0, 2, 3));
     }
 
     // (5c)
@@ -224,8 +225,6 @@ public class CellTests {
         game.play(GRASSHOPPER, -1,0);
         //black
         game.play(GRASSHOPPER, +2,0);
-
-        game.move(-2, 0, -3, 0);
 
         assertThrows(Hive.IllegalMove.class, () -> game.move(-2, 0, -3, 0));
     }
