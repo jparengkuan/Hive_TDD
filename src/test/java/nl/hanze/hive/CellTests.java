@@ -3,6 +3,7 @@ package nl.hanze.hive;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static nl.hanze.hive.Hive.Tile.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -253,6 +254,29 @@ public class CellTests {
 
     @Test
     void GetNeighboursHashMapWithTiles() throws Hive.IllegalMove  {
+
+        Game game = new Game();
+
+        //white
+        game.play(QUEEN_BEE, +1,0);
+        //black
+        game.play(QUEEN_BEE, +1,-1);
+        //white
+        game.play(GRASSHOPPER, +2,-0);
+        //black
+        game.play(GRASSHOPPER, 0,-1);
+        //white
+        game.play(GRASSHOPPER, +3,-0);
+        //black
+        game.play(GRASSHOPPER, -1,0);
+        //white
+        game.play(GRASSHOPPER, +2,+1);
+        //black
+        game.play(GRASSHOPPER, -1,+1);
+
+        // We halen de hashmap op van neighbours with tiles
+        HashMap<String, Cell> neighboursWithTilesHashmap = game.getBoard().GetNeighboursHashMapWithTiles(new Cell(-1, +1));
+
 
     }
 }
