@@ -250,4 +250,9 @@ public class CellTests {
 
         assertEquals(game.getBoard().countTotalTileChains(), actualNumberOfChains);
     }
+
+    @Test
+    void GetNeighboursHashMapWithTiles() throws Hive.IllegalMove  {
+
+    }
 }
