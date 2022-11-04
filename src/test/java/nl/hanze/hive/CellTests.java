@@ -100,41 +100,43 @@ public class CellTests {
         // Maak een nieuw spel aan
         Game game = new Game();
 
-        // Speel de grashopper tile van player white naar pos 0,0
-        game.play(GRASSHOPPER, -2, 0);
-
-        // Speel de queen bee tile van player black naar pos 1,0 (NORTH_WEST) TOV grashopper
-        game.play(QUEEN_BEE, 1, 0);
+        // Speel de grashopper tile van player white naar pos -3,0
         game.play(GRASSHOPPER, -3, 0);
+
+        // Speel de queen bee tile van player black naar pos 1,0
+        game.play(QUEEN_BEE, 1, 0);
 
         // Maak een nieuwe arraylist aan met aangrenzende velden (neighbours) met geen tiles
         ArrayList<Cell> actualNeighboursWithNoTiles = new ArrayList<Cell>();
 
-        // Haal de cell op met pos 0,0 van de grashopper
-        Cell cell = game.getBoard().getCell(1,0);
+        // Haal de cell op met -3,0
+        Cell cell = game.getBoard().getCell(-3,0);
 
-        // WEST
-        actualNeighboursWithNoTiles.add(new Cell(0, 0));
-        // NORTH_EAST
-        actualNeighboursWithNoTiles.add(new Cell(2, -1));
-        // SOUTH_WEST
-        actualNeighboursWithNoTiles.add(new Cell(0, +1));
         // SOUTH_EAST
-        actualNeighboursWithNoTiles.add(new Cell(1, +1));
+        actualNeighboursWithNoTiles.add(new Cell(-3, -1));
+        // WEST
+        actualNeighboursWithNoTiles.add(new Cell(-4, 0));
+        // NORTH_EAST
+        actualNeighboursWithNoTiles.add(new Cell(-2, -1));
+        // SOUTH_EAST
+        actualNeighboursWithNoTiles.add(new Cell(-4, +1));
+        // SOUTH_WEST
+        actualNeighboursWithNoTiles.add(new Cell(-3, 1));
         // EAST
-        actualNeighboursWithNoTiles.add(new Cell(+2, -0));
+        actualNeighboursWithNoTiles.add(new Cell(-2, 0));
 
         // We halen de arrayList op met alle neighbours zonder tiles
         ArrayList<Cell> neighboursWithNoTiles = game.getBoard().GetNeighboursFromCellWithNoTiles(cell);
 
         // Assert we vergelijking hiermee de hardcoded waarden van de array actualNeighboursWithNoTiles
         // En de waarden van de array die de functie ons teruggeeft, deze moeten gelijk zijn
-
+        System.out.println(1);
         assertEquals(actualNeighboursWithNoTiles.get(0), neighboursWithNoTiles.get(0));
         assertEquals(actualNeighboursWithNoTiles.get(1), neighboursWithNoTiles.get(1));
         assertEquals(actualNeighboursWithNoTiles.get(2), neighboursWithNoTiles.get(2));
         assertEquals(actualNeighboursWithNoTiles.get(3), neighboursWithNoTiles.get(3));
         assertEquals(actualNeighboursWithNoTiles.get(4), neighboursWithNoTiles.get(4));
+        assertEquals(actualNeighboursWithNoTiles.get(5), neighboursWithNoTiles.get(5));
 
     }
 
