@@ -174,27 +174,30 @@ public class Game implements Hive {
     }
 
     public void pushTile(Cell moveFrom, Cell moveTo) throws IllegalMove {
-        Gametile tile = moveFrom.getTiles().pop();
         boolean destFound = false;
         Cell current = moveFrom;
         ArrayList<Cell> visited = new ArrayList<>();
         while(!destFound){
+            Gametile tile = board.getCell(current.q, current.r).getTiles().pop();
             ArrayList<Cell> neighbors = board.GetNeighboursFromCell(current);
+            HashMap<Cell, Double> cell_distances = new HashMap<>();
             for(Cell cell : neighbors){
-                if(!visited.contains(board.getCell(cell.q, cell.r)) && !board.GetNeighboursFromCell(cell).isEmpty()){
-                    cell.getTiles().add(tile);
-                    if(cell.equals(moveTo)){
-                        destFound = true;
-                        current = cell;
-                    }
-                    else{
-                        visited.add(current);
-                        current = cell;
-                    }
+                double distance = Math.sqrt(Math.pow(moveTo.q - cell.q, 2) + Math.pow(moveTo.r - cell.r, 2));
+                if(!visited.contains(board.getCell(cell.q, cell.r))){
+                    cell_distances.put(cell, distance);
                 }
-                else{
-                    throw new IllegalMove("tile must stay in contact with another cell.");
+            }
+            double shortest = Collections.min(cell_distances.values());
+            for(Map.Entry<Cell, Double> entry : cell_distances.entrySet()){
+                if(entry.getValue() == shortest){
+                    visited.add(current);
+                    current = entry.getKey();
                 }
+            }
+            board.getCell(current.q, current.r).getTiles().add(tile);
+            current.getTiles().add(tile);
+            if(current.equals(moveTo)){
+                destFound = true;
             }
         }
     }
