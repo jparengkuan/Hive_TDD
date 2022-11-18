@@ -250,4 +250,30 @@ public class CellTests {
 
         assertEquals(game.getBoard().countTotalTileChains(), actualNumberOfChains);
     }
+
+    // (6a)
+    @Test
+    void whenTilePushedThenTrue() throws Hive.IllegalMove {
+        Game game = new Game();
+        Board board = game.getBoard();
+        board.addCell(1, 2);
+        game.play(BEETLE, 1, 1);
+        game.play(GRASSHOPPER, 0, 2);
+        Cell moveFromCell = game.getBoard().getCell(1, 1);
+        Cell moveToCell = game.getBoard().getCell(1,2);
+        game.pushTile(moveFromCell, moveToCell);
+        assertFalse(game.getBoard().getCell(1,2).isEmpty());
+    }
+
+    // (6b)
+    @Test
+    void whenLowestStackAtStartAndEndHigherThanHighestStackThenException() throws Hive.IllegalMove {
+
+    }
+
+    // (7a)
+    @Test
+    void whenBeetleIsMovedThenPushOnce() throws Hive.IllegalMove {
+
+    }
 }

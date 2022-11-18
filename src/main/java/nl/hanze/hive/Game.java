@@ -164,13 +164,60 @@ public class Game implements Hive {
             moveToCell.getTiles().push(toMove);
             setTurn();
         } else {
-            // Deze klopt niet lees 4d! nog even goed (Alleen tijdens het spelen niet moven)
-            throw new IllegalMove("the tile must be moved next to another of the player's tiles.");
+            throw new IllegalMove("the tile must be moved next to another tile.");
         }
 
         // Test if the chain will be broken after a certain move
         if (board.checkIfChainWillBeBroken(backupCellArrayList, amountOfChainsBeforeMove)) {
             throw new Hive.IllegalMove("Can't move the tile chain will be broken");
+        }
+    }
+
+    public void pushTile(Cell moveFrom, Cell moveTo) throws IllegalMove {
+        Gametile tile = moveFrom.getTiles().pop();
+        boolean destFound = false;
+        Cell current = moveFrom;
+        ArrayList<Cell> visited = new ArrayList<>();
+        while(!destFound){
+            ArrayList<Cell> neighbors = board.GetNeighboursFromCell(current);
+            for(Cell cell : neighbors){
+                if(!visited.contains(board.getCell(cell.q, cell.r)) && !board.GetNeighboursFromCell(cell).isEmpty()){
+                    cell.getTiles().add(tile);
+                    if(cell.equals(moveTo)){
+                        destFound = true;
+                        current = cell;
+                    }
+                    else{
+                        visited.add(current);
+                        current = cell;
+                    }
+                }
+                else{
+                    throw new IllegalMove("tile must stay in contact with another cell.");
+                }
+            }
+        }
+    }
+
+    public void moveTile(Cell moveFrom, Cell moveTo) throws IllegalMove {
+        ArrayList<Cell> neighborsOfMoveFromCell = board.GetNeighboursFromCell(moveFrom);
+        ArrayList<Cell> neighborsOfMoveToCell = board.GetNeighboursFromCell(moveTo);
+        ArrayList<Cell> newList = new ArrayList<>();
+        for(Cell cell : neighborsOfMoveFromCell){
+            if(neighborsOfMoveToCell.contains(cell)){
+                newList.add(cell);
+            }
+        }
+        ArrayList<Integer> sizes = new ArrayList<>();
+        for(Cell cell : newList){
+            sizes.add(cell.getTiles().size());
+        }
+        int min = Collections.min(sizes);
+        if(min <= Math.max(moveFrom.getTiles().size() - 1, moveTo.getTiles().size())){
+            pushTile(moveFrom, moveTo);
+        }
+        else{
+            throw new IllegalMove("The lowest stack of the start- and endpoint may not be higher than the highest stack of the start- and endpoint.");
         }
     }
 
@@ -194,7 +241,7 @@ public class Game implements Hive {
     public boolean isWinner(Player player) {
         // haal eerst QUEEN BEE op van tegenstander
         int tiles_with_contents_count = 0;
-        Cell queen_bee = null;
+        Cell queen_bee;
         for (Cell cell : board.getCells()) {
             Gametile tile = cell.getTiles().peek();
             if (tile.getTileName() == Tile.QUEEN_BEE && tile.getOwner() != player) {
