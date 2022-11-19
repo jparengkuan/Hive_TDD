@@ -1,6 +1,8 @@
 package nl.hanze.hive;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Board {
 
@@ -263,6 +265,28 @@ public class Board {
      */
     private void setCells(ArrayList<Cell> cellsArray) {
         this.cells = cellsArray;
+    }
+
+
+    String getMoveDirections(int fromQ, int fromR, int toQ, int toR)
+    {
+
+        Cell startPos = new Cell(fromQ, fromR);
+        Cell endPos = new Cell(toQ, toR);
+
+        String direction;
+
+        HashMap<String, Cell> startPosCoordinatesMap = startPos.getCoordinatesHashmap();
+
+        for (Map.Entry<String, Cell> set : startPosCoordinatesMap.entrySet()) {
+
+            if (set.getValue().equals(endPos))
+            {
+                direction = set.getKey();
+                return direction;
+            }
+        }
+        return null;
     }
 
 

@@ -159,6 +159,38 @@ public class Game implements Hive {
             }
         }
 
+
+        // Check of de tile in contact blijft met andere stenen tijdens het verschuiven
+        String direction = board.getMoveDirections(fromQ, fromR, toQ, toR);
+
+        // Ophalen van de hashmap
+        HashMap<String, Cell> directions = new Cell(fromQ, fromR).getCoordinatesHashmap();
+
+        switch (direction) {
+            case "EAST":
+
+                // NE
+                Cell ne = directions.get("NORTH_EAST");
+                // SE
+                Cell se = directions.get("SOUTH_EAST");
+
+                if (board.getCell(ne.q, ne.r) == null || board.getCell(se.q, se.r) == null)
+                {
+                    throw new IllegalMove("Tiles must be in contact during move");
+                }
+
+                Boolean southEastHasTiles = !board.getCell(se.q, se.r).isEmpty();
+                Boolean northEasyHasTiles = !board.getCell(ne.q, ne.r).isEmpty();
+
+                if (!northEasyHasTiles || !southEastHasTiles)
+                {
+                    throw new IllegalMove("Tiles must be in contact during move");
+                }
+        }
+
+
+
+
         if (hasAdjacentCells) {
             // Add tile to cell and change turn
             Cell moveToCell = board.getCell(toQ, toR);
