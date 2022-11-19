@@ -282,9 +282,9 @@ public class CellTests {
         mockdirectionsHashMap.put("EAST", new Cell(+1, +0));
         mockdirectionsHashMap.put("WEST", new Cell(-1, +0));
 
-        directionsHashMap = cell.getCoordinatesHashmap()
+        HashMap<String, Cell> directionsHashMap = cell.getCoordinatesHashmap();
 
-        assertTrue(mockdirectionsHashMap.equals(directionsHashMap);
+        assertTrue(mockdirectionsHashMap.equals(directionsHashMap));
     }
 
     // (6b)
