@@ -37,6 +37,15 @@ public class Cell {
         return tiles;
     }
 
+    public Hive.Tile getTopTileTypeFromStack() {
+        if (this.tiles.isEmpty()){
+            return null;
+        }
+
+        return this.tiles.peek().getTileName();
+
+    }
+
     /**
      * @returns a boolean if the cell has a tile or tiles stacked on top
      */

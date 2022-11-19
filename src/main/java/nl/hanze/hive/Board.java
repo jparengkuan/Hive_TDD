@@ -286,7 +286,7 @@ public class Board {
                 return direction;
             }
         }
-        return null;
+        return "Unknown";
     }
 
 

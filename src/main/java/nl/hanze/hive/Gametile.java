@@ -6,7 +6,6 @@ public class Gametile {
     private Hive.Player owner;
     private Hive.Tile tileName;
     private boolean played;
-    private Strategy strategy;
 
     /**
      * Constructor of a Gametile

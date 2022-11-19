@@ -119,6 +119,23 @@ public class Game implements Hive {
         Cell moveFromCell = board.getCell(fromQ, fromR);
         Player player = getTurn();
 
+        // If cell does not exist yet, add cell to board
+        if (!board.cellExists(toQ, toR)) {
+            board.getCells().add(new Cell(toQ, toR));
+        }
+
+        // Get the tile type
+        if (!board.getCell(fromQ, fromR).isEmpty())
+        {
+            Tile gametile = board.getCell(fromQ, fromR).getTopTileTypeFromStack();
+
+            MoveBehaviorFactory factory = new MoveBehaviorFactory(this.board);
+            MoveBehavior moveBehavior = factory.getMoveBehavior(gametile);
+
+            moveBehavior.move(fromQ, fromR, toQ, toR);
+        }
+
+
         // Het aantal chains op het bord bijhouden
         int amountOfChainsBeforeMove = board.countTotalTileChains();
 
@@ -141,11 +158,6 @@ public class Game implements Hive {
         }
 
         Gametile toMove = moveFromCell.getTiles().peek();
-
-        // If cell does not exist yet, add cell to board
-        if (!board.cellExists(toQ, toR)) {
-            board.getCells().add(new Cell(toQ, toR));
-        }
 
         // test if the cell has any neighbors containing tiles (later to be refactored into a different method)
         ArrayList<Cell> neighbors = board.GetNeighboursFromCell(board.getCell(toQ, toR));
@@ -185,7 +197,7 @@ public class Game implements Hive {
                 Boolean southEastHasTiles = !board.getCell(se.q, se.r).isEmpty();
                 Boolean northEasyHasTiles = !board.getCell(ne.q, ne.r).isEmpty();
 
-                if (!northEasyHasTiles || !southEastHasTiles)
+                if (!northEasyHasTiles && !southEastHasTiles)
                 {
                     throw new IllegalMove("Tiles must be in contact during move");
                 }
@@ -208,7 +220,7 @@ public class Game implements Hive {
                 Boolean southWestHasTiles = !board.getCell(sw.q, sw.r).isEmpty();
                 Boolean northWestHasTiles = !board.getCell(nw.q, nw.r).isEmpty();
 
-                if (!northWestHasTiles || !southWestHasTiles)
+                if (!northWestHasTiles && !southWestHasTiles)
                 {
                     throw new IllegalMove("Tiles must be in contact during move");
                 }
