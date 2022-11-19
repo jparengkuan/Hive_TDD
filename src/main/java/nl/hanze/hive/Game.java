@@ -140,7 +140,7 @@ public class Game implements Hive {
             throw new IllegalMove("player can't move opponent's tiles");
         }
 
-        Gametile toMove = moveFromCell.getTiles().pop();
+        Gametile toMove = moveFromCell.getTiles().peek();
 
         // If cell does not exist yet, add cell to board
         if (!board.cellExists(toQ, toR)) {
@@ -213,22 +213,27 @@ public class Game implements Hive {
                     throw new IllegalMove("Tiles must be in contact during move");
                 }
         }
+        // Cell that tile needs to move to
+        Cell moveToCell = board.getCell(toQ, toR);
 
-
-
-
-        if (hasAdjacentCells) {
-            // Add tile to cell and change turn
-            Cell moveToCell = board.getCell(toQ, toR);
-            moveToCell.getTiles().push(toMove);
-            setTurn();
-        } else {
-            throw new IllegalMove("the tile must be moved next to another tile.");
-        }
 
         // Test if the chain will be broken after a certain move
         if (board.checkIfChainWillBeBroken(backupCellArrayList, amountOfChainsBeforeMove)) {
-            throw new Hive.IllegalMove("Can't move the tile chain will be broken");
+            throw new IllegalMove("Can't move the tile chain will be broken");
+        }
+        else if (!hasAdjacentCells){
+            // If destination tile doesn't have adjacent cells, throw IllegalMove.
+            throw new IllegalMove("the tile must be moved next to another tile.");
+        }
+        else if (!canMoveToAdjacentTile(moveFromCell, moveToCell)){
+            // If tile can't move to adjacent tile, throw IllegalMove.
+            throw new IllegalMove("The lowest stack of the neighbors of start- and endpoint may not be higher than the highest stack of the start- and endpoint.");
+        }
+        else {
+            // Add tile to cell and change turn
+            moveFromCell.getTiles().pop();
+            moveToCell.getTiles().push(toMove);
+            setTurn();
         }
     }
 
@@ -268,7 +273,7 @@ public class Game implements Hive {
      * @param moveTo The cell to move to.
      * @throws IllegalMove if the lowest stack of the neighbors of A and B is higher than the highest of A and B.
      */
-    public void moveTile(Cell moveFrom, Cell moveTo) throws IllegalMove {
+    public boolean canMoveToAdjacentTile(Cell moveFrom, Cell moveTo) throws IllegalMove {
         // Get neighbors of both the cell to move from, and the cell to move to.
         ArrayList<Cell> neighborsOfMoveFromCell = board.GetNeighboursFromCell(moveFrom);
         ArrayList<Cell> neighborsOfMoveToCell = board.GetNeighboursFromCell(moveTo);
@@ -277,7 +282,10 @@ public class Game implements Hive {
         for(Cell cell : neighborsOfMoveFromCell){
             // if cell in the neighbors of moveTo also appears in the neighbors of moveFrom then add cell to list.
             if(neighborsOfMoveToCell.contains(cell)){
-                newList.add(cell);
+                if(!board.cellExists(cell.q, cell.r)){
+                    board.addCell(cell.q, cell.r);
+                }
+                newList.add(board.getCell(cell.q, cell.r));
             }
         }
         // ArrayList for the sizes of the neighbor stacks.
@@ -289,13 +297,7 @@ public class Game implements Hive {
         // Get the lowest value of the neighbor stacks (n0 and n1)
         int min = Collections.min(sizes);
         // if min(h(n1), h(n2)) <= max(h(a) - 1, h(b)), then tile can be moved.
-        if(min <= Math.max(moveFrom.getTiles().size() - 1, moveTo.getTiles().size())){
-            pushTile(moveFrom, moveTo);
-        }
-        else{
-            // if not, throw IllegalMove.
-            throw new IllegalMove("The lowest stack of the neighbors of start- and endpoint may not be higher than the highest stack of the start- and endpoint.");
-        }
+        return min <= Math.max(moveFrom.getTiles().size() - 1, moveTo.getTiles().size());
     }
 
     /**

@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import static nl.hanze.hive.Hive.Player.BLACK;
+import static nl.hanze.hive.Hive.Player.WHITE;
 import static nl.hanze.hive.Hive.Tile.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -257,20 +259,6 @@ public class CellTests {
         assertEquals(game.getBoard().countTotalTileChains(), actualNumberOfChains);
     }
 
-    // (6a)
-    @Test
-    void pushToAdjacentTile() throws Hive.IllegalMove {
-        Game game = new Game();
-        Board board = game.getBoard();
-        board.addCell(1, 2);
-        game.play(BEETLE, 1, 1);
-        game.play(GRASSHOPPER, 0, 2);
-        Cell moveFromCell = game.getBoard().getCell(1, 1);
-        Cell moveToCell = game.getBoard().getCell(1,2);
-        game.pushTile(moveFromCell, moveToCell);
-        assertFalse(game.getBoard().getCell(1,2).isEmpty());
-    }
-
     @Test
     void getDirectionCoordinatesFromCell()
     {
@@ -295,6 +283,16 @@ public class CellTests {
     // (6b)
     @Test
     void whenLowestStackAtStartAndEndHigherThanHighestStackThenException() throws Hive.IllegalMove {
-
+        Game game = new Game();
+        Board board = game.getBoard();
+        game.play(QUEEN_BEE, 1, -1);
+        game.play(QUEEN_BEE, 2, -2);
+        board.addCell(1,0);
+        board.addCell(0,-1);
+        board.getCell(1, 0).getTiles().push(new Gametile(WHITE, GRASSHOPPER));
+        board.getCell(0,-1).getTiles().push(new Gametile(BLACK, GRASSHOPPER));
+        board.getCell(1, 0).getTiles().push(new Gametile(WHITE, SOLDIER_ANT));
+        board.getCell(0,-1).getTiles().push(new Gametile(BLACK, SOLDIER_ANT));
+        assertThrows(Hive.IllegalMove.class, () -> game.move(1, -1, 0, 0));
     }
 }
