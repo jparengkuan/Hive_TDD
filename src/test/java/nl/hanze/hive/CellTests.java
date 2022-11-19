@@ -3,7 +3,6 @@ package nl.hanze.hive;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static nl.hanze.hive.Hive.Tile.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -252,31 +251,29 @@ public class CellTests {
         assertEquals(game.getBoard().countTotalTileChains(), actualNumberOfChains);
     }
 
+    // (6a)
     @Test
-    void GetNeighboursHashMapWithTiles() throws Hive.IllegalMove  {
-
+    void whenTilePushedThenTrue() throws Hive.IllegalMove {
         Game game = new Game();
+        Board board = game.getBoard();
+        board.addCell(1, 2);
+        game.play(BEETLE, 1, 1);
+        game.play(GRASSHOPPER, 0, 2);
+        Cell moveFromCell = game.getBoard().getCell(1, 1);
+        Cell moveToCell = game.getBoard().getCell(1,2);
+        game.pushTile(moveFromCell, moveToCell);
+        assertFalse(game.getBoard().getCell(1,2).isEmpty());
+    }
 
-        //white
-        game.play(QUEEN_BEE, +1,0);
-        //black
-        game.play(QUEEN_BEE, +1,-1);
-        //white
-        game.play(GRASSHOPPER, +2,-0);
-        //black
-        game.play(GRASSHOPPER, 0,-1);
-        //white
-        game.play(GRASSHOPPER, +3,-0);
-        //black
-        game.play(GRASSHOPPER, -1,0);
-        //white
-        game.play(GRASSHOPPER, +2,+1);
-        //black
-        game.play(GRASSHOPPER, -1,+1);
+    // (6b)
+    @Test
+    void whenLowestStackAtStartAndEndHigherThanHighestStackThenException() throws Hive.IllegalMove {
 
-        // We halen de hashmap op van neighbours with tiles
-        HashMap<String, Cell> neighboursWithTilesHashmap = game.getBoard().GetNeighboursHashMapWithTiles(new Cell(-1, +1));
+    }
 
+    // (7a)
+    @Test
+    void whenBeetleIsMovedThenPushOnce() throws Hive.IllegalMove {
 
     }
 }

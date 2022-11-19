@@ -70,7 +70,7 @@ public class Board {
     /**
      * Get all the surrounding neighbour cells for a given cell
      *
-     * @param Cell cell The target cell
+     * @param cell The target cell
      * @return ArrayList<Cell> Arraylist with all the six neighbour cells
      */
     public ArrayList<Cell> GetNeighboursFromCell(Cell cell) {
@@ -97,7 +97,7 @@ public class Board {
     /**
      * Get all the surrounding neighbour cells for a given cell that tiles
      *
-     * @param Cell cell The target cell
+     * @param cell The target cell
      * @return ArrayList<Cell> Arraylist with all cells with tiles
      */
     ArrayList<Cell> GetNeighboursFromCellWithTiles(Cell cell) {
@@ -132,7 +132,7 @@ public class Board {
     /**
      * Get all the surrounding neighbour cells for a given cell that has no tiles
      *
-     * @param Cell cell The target cell
+     * @param cell The target cell
      * @return ArrayList<Cell> Arraylist with all cells that have no tiles
      */
     ArrayList<Cell> GetNeighboursFromCellWithNoTiles(Cell cell) {
@@ -173,8 +173,8 @@ public class Board {
     /**
      * Check if the chain will be broken if a player makes a certain move
      *
-     * @param ArrayList<Cell> cellsArray for backup purposes
-     * @param int amountOfChainsBeforeMove
+     * @param cellsArray for backup purposes
+     * @param amountOfChainsBeforeMove
      * @return Boolean true or false
      */
     public boolean checkIfChainWillBeBroken(ArrayList<Cell> cellsArray, int amountOfChainsBeforeMove) {
@@ -210,7 +210,6 @@ public class Board {
                 }
             }
         }
-
         return black_count > 0 && white_count > 0;
     }
 
@@ -259,7 +258,7 @@ public class Board {
     /**
      * Setter to set all the cells
      *
-     * @param ArrayList<Cell> cell The target cell
+     * @param cellsArray the array of cells
      * @return Boolean true or false
      */
     private void setCells(ArrayList<Cell> cellsArray) {
