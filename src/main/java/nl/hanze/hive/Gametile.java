@@ -6,6 +6,7 @@ public class Gametile {
     private Hive.Player owner;
     private Hive.Tile tileName;
     private boolean played;
+    private Strategy strategy;
 
     /**
      * Constructor of a Gametile
@@ -26,10 +27,18 @@ public class Gametile {
         return owner;
     }
 
+    /**
+     * Getter that returns if tile has been played already.
+     * @return true if tile is already played, false if not.
+     */
     public boolean isPlayed(){
         return played;
     }
 
+    /**
+     * Setter that sets the state of the tile.
+     * @param status if the tile has been played or not.
+     */
     public void setTileState(boolean status){
         this.played = status;
     }

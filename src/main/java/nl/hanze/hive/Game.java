@@ -10,6 +10,7 @@ public class Game implements Hive {
     private Deck decks;
     private Board board;
     private Player turn;
+    // Movement directions
     public static final int[] NORTH_WEST = new int[]{0, -1};
     public static final int[] WEST = new int[]{-1, 0};
     public static final int[] SOUTH_WEST = new int[]{-1, 1};
@@ -174,7 +175,7 @@ public class Game implements Hive {
     }
 
     public void pushTile(Cell moveFrom, Cell moveTo) throws IllegalMove {
-        boolean destFound = false;
+        /*boolean destFound = false;
         Cell current = moveFrom;
         ArrayList<Cell> visited = new ArrayList<>();
         while(!destFound){
@@ -199,28 +200,43 @@ public class Game implements Hive {
             if(current.equals(moveTo)){
                 destFound = true;
             }
-        }
+        }*/
+
     }
 
+    /**
+     * Method that checks if the lowest stack of the neighbors of A and B is not higher than the highest stack of both A and B.
+     * @param moveFrom The cell to move from.
+     * @param moveTo The cell to move to.
+     * @throws IllegalMove if the lowest stack of the neighbors of A and B is higher than the highest of A and B.
+     */
     public void moveTile(Cell moveFrom, Cell moveTo) throws IllegalMove {
+        // Get neighbors of both the cell to move from, and the cell to move to.
         ArrayList<Cell> neighborsOfMoveFromCell = board.GetNeighboursFromCell(moveFrom);
         ArrayList<Cell> neighborsOfMoveToCell = board.GetNeighboursFromCell(moveTo);
+        // Make a new list to put the neighbor cells of both moveFrom and moveTo in.
         ArrayList<Cell> newList = new ArrayList<>();
         for(Cell cell : neighborsOfMoveFromCell){
+            // if cell in the neighbors of moveTo also appears in the neighbors of moveFrom then add cell to list.
             if(neighborsOfMoveToCell.contains(cell)){
                 newList.add(cell);
             }
         }
+        // ArrayList for the sizes of the neighbor stacks.
         ArrayList<Integer> sizes = new ArrayList<>();
+        // Add the sizes of the stacks to the list.
         for(Cell cell : newList){
             sizes.add(cell.getTiles().size());
         }
+        // Get the lowest value of the neighbor stacks (n0 and n1)
         int min = Collections.min(sizes);
+        // if min(h(n1), h(n2)) <= max(h(a) - 1, h(b)), then tile can be moved.
         if(min <= Math.max(moveFrom.getTiles().size() - 1, moveTo.getTiles().size())){
             pushTile(moveFrom, moveTo);
         }
         else{
-            throw new IllegalMove("The lowest stack of the start- and endpoint may not be higher than the highest stack of the start- and endpoint.");
+            // if not, throw IllegalMove.
+            throw new IllegalMove("The lowest stack of the neighbors of start- and endpoint may not be higher than the highest stack of the start- and endpoint.");
         }
     }
 
