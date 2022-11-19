@@ -129,12 +129,10 @@ public class Game implements Hive {
         {
             Tile gametile = board.getCell(fromQ, fromR).getTopTileTypeFromStack();
 
-            if (gametile == Tile.BEETLE){
-                MoveBehavior moveBehavior = new BeetleMove(this.getBoard());
-                if (!moveBehavior.isLegalMove(fromQ, fromR, toQ, toR)){
-                    throw new IllegalMove("Beetle tile can only move 1 pos");
-                }
-            }
+            MoveBehaviorFactory factory = new MoveBehaviorFactory(this.board);
+            MoveBehavior moveBehavior = factory.getMoveBehavior(gametile);
+
+            moveBehavior.move(fromQ, fromR, toQ, toR);
         }
 
 

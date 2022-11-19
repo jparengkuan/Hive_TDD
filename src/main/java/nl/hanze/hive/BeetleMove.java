@@ -11,7 +11,7 @@ public class BeetleMove implements MoveBehavior {
     }
 
     @Override
-    public boolean isLegalMove(int fromQ, int fromR, int toQ, int toR) {
+    public void move(int fromQ, int fromR, int toQ, int toR) throws Hive.IllegalMove {
 
         // Haal de neighbors op van de from coordinaten
         ArrayList<Cell> neighboursFrom = board.GetNeighboursFromCell(new Cell(fromQ, fromR));
@@ -21,12 +21,10 @@ public class BeetleMove implements MoveBehavior {
 
         neighboursFrom.retainAll(neighboursTo);
 
-        if (!neighboursFrom.isEmpty())
+        if (neighboursFrom.isEmpty())
         {
-            return true;
+            throw new Hive.IllegalMove("Beetle tile can only move 1 pos");
         }
 
-
-        return false;
     }
 }
