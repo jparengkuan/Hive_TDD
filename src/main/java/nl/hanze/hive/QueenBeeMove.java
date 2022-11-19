@@ -26,6 +26,12 @@ public class QueenBeeMove implements MoveBehavior {
             throw new Hive.IllegalMove("QueenBee tile can only move 1 pos");
         }
 
+        Cell cellToMoveTo = board.getCell(toQ, toR);
+
+        if (cellToMoveTo != null || !cellToMoveTo.isEmpty()){
+            throw new Hive.IllegalMove("QueenBee tile can only be moved to an empty cell");
+        }
+
 
     }
 }
