@@ -168,21 +168,47 @@ public class Game implements Hive {
 
         switch (direction) {
             case "EAST":
-
                 // NE
                 Cell ne = directions.get("NORTH_EAST");
                 // SE
                 Cell se = directions.get("SOUTH_EAST");
 
-                if (board.getCell(ne.q, ne.r) == null || board.getCell(se.q, se.r) == null)
+                if (board.getCell(ne.q, ne.r) == null)
                 {
-                    throw new IllegalMove("Tiles must be in contact during move");
+                    board.addCell(ne.q, ne.r);
+                }
+                if (board.getCell(se.q, se.r) == null)
+                {
+                    board.addCell(se.q, se.r);
                 }
 
                 Boolean southEastHasTiles = !board.getCell(se.q, se.r).isEmpty();
                 Boolean northEasyHasTiles = !board.getCell(ne.q, ne.r).isEmpty();
 
                 if (!northEasyHasTiles || !southEastHasTiles)
+                {
+                    throw new IllegalMove("Tiles must be in contact during move");
+                }
+
+            case "WEST":
+                // NW
+                Cell nw = directions.get("NORTH_WEST");
+                // SW
+                Cell sw = directions.get("SOUTH_WEST");
+
+                if (board.getCell(nw.q, nw.r) == null)
+                {
+                    board.addCell(nw.q, nw.r);
+                }
+                if (board.getCell(sw.q, sw.r) == null)
+                {
+                    board.addCell(sw.q, sw.r);
+                }
+
+                Boolean southWestHasTiles = !board.getCell(sw.q, sw.r).isEmpty();
+                Boolean northWestHasTiles = !board.getCell(nw.q, nw.r).isEmpty();
+
+                if (!northWestHasTiles || !southWestHasTiles)
                 {
                     throw new IllegalMove("Tiles must be in contact during move");
                 }
