@@ -5,7 +5,7 @@ import static nl.hanze.hive.Hive.Tile.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class MovementRulesTests {
-    /*@Test
+    @Test
     void pushToAdjacentTile() throws Hive.IllegalMove {
         Game game = new Game();
         Board board = game.getBoard();
@@ -16,7 +16,7 @@ public class MovementRulesTests {
         game.move(0, 0, 1, 0);
         // check if move has been executed correctly
         assertTrue(board.getCell(0, 0).getTiles().isEmpty() && !board.getCell(1, 0).getTiles().isEmpty());
-    }*/
+    }
 
     @Test
     void whenAnyGivenTileIsMovedThrowIlligalMoveWhenADuringMoveThereIsNoContact() throws Hive.IllegalMove {
@@ -59,7 +59,7 @@ public class MovementRulesTests {
         // Black
         game.play(GRASSHOPPER, +2, -1);
         // White turn
-        game.move(-1, -1, +1, -3);
+        // game.move(-1, -1, +1, -3);
         assertThrows(Hive.IllegalMove.class, () -> game.move(-1, -1, +1, -3));
     }
 
