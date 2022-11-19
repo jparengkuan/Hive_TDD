@@ -10,8 +10,12 @@ public class MoveBehaviorFactory {
     }
 
     public MoveBehavior getMoveBehavior(Hive.Tile gametile){
+
         if (gametile == Hive.Tile.BEETLE){
             return new BeetleMove(board);
+        }
+        else if (gametile == Hive.Tile.QUEEN_BEE){
+            return new QueenBeeMove(board);
         }
         return null;
     }
