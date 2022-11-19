@@ -185,7 +185,7 @@ public class Game implements Hive {
                 Boolean southEastHasTiles = !board.getCell(se.q, se.r).isEmpty();
                 Boolean northEasyHasTiles = !board.getCell(ne.q, ne.r).isEmpty();
 
-                if (!northEasyHasTiles || !southEastHasTiles)
+                if (!northEasyHasTiles && !southEastHasTiles)
                 {
                     throw new IllegalMove("Tiles must be in contact during move");
                 }
@@ -208,7 +208,7 @@ public class Game implements Hive {
                 Boolean southWestHasTiles = !board.getCell(sw.q, sw.r).isEmpty();
                 Boolean northWestHasTiles = !board.getCell(nw.q, nw.r).isEmpty();
 
-                if (!northWestHasTiles || !southWestHasTiles)
+                if (!northWestHasTiles && !southWestHasTiles)
                 {
                     throw new IllegalMove("Tiles must be in contact during move");
                 }

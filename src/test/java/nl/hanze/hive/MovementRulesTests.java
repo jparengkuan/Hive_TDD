@@ -1,8 +1,6 @@
 package nl.hanze.hive;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
 import static nl.hanze.hive.Hive.Tile.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,26 +22,43 @@ public class MovementRulesTests {
         Game game = new Game();
         Board board = game.getBoard();
         // White
-        game.play(QUEEN_BEE, -1, +1);
+        game.play(QUEEN_BEE, +1, +0);
         // Black
-        game.play(QUEEN_BEE, 0, +-3);
+        game.play(QUEEN_BEE, 0, -3);
         // White
-        game.play(GRASSHOPPER, -1, 0);
+        game.play(GRASSHOPPER, +1, -1);
         // Black
-        game.play(GRASSHOPPER, +1, +-3);
+        game.play(GRASSHOPPER, +1, -3);
         // White
         game.play(BEETLE, 0, -1);
         // Black
-        game.play(GRASSHOPPER, +2, +-3);
+        game.play(GRASSHOPPER, +2, -3);
         // White
-        game.play(BEETLE, +1, -1);
+        game.play(BEETLE, -1, 0);
         // Black
-        game.play(GRASSHOPPER, +3, +-3);
+        game.play(GRASSHOPPER, +3, -3);
         // White
-        game.play(GRASSHOPPER, +1, 0);
+        game.play(GRASSHOPPER, -1, +1);
+        // black
+        game.play(SPIDER, +3, -4);
+        // White
+       assertThrows(Hive.IllegalMove.class, () -> game.move(-1, +1, 0, +1));
+    }
+
+    @Test
+    void WhenBeetleTileIsMovedMoreThatOnceThrowIllegalMove() throws Hive.IllegalMove {
+        Game game = new Game();
+        Board board = game.getBoard();
+        // White
+        game.play(QUEEN_BEE, -2, -1);
         // Black
-        game.move(+3,-3,+2, -2);
+        game.play(QUEEN_BEE, +1, -1);
         // White
-        assertThrows(Hive.IllegalMove.class, () -> game.move(-1, +1, 0, +1));
+        game.play(BEETLE, -1, -1);
+        // Black
+        game.play(GRASSHOPPER, +2, -1);
+        // White
+        assertThrows(Hive.IllegalMove.class, () -> game.move(-1, -1, +1, -3));
+
     }
 }
