@@ -2,10 +2,7 @@ package nl.hanze.hive;
 
 import java.util.Stack;
 
-public class
-
-
-Cell {
+public class Cell {
     int q;
     int r;
     Stack<Gametile> tiles;
