@@ -124,6 +124,19 @@ public class Game implements Hive {
             board.getCells().add(new Cell(toQ, toR));
         }
 
+        // Get the tile type
+        if (!board.getCell(fromQ, fromR).isEmpty())
+        {
+            Tile gametile = board.getCell(fromQ, fromR).getTopTileTypeFromStack();
+
+            if (gametile == Tile.BEETLE){
+                MoveBehavior moveBehavior = new BeetleMove(this.getBoard());
+                if (!moveBehavior.isLegalMove(fromQ, fromR, toQ, toR)){
+                    throw new IllegalMove("Beetle tile can only move 1 pos");
+                }
+            }
+        }
+
 
         // Het aantal chains op het bord bijhouden
         int amountOfChainsBeforeMove = board.countTotalTileChains();

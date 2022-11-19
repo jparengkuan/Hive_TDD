@@ -21,8 +21,10 @@ public class BeetleMove implements MoveBehavior {
 
         neighboursFrom.retainAll(neighboursTo);
 
-        System.out.println(1);
-
+        if (!neighboursFrom.isEmpty())
+        {
+            return true;
+        }
 
 
         return false;
