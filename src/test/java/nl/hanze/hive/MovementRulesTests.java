@@ -58,7 +58,7 @@ public class MovementRulesTests {
         // Black
         game.play(GRASSHOPPER, +2, -1);
         // White turn
-        assertThrows(Hive.IllegalMove.class, () -> game.move(-1, -1, +1, -3));
+        game.move(-1, -1, +1, -3);
 
     }
 }

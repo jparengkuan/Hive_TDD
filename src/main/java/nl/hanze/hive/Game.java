@@ -119,6 +119,12 @@ public class Game implements Hive {
         Cell moveFromCell = board.getCell(fromQ, fromR);
         Player player = getTurn();
 
+        // If cell does not exist yet, add cell to board
+        if (!board.cellExists(toQ, toR)) {
+            board.getCells().add(new Cell(toQ, toR));
+        }
+
+
         // Het aantal chains op het bord bijhouden
         int amountOfChainsBeforeMove = board.countTotalTileChains();
 
@@ -141,11 +147,6 @@ public class Game implements Hive {
         }
 
         Gametile toMove = moveFromCell.getTiles().pop();
-
-        // If cell does not exist yet, add cell to board
-        if (!board.cellExists(toQ, toR)) {
-            board.getCells().add(new Cell(toQ, toR));
-        }
 
         // test if the cell has any neighbors containing tiles (later to be refactored into a different method)
         ArrayList<Cell> neighbors = board.GetNeighboursFromCell(board.getCell(toQ, toR));
