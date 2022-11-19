@@ -3,6 +3,7 @@ package nl.hanze.hive;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static nl.hanze.hive.Hive.Tile.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -268,6 +269,27 @@ public class CellTests {
         Cell moveToCell = game.getBoard().getCell(1,2);
         game.pushTile(moveFromCell, moveToCell);
         assertFalse(game.getBoard().getCell(1,2).isEmpty());
+    }
+
+    @Test
+    void getDirectionCoordinatesFromCell()
+    {
+        Game game = new Game();
+        Board board = game.getBoard();
+        board.addCell(0,0);
+        Cell cell = game.getBoard().getCell(0,0);
+
+        HashMap<String, Cell> mockdirectionsHashMap  = new HashMap<String, Cell>();
+        mockdirectionsHashMap.put("NORTH_EAST", new Cell(+1, -1));
+        mockdirectionsHashMap.put("NORTH_WEST", new Cell(+0, -1));
+        mockdirectionsHashMap.put("SOUTH_EAST", new Cell(+0, +1));
+        mockdirectionsHashMap.put("SOUTH_WEST", new Cell(-1, +1));
+        mockdirectionsHashMap.put("EAST", new Cell(+1, +0));
+        mockdirectionsHashMap.put("WEST", new Cell(-1, +0));
+
+        directionsHashMap = cell.getCoordinatesHashmap()
+
+        assertTrue(mockdirectionsHashMap.equals(directionsHashMap);
     }
 
     // (6b)
