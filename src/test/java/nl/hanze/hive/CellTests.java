@@ -275,6 +275,12 @@ public class CellTests {
         Cell cell = game.getBoard().getCell(0,0);
 
         HashMap<String, Cell> mockdirectionsHashMap  = new HashMap<String, Cell>();
+        mockdirectionsHashMap.put("NORTH_EAST", new Cell(+1, -1));
+        mockdirectionsHashMap.put("NORTH_WEST", new Cell(+0, -1));
+        mockdirectionsHashMap.put("SOUTH_EAST", new Cell(+0, +1));
+        mockdirectionsHashMap.put("SOUTH_WEST", new Cell(-1, +1));
+        mockdirectionsHashMap.put("EAST", new Cell(+1, +0));
+        mockdirectionsHashMap.put("WEST", new Cell(-1, +0));
 
         directionsHashMap = cell.getCoordinatesHashmap()
 
