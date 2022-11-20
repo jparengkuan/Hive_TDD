@@ -148,24 +148,35 @@ public class SanityCheck {
     // (2f) Test if tiles can be on top of each other
     @Test
     void whenTileOnTopOfAnotherTile() throws Hive.IllegalMove {
-
-        // Maak een nieuw spel aan
         Game game = new Game();
+        // White
+        game.play(QUEEN_BEE, +1, +0);
+        // Black
+        game.play(QUEEN_BEE, 0, -3);
+        // White
+        game.play(GRASSHOPPER, +1, -1);
+        // Black
+        game.play(GRASSHOPPER, +1, -3);
+        // White
+        game.play(BEETLE, 0, -1);
+        // Black
+        game.play(GRASSHOPPER, +2, -3);
+        // White
+        game.play(SOLDIER_ANT, -1, 0);
+        // Black
+        game.play(GRASSHOPPER, +3, -3);
+        // White
+        game.play(BEETLE, -1, +1);
+        // black
+        game.play(SPIDER, +3, -4);
+        // White
+        game.play(SOLDIER_ANT,0,0);
+        // Black
+        game.play(SOLDIER_ANT, +4, -3);
+        // white
+        game.move(-1,+1,0,0);
 
-        // Player white speelt queen bee naar pos 0,0
-        game.play(QUEEN_BEE, 0, 0);
-
-        // Player black speelt grashopper naar 1,1
-        game.play(QUEEN_BEE, 1, 1);
-
-        // Player white speelt soldier ant naar -1,1
-        game.play(SOLDIER_ANT, -1, 1);
-
-        // Player black verplaasts zijn grasshopper bovenop de soldier ant van player white
-        game.move(1,1,-1,1);
-
-        // Check of er nu twee stenen staan op pos 1,1
-        assertEquals(2, game.getBoard().getCell(-1,1).getTiles().size());
+        assertEquals(2, game.getBoard().getCell(0,0).getTiles().size());
     }
 
     // (3a) Test to make sure white has the first turn
