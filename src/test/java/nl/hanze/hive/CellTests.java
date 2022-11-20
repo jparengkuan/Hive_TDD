@@ -156,10 +156,9 @@ public class CellTests {
     // (4d)
     @Test
     void givenNonEmptyBoardWhenPlayerTilePlayedNextToOpponentTileThenIllegalMove() throws Hive.IllegalMove {
-        //TODO refactor
         Game game = new Game();
         game.play(GRASSHOPPER, 0, 0);
-        // (assert) When BLACK tries to place tile next to WHITE's tile, throw IllegalMove. (needs refactor)
+        // (assert) When BLACK tries to place tile next to WHITE's tile, throw IllegalMove.
         game.play(SOLDIER_ANT, 0, 1);
         game.play(SOLDIER_ANT, 0, -1);
         assertThrows(Hive.IllegalMove.class, () -> game.play(SOLDIER_ANT, 1, -1));
@@ -206,7 +205,7 @@ public class CellTests {
         game.play(QUEEN_BEE, 0, 0);
         game.play(GRASSHOPPER, 2, 4);
         // (assert) When WHITE has played QUEEN_BEE and tries to move a tile, do NOT throw IllegalMove.
-        assertDoesNotThrow(() -> game.move(0, 0, 2, 3));
+        assertDoesNotThrow(() -> game.move(0, 0, 0, 1));
     }
 
     // (5c)
