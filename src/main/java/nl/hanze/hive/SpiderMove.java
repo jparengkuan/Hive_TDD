@@ -21,6 +21,9 @@ public class SpiderMove implements MoveBehavior {
         if(moveFrom.equals(moveTo)){
             throw new Hive.IllegalMove("spider can't move to its current place");
         }
+        if(!board.getCell(toQ, toR).getTiles().isEmpty()){
+            throw new Hive.IllegalMove("spider can't move to non empty end place");
+        }
         calculatePath(moveFrom, moveTo);
     }
 
