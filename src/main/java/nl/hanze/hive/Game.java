@@ -228,7 +228,14 @@ public class Game implements Hive {
         // Cell that tile needs to move to
         Cell moveToCell = board.getCell(toQ, toR);
 
-
+        for(Cell neighbor : neighbors){
+            if(board.GetNeighboursFromCell(moveFromCell).contains(neighbor)){
+                if (!canMoveToAdjacentTile(moveFromCell, moveToCell)){
+                    // If tile can't move to adjacent tile, throw IllegalMove.
+                    throw new IllegalMove("The lowest stack of the neighbors of start- and endpoint may not be higher than the highest stack of the start- and endpoint.");
+                }
+            }
+        }
         // Test if the chain will be broken after a certain move
         if (board.checkIfChainWillBeBroken(backupCellArrayList, amountOfChainsBeforeMove)) {
             throw new IllegalMove("Can't move the tile chain will be broken");
@@ -237,44 +244,11 @@ public class Game implements Hive {
             // If destination tile doesn't have adjacent cells, throw IllegalMove.
             throw new IllegalMove("the tile must be moved next to another tile.");
         }
-        else if (!canMoveToAdjacentTile(moveFromCell, moveToCell)){
-            // If tile can't move to adjacent tile, throw IllegalMove.
-            throw new IllegalMove("The lowest stack of the neighbors of start- and endpoint may not be higher than the highest stack of the start- and endpoint.");
-        }
         else {
             // Add tile to cell and change turn
             moveFromCell.getTiles().pop();
             moveToCell.getTiles().push(toMove);
             setTurn();
-        }
-    }
-
-    public void takeShortestPath(Cell moveFrom, Cell moveTo) throws IllegalMove {
-        boolean destFound = false;
-        Cell current = moveFrom;
-        ArrayList<Cell> visited = new ArrayList<>();
-        while(!destFound){
-            Gametile tile = board.getCell(current.q, current.r).getTiles().pop();
-            ArrayList<Cell> neighbors = board.GetNeighboursFromCell(current);
-            HashMap<Cell, Double> cell_distances = new HashMap<>();
-            for(Cell cell : neighbors){
-                double distance = Math.sqrt(Math.pow(moveTo.q - cell.q, 2) + Math.pow(moveTo.r - cell.r, 2));
-                if(!visited.contains(board.getCell(cell.q, cell.r))){
-                    cell_distances.put(cell, distance);
-                }
-            }
-            double shortest = Collections.min(cell_distances.values());
-            for(Map.Entry<Cell, Double> entry : cell_distances.entrySet()){
-                if(entry.getValue() == shortest){
-                    visited.add(current);
-                    current = entry.getKey();
-                }
-            }
-            board.getCell(current.q, current.r).getTiles().add(tile);
-            current.getTiles().add(tile);
-            if(current.equals(moveTo)){
-                destFound = true;
-            }
         }
     }
 

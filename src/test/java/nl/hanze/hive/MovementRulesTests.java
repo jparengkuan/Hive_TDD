@@ -113,11 +113,15 @@ public class MovementRulesTests {
         // Black
         game.play(SOLDIER_ANT, +1, +1);
         // White
+        game.play(SPIDER, -1, +0);
+        // Black
+        game.play(BEETLE, +2, +0);
+        // White
         game.play(SPIDER, +0, -2);
         // Black
         game.play(GRASSHOPPER, +2, +1);
         // White
-        assertDoesNotThrow(() -> game.move(+0, -2, -2, +0));
+        assertDoesNotThrow(() -> game.move(+0, -2, -1, +1));
     }
 
     // (10a)
@@ -155,12 +159,18 @@ public class MovementRulesTests {
         // Black
         game.play(SOLDIER_ANT, +1, +1);
         // White
+        game.play(SPIDER, -1, +0);
+        // Black
+        game.play(BEETLE, +2, +0);
+        // White
         game.play(SPIDER, +0, -2);
         // Black
         game.play(GRASSHOPPER, +2, +1);
         // White
         assertThrows(Hive.IllegalMove.class, () -> game.move(+0, -2, -2, -1));
     }
+    
+    // (9a)
     @Test
     void WhenSoldierAntTileIsMovedToHisBeginningPositionsThrowIllegalMove() throws Hive.IllegalMove {
         Game game = new Game();
