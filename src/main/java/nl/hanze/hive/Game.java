@@ -161,7 +161,7 @@ public class Game implements Hive {
         boolean hasAdjacentCells = false;
         for (Cell neighbor : neighbors) {
             Cell actualNeighbor = board.getCell(neighbor.q, neighbor.r);
-            if (actualNeighbor != null) {
+            if (actualNeighbor != null && actualNeighbor != moveFromCell) {
                 if (!actualNeighbor.isEmpty()) {
                     hasAdjacentCells = true;
                 }
