@@ -18,6 +18,9 @@ public class SpiderMove implements MoveBehavior {
         Cell moveFrom = board.getCell(fromQ, fromR);
         Cell moveTo = board.getCell(toQ, toR);
 
+        if(moveFrom.equals(moveTo)){
+            throw new Hive.IllegalMove("spider can't move to its current place");
+        }
         calculatePath(moveFrom, moveTo);
     }
 
