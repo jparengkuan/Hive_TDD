@@ -273,7 +273,7 @@ public class MovementRulesTests {
         // Black
         game.play(GRASSHOPPER, +3, -3);
         // White
-        game.play(SPIDER, -1, +1);
+        game.play(SOLDIER_ANT, -1, +1);
         // black
         game.play(SPIDER, +3, -4);
         // White
@@ -281,7 +281,7 @@ public class MovementRulesTests {
         // black
         game.play(SPIDER, +4, -3);
         // White
-        assertThrows(Hive.IllegalMove.class, () -> game.move(-1, +1, +1, +1));
+        game.move(-1, +1, +2, -1);
 
     }
 

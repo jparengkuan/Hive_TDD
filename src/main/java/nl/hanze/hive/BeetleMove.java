@@ -25,5 +25,11 @@ public class BeetleMove implements MoveBehavior {
         {
             throw new Hive.IllegalMove("Beetle tile can only move 1 pos");
         }
+
+        if(movementHelperMethods.lostContactDuringMove(board, fromQ, fromR, toQ, toR))
+        {
+            throw new Hive.IllegalMove("Beetle tile lost contact during move");
+        }
+
     }
 }

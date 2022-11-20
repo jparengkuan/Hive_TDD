@@ -36,15 +36,14 @@ public class SoldierAntMove implements MoveBehavior {
 
             visited.add(currenFirst);
 
-            System.out.println(currenFirst.q + " " + currenFirst.r );
-
             ArrayList<Cell> allNeighbors = board.GetNeighboursFromCell(currenFirst);
 
             if (allNeighbors == null)
                 continue;
 
             int neighborSize = allNeighbors.size();
-            int countEmptyNeighborTiles = 0;
+            int nonEmptyNeighbors = 0;
+            int lostContactDuringMove = 0;
 
             for (Cell neighbor : allNeighbors) {
 
@@ -53,8 +52,15 @@ public class SoldierAntMove implements MoveBehavior {
                     board.getCells().add(new Cell(neighbor.q, neighbor.r));
                 }
 
-                if(board.getCell(neighbor.q, neighbor.r).isEmpty()){
-                    countEmptyNeighborTiles += 1;
+
+
+                if(!board.getCell(neighbor.q, neighbor.r).isEmpty()){
+                    nonEmptyNeighbors += 1;
+                }
+
+                if(movementHelperMethods.lostContactDuringMove(board, currenFirst.q, currenFirst.r, neighbor.q, neighbor.r))
+                {
+                    lostContactDuringMove += 1;
                 }
 
                 if (!visited.contains(neighbor)) {
@@ -62,8 +68,12 @@ public class SoldierAntMove implements MoveBehavior {
                 }
             }
 
-            if (countEmptyNeighborTiles <= neighborSize){
+            if (nonEmptyNeighbors == neighborSize){
                 throw new Hive.IllegalMove("SoldierAnt can only be moved over empty tiles");
+            }
+
+            if (lostContactDuringMove == neighborSize){
+                throw new Hive.IllegalMove("SoldierAnt lost contact with other tiles during move");
             }
             System.out.println();
 

@@ -21,6 +21,11 @@ public class QueenBeeMove implements MoveBehavior {
 
         neighboursFrom.retainAll(neighboursTo);
 
+        if(movementHelperMethods.lostContactDuringMove(board, fromQ, fromR, toQ, toR))
+        {
+            throw new Hive.IllegalMove("QueenBee tile lost contact during move");
+        }
+
         if (neighboursFrom.isEmpty())
         {
             throw new Hive.IllegalMove("QueenBee tile can only move 1 pos");
