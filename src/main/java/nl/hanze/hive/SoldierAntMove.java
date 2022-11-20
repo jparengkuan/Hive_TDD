@@ -21,7 +21,7 @@ public class SoldierAntMove implements MoveBehavior {
 
         // Soldier mag zich alleen verplaatsen naar een lege eind positie
         if (!board.getCell(toQ, toR).isEmpty()){
-            throw new Hive.IllegalMove("SoldierAnt tile cannot move to an empty end pos");
+            throw new Hive.IllegalMove("SoldierAnt tile can only move to an empty end pos");
         }
 
 

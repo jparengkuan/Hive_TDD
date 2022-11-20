@@ -201,8 +201,14 @@ public class MovementRulesTests {
         // White
         assertThrows(Hive.IllegalMove.class, () -> game.move(0, -1, 0, 3));
     }
-    
-    // (9a)
+
+    // (10c)
+    @Test
+    void whenSpiderMovesToNonEmptyPositionThrowIllegalMove() throws Hive.IllegalMove {
+        Game game = new Game();
+    }
+
+    // (9b)
     @Test
     void WhenSoldierAntTileIsMovedToHisBeginningPositionsThrowIllegalMove() throws Hive.IllegalMove {
         Game game = new Game();
@@ -219,6 +225,7 @@ public class MovementRulesTests {
         assertThrows(Hive.IllegalMove.class, () -> game.move(-1, -1, -1, -1));
     }
 
+    // (9c)
     @Test
     void WhenSoldierAntTileIsMovedToANonEmptyEndpoint() throws Hive.IllegalMove {
         Game game = new Game();

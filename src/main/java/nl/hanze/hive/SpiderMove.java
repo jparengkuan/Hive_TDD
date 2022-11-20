@@ -49,6 +49,11 @@ public class SpiderMove implements MoveBehavior {
                 destFound = true;
             }
         }
+        for(Cell cell : visited){
+            if(visited.indexOf(cell) > 0 && cell.getTiles().size() > 0){
+                throw new Hive.IllegalMove("A spider has to move over an empty field.");
+            }
+        }
         if(visited.size() != amountOfMoves){
             throw new Hive.IllegalMove("A spider must move exactly three times.");
         }
