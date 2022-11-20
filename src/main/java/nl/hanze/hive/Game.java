@@ -40,9 +40,6 @@ public class Game implements Hive {
 
         // Get the player
         Player player = getTurn();
-
-        //TODO De gametile moet nog uit de playersdeck klasse komen
-        // Create a gametile object with the player and tile information
         Tile tileFromDeck = decks.getTilefromDeck(tile, player);
         Gametile gametile = new Gametile(player, tileFromDeck);
         if(tileFromDeck == null){

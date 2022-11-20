@@ -52,7 +52,6 @@ public class Deck {
             deck.add(Hive.Tile.SOLDIER_ANT);
             deck.add(Hive.Tile.GRASSHOPPER);
         }
-
         // Add the deck to the player
         decks.put(player, deck);
     }

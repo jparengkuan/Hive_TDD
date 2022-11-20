@@ -15,15 +15,20 @@ public class SpiderMove implements MoveBehavior {
 
     @Override
     public void move(int fromQ, int fromR, int toQ, int toR) throws Hive.IllegalMove {
+        // Cell to move from
         Cell moveFrom = board.getCell(fromQ, fromR);
+        // Cell to move to
         Cell moveTo = board.getCell(toQ, toR);
 
+        // If end point and current point are the same, throw IllegalMove.
         if(moveFrom.equals(moveTo)){
             throw new Hive.IllegalMove("spider can't move to its current place");
         }
+        // If end cell is not empty, throw IllegalMove.
         if(!board.getCell(toQ, toR).getTiles().isEmpty()){
             throw new Hive.IllegalMove("spider can't move to non empty end place");
         }
+        // Calculate best path
         calculatePath(moveFrom, moveTo);
     }
 
