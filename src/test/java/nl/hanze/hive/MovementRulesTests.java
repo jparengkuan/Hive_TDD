@@ -193,4 +193,37 @@ public class MovementRulesTests {
         assertThrows(Hive.IllegalMove.class, () -> game.move(-1, -1, -2, -1));
     }
 
+    @Test
+    void WhenSoldierAntTileIsMovedAndLostContactDuringMoveThrowIllegalMove() throws Hive.IllegalMove {
+        Game game = new Game();
+        Board board = game.getBoard();
+        // White
+        game.play(QUEEN_BEE, +1, +0);
+        // Black
+        game.play(QUEEN_BEE, 0, -3);
+        // White
+        game.play(GRASSHOPPER, +1, -1);
+        // Black
+        game.play(GRASSHOPPER, +1, -3);
+        // White
+        game.play(BEETLE, 0, -1);
+        // Black
+        game.play(GRASSHOPPER, +2, -3);
+        // White
+        game.play(BEETLE, -1, 0);
+        // Black
+        game.play(GRASSHOPPER, +3, -3);
+        // White
+        game.play(SPIDER, -1, +1);
+        // black
+        game.play(SPIDER, +3, -4);
+        // White
+        game.play(GRASSHOPPER, 0, 0);
+        // black
+        game.play(SPIDER, +4, -3);
+        // White
+        assertThrows(Hive.IllegalMove.class, () -> game.move(-1, +1, +1, +1));
+
+    }
+
 }
