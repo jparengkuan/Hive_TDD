@@ -17,6 +17,7 @@ public class MoveBehaviorFactory {
         else if (gametile == Hive.Tile.QUEEN_BEE){
             return new QueenBeeMove(board);
         }
+
         return null;
     }
 }
