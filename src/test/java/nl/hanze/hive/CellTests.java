@@ -211,18 +211,18 @@ public class CellTests {
 
     // (5c)
     @Test
-    void whenTileMovedThenTileInContactWithAtLeastOneOtherTile() throws Hive.IllegalMove {
+    void whenTileMovedThenTileInNotInContactWithAtLeastOneOtherTileThrowIlligalMove() throws Hive.IllegalMove {
         Game game = new Game();
         // white
-        game.play(QUEEN_BEE, 1, 3);
+        game.play(QUEEN_BEE, -2, -1);
         // black
-        game.play(GRASSHOPPER, 2, 5);
+        game.play(GRASSHOPPER, 0, 0);
         // white
-        game.play(SOLDIER_ANT, 1, 4);
+        game.play(BEETLE, -1, -1);
         // black
-        game.play(SPIDER, 2, 6);
-        // (assert) When WHITE moves a tile to a cell that has no tiles on its neighboring cells, throw IllegalMove.
-        assertThrows(Hive.IllegalMove.class, () -> game.move(1, 4, 7, -29));
+        game.play(SPIDER, +1, 0);
+
+        assertThrows(Hive.IllegalMove.class, () -> game.move(-1, -1, 0, -1));
     }
 
     // (5d)
