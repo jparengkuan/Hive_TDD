@@ -40,11 +40,11 @@ public class MovementRulesTests {
         // Black
         game.play(GRASSHOPPER, +2, -3);
         // White
-        game.play(BEETLE, -1, 0);
+        game.play(SOLDIER_ANT, -1, 0);
         // Black
         game.play(GRASSHOPPER, +3, -3);
         // White
-        game.play(SOLDIER_ANT, -1, +1);
+        game.play(BEETLE, -1, +1);
         // black
         game.play(SPIDER, +3, -4);
         // White
