@@ -130,7 +130,6 @@ public class SanityCheck {
         game.play(BEETLE, 0, 0);
         Gametile tilePlayed = game.getBoard().getCell(0,0).getTiles().peek();
         assertEquals(BEETLE, tilePlayed.getTileName());
-
     }
 
     // (2f) Test if tiles can be on top of each other
