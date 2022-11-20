@@ -14,5 +14,4 @@ public class GametileTests {
         game.move(0, 0, 1, 0);
         assertThrows(Hive.IllegalMove.class, () -> game.move(1, 0, 3, 0));
     }
-
 }

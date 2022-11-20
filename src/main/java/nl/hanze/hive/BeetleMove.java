@@ -25,6 +25,5 @@ public class BeetleMove implements MoveBehavior {
         {
             throw new Hive.IllegalMove("Beetle tile can only move 1 pos");
         }
-
     }
 }

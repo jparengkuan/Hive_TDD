@@ -249,8 +249,8 @@ public class Game implements Hive {
         }
     }
 
-    public void pushTile(Cell moveFrom, Cell moveTo) throws IllegalMove {
-        /*boolean destFound = false;
+    public void takeShortestPath(Cell moveFrom, Cell moveTo) throws IllegalMove {
+        boolean destFound = false;
         Cell current = moveFrom;
         ArrayList<Cell> visited = new ArrayList<>();
         while(!destFound){
@@ -275,8 +275,7 @@ public class Game implements Hive {
             if(current.equals(moveTo)){
                 destFound = true;
             }
-        }*/
-
+        }
     }
 
     /**

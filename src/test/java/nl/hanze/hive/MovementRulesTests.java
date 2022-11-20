@@ -18,6 +18,7 @@ public class MovementRulesTests {
         assertTrue(board.getCell(0, 0).getTiles().isEmpty() && !board.getCell(1, 0).getTiles().isEmpty());
     }
 
+    // (6c)
     @Test
     void whenAnyGivenTileIsMovedThrowIlligalMoveWhenADuringMoveThereIsNoContact() throws Hive.IllegalMove {
         Game game = new Game();
@@ -46,6 +47,7 @@ public class MovementRulesTests {
        assertThrows(Hive.IllegalMove.class, () -> game.move(-1, +1, 0, +1));
     }
 
+    // (7a)
     @Test
     void WhenBeetleTileIsMovedMoreThatOnceThrowIllegalMove() throws Hive.IllegalMove {
         Game game = new Game();
@@ -63,6 +65,7 @@ public class MovementRulesTests {
         assertThrows(Hive.IllegalMove.class, () -> game.move(-1, -1, +1, -3));
     }
 
+    // (8a)
     @Test
     void WhenQueenBeeTileIsMovedMoreThatOnceThrowIllegalMove() throws Hive.IllegalMove {
         Game game = new Game();
@@ -79,6 +82,7 @@ public class MovementRulesTests {
         assertThrows(Hive.IllegalMove.class, () -> game.move(-2, -1, +1, -3));
     }
 
+    // (8b)
     @Test
     void WhenQueenBeeTileIsMovedToANonEmptyCellThrowIllegalMove() throws Hive.IllegalMove {
         Game game = new Game();
@@ -95,6 +99,68 @@ public class MovementRulesTests {
         assertThrows(Hive.IllegalMove.class, () -> game.move(-2, -1, -1, -1));
     }
 
+    // (10a)
+    @Test
+    void WhenSpiderIsMovedThreeSpotsThenDontThrowIllegalMove() throws Hive.IllegalMove {
+        Game game = new Game();
+        Board board = new Board();
+        // White
+        game.play(QUEEN_BEE, -1, -2);
+        // Black
+        game.play(QUEEN_BEE, +1, +2);
+        // White
+        game.play(GRASSHOPPER, -1, -1);
+        // Black
+        game.play(SOLDIER_ANT, +1, +1);
+        // White
+        game.play(SPIDER, +0, -2);
+        // Black
+        game.play(GRASSHOPPER, +2, +1);
+        // White
+        assertDoesNotThrow(() -> game.move(+0, -2, -2, +0));
+    }
+
+    // (10a)
+    @Test
+    void WhenSpiderIsMovedLessThanThreeTimesThenThrowIllegalMove() throws Hive.IllegalMove {
+        Game game = new Game();
+        Board board = new Board();
+        // White
+        game.play(QUEEN_BEE, -1, -2);
+        // Black
+        game.play(QUEEN_BEE, +1, +2);
+        // White
+        game.play(GRASSHOPPER, -1, -1);
+        // Black
+        game.play(SOLDIER_ANT, +1, +1);
+        // White
+        game.play(SPIDER, +0, -2);
+        // Black
+        game.play(GRASSHOPPER, +2, +1);
+        // White
+        assertThrows(Hive.IllegalMove.class, () -> game.move(+0, -2, -1, +0));
+    }
+
+    // (10a)
+    @Test
+    void WhenSpiderIsMovedMoreThanThreeTimesThenThrowIllegalMove() throws Hive.IllegalMove {
+        Game game = new Game();
+        Board board = new Board();
+        // White
+        game.play(QUEEN_BEE, -1, -2);
+        // Black
+        game.play(QUEEN_BEE, +1, +2);
+        // White
+        game.play(GRASSHOPPER, -1, -1);
+        // Black
+        game.play(SOLDIER_ANT, +1, +1);
+        // White
+        game.play(SPIDER, +0, -2);
+        // Black
+        game.play(GRASSHOPPER, +2, +1);
+        // White
+        assertThrows(Hive.IllegalMove.class, () -> game.move(+0, -2, -2, -1));
+    }
     @Test
     void WhenSoldierAntTileIsMovedToHisBeginningPositionsThrowIllegalMove() throws Hive.IllegalMove {
         Game game = new Game();
