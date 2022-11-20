@@ -22,7 +22,6 @@ public class MovementRulesTests {
     @Test
     void whenAnyGivenTileIsMovedThrowIlligalMoveWhenADuringMoveThereIsNoContact() throws Hive.IllegalMove {
         Game game = new Game();
-        Board board = game.getBoard();
         // White
         game.play(QUEEN_BEE, +1, +0);
         // Black
@@ -51,7 +50,6 @@ public class MovementRulesTests {
     @Test
     void WhenBeetleTileIsMovedMoreThatOnceThrowIllegalMove() throws Hive.IllegalMove {
         Game game = new Game();
-        Board board = game.getBoard();
         // White
         game.play(QUEEN_BEE, -2, -1);
         // Black
@@ -69,7 +67,6 @@ public class MovementRulesTests {
     @Test
     void WhenQueenBeeTileIsMovedMoreThatOnceThrowIllegalMove() throws Hive.IllegalMove {
         Game game = new Game();
-        Board board = game.getBoard();
         // White
         game.play(QUEEN_BEE, -2, -1);
         // Black
@@ -86,7 +83,6 @@ public class MovementRulesTests {
     @Test
     void WhenQueenBeeTileIsMovedToANonEmptyCellThrowIllegalMove() throws Hive.IllegalMove {
         Game game = new Game();
-        Board board = game.getBoard();
         // White
         game.play(QUEEN_BEE, -2, -1);
         // Black
@@ -103,7 +99,6 @@ public class MovementRulesTests {
     @Test
     void WhenSpiderIsMovedThreeSpotsThenDontThrowIllegalMove() throws Hive.IllegalMove {
         Game game = new Game();
-        Board board = new Board();
         // White
         game.play(QUEEN_BEE, -1, -2);
         // Black
@@ -128,7 +123,6 @@ public class MovementRulesTests {
     @Test
     void WhenSpiderIsMovedLessThanThreeTimesThenThrowIllegalMove() throws Hive.IllegalMove {
         Game game = new Game();
-        Board board = new Board();
         // White
         game.play(QUEEN_BEE, -1, -2);
         // Black
@@ -149,7 +143,6 @@ public class MovementRulesTests {
     @Test
     void WhenSpiderIsMovedMoreThanThreeTimesThenThrowIllegalMove() throws Hive.IllegalMove {
         Game game = new Game();
-        Board board = new Board();
         // White
         game.play(QUEEN_BEE, -1, -2);
         // Black
@@ -221,6 +214,7 @@ public class MovementRulesTests {
     // (10d)
     @Test
     void whenSpiderMovesToPreviouslyVisitedPositionThrowIllegalMove() throws Hive.IllegalMove {
+        Game game = new Game();
 
     }
 
@@ -232,7 +226,6 @@ public class MovementRulesTests {
     @Test
     void WhenSoldierAntTileIsMovedToHisBeginningPositionsThrowIllegalMove() throws Hive.IllegalMove {
         Game game = new Game();
-        Board board = game.getBoard();
         // White
         game.play(QUEEN_BEE, -2, -1);
         // Black
@@ -249,7 +242,6 @@ public class MovementRulesTests {
     @Test
     void WhenSoldierAntTileIsMovedToANonEmptyEndpoint() throws Hive.IllegalMove {
         Game game = new Game();
-        Board board = game.getBoard();
         // White
         game.play(QUEEN_BEE, -2, -1);
         // Black
@@ -261,4 +253,37 @@ public class MovementRulesTests {
         // White turn
         assertThrows(Hive.IllegalMove.class, () -> game.move(-1, -1, -2, -1));
     }
+
+    @Test
+    void WhenSoldierAntTileIsMovedAndLostContactDuringMoveThrowIllegalMove() throws Hive.IllegalMove {
+        Game game = new Game();
+        // White
+        game.play(QUEEN_BEE, +1, +0);
+        // Black
+        game.play(QUEEN_BEE, 0, -3);
+        // White
+        game.play(GRASSHOPPER, +1, -1);
+        // Black
+        game.play(GRASSHOPPER, +1, -3);
+        // White
+        game.play(BEETLE, 0, -1);
+        // Black
+        game.play(GRASSHOPPER, +2, -3);
+        // White
+        game.play(BEETLE, -1, 0);
+        // Black
+        game.play(GRASSHOPPER, +3, -3);
+        // White
+        game.play(SOLDIER_ANT, -1, +1);
+        // black
+        game.play(SPIDER, +3, -4);
+        // White
+        game.play(GRASSHOPPER, 0, 0);
+        // black
+        game.play(SPIDER, +4, -3);
+        // White
+        game.move(-1, +1, +2, -1);
+
+    }
+
 }

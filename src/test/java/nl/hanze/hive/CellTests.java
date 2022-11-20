@@ -203,9 +203,9 @@ public class CellTests {
     void whenQueenBeePlayedDoNotThrowIllegalMoveUponMovingTile() throws Hive.IllegalMove {
         Game game = new Game();
         game.play(QUEEN_BEE, 0, 0);
-        game.play(GRASSHOPPER, 2, 4);
+        game.play(SOLDIER_ANT, 2, 4);
         // (assert) When WHITE has played QUEEN_BEE and tries to move a tile, do NOT throw IllegalMove.
-        assertDoesNotThrow(() -> game.move(0, 0, 0, 1));
+        assertDoesNotThrow(() -> game.move(0, 0, +1, 0));
     }
 
     // (5c)
