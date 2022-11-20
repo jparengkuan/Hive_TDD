@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class MovementRulesTests {
     @Test
-    void pushToAdjacentTile() throws Hive.IllegalMove {
+    void pushToAdjacentTile() throws Exception {
         Game game = new Game();
         Board board = game.getBoard();
         // White
@@ -265,7 +265,7 @@ public class MovementRulesTests {
     }
 
     @Test
-    void WhenSoldierAntTileIsMovedAndLostContactDuringMoveThrowIllegalMove() throws Hive.IllegalMove {
+    void WhenSoldierAntTileIsMovedAndLostContactDuringMoveThrowIllegalMove() throws Exception {
         Game game = new Game();
         // White
         game.play(QUEEN_BEE, +1, +0);
@@ -305,11 +305,11 @@ public class MovementRulesTests {
         // Black
         game.play(QUEEN_BEE, +1, -1);
         // White
-        game.play(SOLDIER_ANT, -1, -1);
+        game.play(GRASSHOPPER, -1, -1);
         // Black
         game.play(GRASSHOPPER, +2, -1);
         // White turn
-        assertThrows(Hive.IllegalMove.class, () -> game.move(-1, -1, -2, -1));
+        assertThrows(Hive.IllegalMove.class, () -> game.move(-1, -1, -1, -1));
     }
 
 

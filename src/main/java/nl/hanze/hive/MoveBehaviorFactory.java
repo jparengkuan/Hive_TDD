@@ -9,7 +9,7 @@ public class MoveBehaviorFactory {
         this.board = board;
     }
 
-    public MoveBehavior getMoveBehavior(Hive.Tile gametile){
+    public MoveBehavior getMoveBehavior(Hive.Tile gametile) {
 
         if (gametile == Hive.Tile.BEETLE){
             return new BeetleMove(board);
@@ -23,6 +23,10 @@ public class MoveBehaviorFactory {
         else if (gametile == Hive.Tile.SPIDER){
             return new SpiderMove(board);
         }
+        else if (gametile == Hive.Tile.GRASSHOPPER){
+            return new GrashopperMove(board);
+        }
+
         return null;
     }
 }

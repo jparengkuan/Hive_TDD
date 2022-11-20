@@ -30,7 +30,6 @@ public class SoldierAntMove implements MoveBehavior {
             }
 
             if (visited.contains(new Cell(toQ, toR))) {
-                System.out.println("Found");
                 break;
             }
 
@@ -51,8 +50,6 @@ public class SoldierAntMove implements MoveBehavior {
                 if (!board.cellExists(neighbor.q, neighbor.r)) {
                     board.getCells().add(new Cell(neighbor.q, neighbor.r));
                 }
-
-
 
                 if(!board.getCell(neighbor.q, neighbor.r).isEmpty()){
                     nonEmptyNeighbors += 1;
@@ -75,8 +72,6 @@ public class SoldierAntMove implements MoveBehavior {
             if (lostContactDuringMove == neighborSize){
                 throw new Hive.IllegalMove("SoldierAnt lost contact with other tiles during move");
             }
-            System.out.println();
-
 
         }
 
