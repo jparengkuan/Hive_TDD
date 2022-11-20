@@ -17,6 +17,9 @@ public class MoveBehaviorFactory {
         else if (gametile == Hive.Tile.QUEEN_BEE){
             return new QueenBeeMove(board);
         }
+        else if (gametile == Hive.Tile.SOLDIER_ANT){
+            return new SoldierAntMove(board);
+        }
         return null;
     }
 }
