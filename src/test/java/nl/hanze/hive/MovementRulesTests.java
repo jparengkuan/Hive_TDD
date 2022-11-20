@@ -206,6 +206,16 @@ public class MovementRulesTests {
     @Test
     void whenSpiderMovesToNonEmptyPositionThrowIllegalMove() throws Hive.IllegalMove {
         Game game = new Game();
+        // White
+        game.play(QUEEN_BEE, 0, 0);
+        // Black
+        game.play(QUEEN_BEE, 2, -3);
+        // White
+        game.play(SPIDER, 0, 1);
+        // Black
+        game.play(GRASSHOPPER, 2, -2);
+        // White
+        assertThrows(Hive.IllegalMove.class, () -> game.move(0, 1, 0, 0));
     }
 
     // (9b)
