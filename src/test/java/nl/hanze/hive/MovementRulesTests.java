@@ -11,11 +11,16 @@ public class MovementRulesTests {
         Board board = game.getBoard();
         // White
         game.play(QUEEN_BEE, 0, 0);
+        // Black
         game.play(QUEEN_BEE, 0, 1);
-        // move tile to adjacent tile
-        game.move(0, 0, 1, 0);
+        // White
+        game.play(BEETLE, 1, -1);
+        // Black
+        game.play(GRASSHOPPER, 0, 2);
+        // move White tile to adjacent tile
+        game.move(1, -1, 0, -1);
         // check if move has been executed correctly
-        assertTrue(board.getCell(0, 0).getTiles().isEmpty() && !board.getCell(1, 0).getTiles().isEmpty());
+        assertTrue(board.getCell(1, -1).getTiles().isEmpty() && !board.getCell(0, -1).getTiles().isEmpty());
     }
 
     // (6c)
@@ -215,13 +220,18 @@ public class MovementRulesTests {
     @Test
     void whenSpiderMovesToPreviouslyVisitedPositionThrowIllegalMove() throws Hive.IllegalMove {
         Game game = new Game();
-
+        // White
+        game.play(QUEEN_BEE, 0, 0);
+        // Black
+        game.play(QUEEN_BEE, 2, 4);
+        // White
+        game.play(SPIDER, 0, 1);
+        // Black
+        game.play(SPIDER, 2, 3);
+        // White
+       // assertThrows(Hive.IllegalMove.class, () -> game.move())
     }
 
-    @Test
-    void testSoldierAntBehavior(){
-
-    }
     // (9b)
     @Test
     void WhenSoldierAntTileIsMovedToHisBeginningPositionsThrowIllegalMove() throws Hive.IllegalMove {

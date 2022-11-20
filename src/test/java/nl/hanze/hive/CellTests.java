@@ -221,7 +221,7 @@ public class CellTests {
         // black
         game.play(SPIDER, 2, 6);
         // (assert) When WHITE moves a tile to a cell that has no tiles on its neighboring cells, throw IllegalMove.
-        assertThrows(Hive.IllegalMove.class, () -> game.move(1, 4, 7, -29));
+        assertThrows(Hive.IllegalMove.class, () -> game.move(1, 4, 2, 2));
     }
 
     // (5d)
