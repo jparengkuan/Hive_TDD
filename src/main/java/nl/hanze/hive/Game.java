@@ -156,7 +156,7 @@ public class Game implements Hive {
 
         Gametile toMove = moveFromCell.getTiles().peek();
 
-        // test if the cell has any neighbors containing tiles (later to be refactored into a different method)
+        // test if the cell has any neighbors containing tiles
         ArrayList<Cell> neighbors = board.GetNeighboursFromCell(board.getCell(toQ, toR));
         boolean hasAdjacentCells = false;
         for (Cell neighbor : neighbors) {
