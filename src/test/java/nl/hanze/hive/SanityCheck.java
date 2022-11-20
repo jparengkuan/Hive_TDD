@@ -133,18 +133,6 @@ public class SanityCheck {
 
     }
 
-    // (2d) is a bit difficult to test if tiles can already be in one place only
-
-    // (2e) Test if tiles can be moved
-    @Test
-    void whenTileMoved() throws Hive.IllegalMove {
-        Game game = new Game();
-        game.play(BEETLE, 0, 0);
-      //  main.move(0, 0, 1, 0);
-      //  assertEquals(BEETLE, main.getBoard().getCell(1, 0).getTiles().peek().getTileName());
-        assertThrows(Hive.IllegalMove.class, () -> game.move(6, -4, 5, 3));
-    }
-
     // (2f) Test if tiles can be on top of each other
     @Test
     void whenTileOnTopOfAnotherTile() throws Hive.IllegalMove {
