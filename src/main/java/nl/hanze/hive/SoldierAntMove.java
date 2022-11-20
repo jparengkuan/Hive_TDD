@@ -19,5 +19,7 @@ public class SoldierAntMove implements MoveBehavior {
             throw new Hive.IllegalMove("SoldierAnt title cannot move to his start pos");
         }
 
+
+
     }
 }
