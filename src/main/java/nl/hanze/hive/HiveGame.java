@@ -1,5 +1,7 @@
 package nl.hanze.hive;
 
+import java.util.HashMap;
+
 /**
  * Deze klasse representeert de Hive Game
  */
@@ -7,8 +9,13 @@ package nl.hanze.hive;
 public class HiveGame implements Hive {
 
     private Player currenPlayer;
+    private HashMap<Player, HashMap<Hive.Tile, Integer>> playerDeck;
 
     public HiveGame(){
+
+        // Decks aanmaken met de Hive tiles voor beide spelers
+        setupPlayersDeck();
+
         // Als eerst is wit aan de beurt
         currenPlayer = Player.WHITE;
 
@@ -57,4 +64,23 @@ public class HiveGame implements Hive {
     public void setCurrenPlayer(Player currenPlayer) {
         this.currenPlayer = currenPlayer;
     }
+
+    private void setupPlayersDeck() {
+        this.playerDeck = new HashMap<>();
+        for (Player player : new Player[]{Player.WHITE, Player.BLACK}) {
+            playerDeck.put(player, new HashMap<Hive.Tile, Integer>() {{
+                put(Tile.QUEEN_BEE, 1);
+                put(Tile.SPIDER, 2);
+                put(Tile.BEETLE, 2);
+                put(Tile.SOLDIER_ANT, 3);
+                put(Tile.GRASSHOPPER, 3);
+            }});
+        }
+    }
+
+    public HashMap<Tile, Integer> getPlayersDeck(Player player){
+        return this.playerDeck.get(player);
+    }
 }
+
+
