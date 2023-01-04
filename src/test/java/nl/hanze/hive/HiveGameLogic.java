@@ -15,12 +15,11 @@ public class HiveGameLogic {
     void whenGameStartThenPlayerHaveACompleteDeck() {
         HiveGame hiveGame = new HiveGame();
         HashMap<Hive.Tile, Integer> playersDeck = hiveGame.getPlayersDeck(Hive.Player.WHITE);
-        assertEquals(Hive.Tile.QUEEN_BEE, 1);
-        assertEquals(Hive.Tile.SPIDER, 2);
-        assertEquals(Hive.Tile.BEETLE, 2);
-        assertEquals(Hive.Tile.SOLDIER_ANT, 3);
-        assertEquals(Hive.Tile.GRASSHOPPER, 3);
-
+        assertEquals(playersDeck.get(Hive.Tile.QUEEN_BEE), 1);
+        assertEquals(playersDeck.get(Hive.Tile.SPIDER), 2);
+        assertEquals(playersDeck.get(Hive.Tile.BEETLE), 2);
+        assertEquals(playersDeck.get(Hive.Tile.SOLDIER_ANT), 3);
+        assertEquals(playersDeck.get(Hive.Tile.GRASSHOPPER), 3);
     }
 
     // 3. Spelverloop Wit heeft de eerste beurt.
