@@ -11,8 +11,6 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.*;
 
-import static nl.hanze.hive.Hive.Player.BLACK;
-import static nl.hanze.hive.Hive.Player.WHITE;
 import static nl.hanze.hive.Hive.Tile.*;
 import static org.junit.jupiter.api.Assertions.*;
 
