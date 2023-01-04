@@ -8,7 +8,11 @@ import nl.hanze.hive.Hive;
 
 public class HiveGame implements Hive {
 
+    private Player currenPlayer;
+
     public HiveGame(){
+        // Als eerst is wit aan de beurt
+        currenPlayer = Player.WHITE;
 
     }
 
@@ -35,5 +39,13 @@ public class HiveGame implements Hive {
     @Override
     public boolean isDraw() {
         return false;
+    }
+
+    public Player getCurrenPlayer() {
+        return currenPlayer;
+    }
+
+    public void setCurrenPlayer(Player currenPlayer) {
+        this.currenPlayer = currenPlayer;
     }
 }
