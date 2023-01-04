@@ -10,7 +10,7 @@ public class HiveGameLogic {
     void whenGameStartThenPlayersItsWhiteturn()
     {
         HiveGame hiveGame = new HiveGame();
-        player = hiveGame.getCurrenPlayer();
+        Hive.Player player = hiveGame.getCurrenPlayer();
         assertEquals(Hive.Player.WHITE, player);
     }
 
