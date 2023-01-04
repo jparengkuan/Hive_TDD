@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class HivePlayTests {
 
+    //4a Een speler mag alleen zijn eigen nog niet gespeelde stenen spelen
     @Test
     void WhenPlayerTriesToPlayQueenBeeTwiceThrowError() throws Hive.IllegalMove {
         HiveGame hiveGame = new HiveGame();
