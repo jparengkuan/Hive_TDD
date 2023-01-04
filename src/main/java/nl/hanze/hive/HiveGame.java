@@ -1,7 +1,5 @@
 package nl.hanze.hive;
 
-import nl.hanze.hive.Hive;
-
 /**
  * Deze klasse representeert de Hive Game
  */
@@ -18,6 +16,8 @@ public class HiveGame implements Hive {
 
     @Override
     public void play(Tile tile, int q, int r) throws IllegalMove {
+        // Wissel van speler na een zet
+        this.switchTurn();
 
     }
 
@@ -39,6 +39,15 @@ public class HiveGame implements Hive {
     @Override
     public boolean isDraw() {
         return false;
+    }
+
+    public void switchTurn() {
+        if(getCurrenPlayer() == Player.WHITE){
+            this.setCurrenPlayer(Player.BLACK);
+        }
+        else{
+            this.setCurrenPlayer(Player.WHITE);
+        }
     }
 
     public Player getCurrenPlayer() {
