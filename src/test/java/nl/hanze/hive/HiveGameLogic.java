@@ -14,4 +14,14 @@ public class HiveGameLogic {
         assertEquals(Hive.Player.WHITE, player);
     }
 
+    // 3 Tijdens zijn beurt kan een speler een steen spelen, een steen verplaatsen of
+    // passen; daarna is de tegenstander aan de beurt
+    @Test
+    void whenPlayerMakesAMoveThenGiveTurntoOppositePlayer() throws Hive.IllegalMove {
+        HiveGame hiveGame = new HiveGame();
+        hiveGame.play(Hive.Tile.GRASSHOPPER, 0,0);
+        assertEquals(Hive.Player.BLACK, hiveGame.getCurrenPlayer());
+    }
+
+
 }
