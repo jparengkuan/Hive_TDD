@@ -26,6 +26,9 @@ public class HiveGame implements Hive {
         // Wissel van speler na een zet
         this.switchTurn();
 
+        // Plaatst de steen vanuit de spelers deck op het bord
+        this.playTileFromDeck(tile);
+
     }
 
     @Override
@@ -80,6 +83,16 @@ public class HiveGame implements Hive {
 
     public HashMap<Tile, Integer> getPlayersDeck(Player player){
         return this.playerDeck.get(player);
+    }
+
+    public void playTileFromDeck(Hive.Tile tile) throws IllegalMove {
+        if(getPlayersDeck(this.getCurrenPlayer()).get(tile) > 0){
+            int aantal = playerDeck.get(this.getCurrenPlayer()).get(tile);
+            this.getPlayersDeck(this.getCurrenPlayer()).put(tile, aantal-1);
+        }
+        else {
+            throw new IllegalMove("De speler heeft het gegeven tile type niet meer in zijn deck");
+        }
     }
 }
 
