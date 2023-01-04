@@ -5,12 +5,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class HiveGameLogic {
 
+    // 3. Spelverloop Wit heeft de eerste beurt.
     @Test
     void whenGameStartThenPlayersItsWhiteturn()
     {
-        hiveGame = new HiveGame();
-        player = hiveGame.getPlayerTurn();
-        assertEquals(Player.WHITE, player);
+        HiveGame hiveGame = new HiveGame();
+        player = hiveGame.getCurrenPlayer();
+        assertEquals(Hive.Player.WHITE, player);
     }
 
 }
