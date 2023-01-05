@@ -11,6 +11,10 @@ public class HiveGame implements Hive {
     private Player currenPlayer;
     private HashMap<Player, HashMap<Hive.Tile, Integer>> playerDeck;
 
+    private HiveBoard hiveBoard;
+
+    private int turnCounter;
+
     public HiveGame(){
 
         // Decks aanmaken met de Hive tiles voor beide spelers
@@ -19,6 +23,11 @@ public class HiveGame implements Hive {
         // Als eerst is wit aan de beurt
         currenPlayer = Player.WHITE;
 
+        // Zet de counter op 0
+        this.turnCounter = 0;
+
+        // Maak een nieuwe hiveboard aan
+        this.hiveBoard = new HiveBoard();
     }
 
     @Override
@@ -30,6 +39,9 @@ public class HiveGame implements Hive {
 
             // Plaatst de steen vanuit de spelers deck op het bord
             this.playTileFromDeck(tile);
+
+            // Increment de turnCounter
+            this.turnCounter++;
         }
 
     }
@@ -114,10 +126,19 @@ public class HiveGame implements Hive {
         return false;
     }
 
+    public boolean playerMustPlayNextToAnotherTile(int q, int r){
+        if (turnCounter > 0 && !this.hiveBoard.givenCoordinateHasNeighbours(q, r)) return true;
+        else return false;
+    }
+
     public boolean isValidPlay(Tile tile, int q, int r) throws IllegalMove {
         if (playerMustPlayQueenBee(tile))
         {
             throw new IllegalMove("Je hebt al drie stenen gespeeld, je kan momenteel alleen de bijenkoningnin spelen");
+        }
+        if (playerMustPlayNextToAnotherTile(q, r))
+        {
+            throw new IllegalMove("De steen kan alleen gespeeld worden, naast een steen op het bord");
         }
         return true;
     }
