@@ -94,6 +94,22 @@ public class HiveGame implements Hive {
             throw new IllegalMove("De speler heeft het gegeven tile type niet meer in zijn deck");
         }
     }
+
+    public boolean playerMustPlayQueenBee(Hive.Tile tile) throws IllegalMove {
+        if (getPlayersDeck(getCurrenPlayer()).get(Tile.QUEEN_BEE) == 1)
+        {
+            int tilesInDeck = 0;
+
+            if (tile != Tile.QUEEN_BEE){
+                tilesInDeck = getPlayersDeck(getCurrenPlayer()).values().stream().reduce(0, Integer::sum);
+
+                if (tilesInDeck <= 8) {
+                   return true;
+                }
+            }
+        }
+        return false;
+    }
 }
 
 
