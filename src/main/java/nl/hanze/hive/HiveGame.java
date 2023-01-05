@@ -39,9 +39,11 @@ public class HiveGame implements Hive {
 
             // Plaatst de steen vanuit de spelers deck op het bord
             this.playTileFromDeck(tile);
+            this.hiveBoard.placeTile(tile, q, r);
 
             // Increment de turnCounter
             this.turnCounter++;
+
         }
 
     }

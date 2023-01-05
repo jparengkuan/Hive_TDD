@@ -34,7 +34,7 @@ public class HiveBoard {
 
         while(neighbours.hasNext()){
             TileStack neighbour = getHiveboard().get(neighbours.next());
-            if (neighbour != null && !neighbour.getTiles().empty()){
+            if (neighbour != null && !neighbour.getTiles().isEmpty()){
                 return true;
             }
         }
