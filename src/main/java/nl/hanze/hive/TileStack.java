@@ -4,26 +4,26 @@ import java.util.Stack;
 
 public class TileStack {
 
-    private Stack<Hive.Tile> tiles;
+    private Stack<HiveTile> tiles;
 
     public TileStack(){
         this.tiles = new Stack<>();
     }
 
-    public TileStack(Hive.Tile tile){
+    public TileStack(HiveTile tile){
         this.tiles = new Stack<>();
         this.tiles.push(tile);
     }
 
-    public void add(Hive.Tile tile){
+    public void add(HiveTile tile){
         this.tiles.add(tile);
     }
 
-    public Hive.Tile remove(){
+    public HiveTile remove(){
         return this.tiles.pop();
     }
 
-    public Stack<Hive.Tile> getTiles()
+    public Stack<HiveTile> getTiles()
     {
         return this.tiles;
     }

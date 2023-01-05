@@ -19,11 +19,11 @@ public class HiveBoard {
         return hiveboard;
     }
 
-    public void placeTile(Hive.Tile tile, int q, int r){
+    public void placeTile(Hive.Tile tile, Hive.Player owner, int q, int r){
         TileStack tiles = this.hiveboard.get(new Hexagon(q, r));
 
-        if (tiles != null) tiles.add(tile); // Plaats bovenop de stack
-        else hiveboard.put(new Hexagon(q, r), new TileStack(tile)); // Maak een nieuwe hexagon met de tile
+        if (tiles != null) tiles.add(new HiveTile(owner, tile)); // Plaats bovenop de stack
+        else hiveboard.put(new Hexagon(q, r), new TileStack(new HiveTile(owner, tile))); // Maak een nieuwe hexagon met de tile
 
     }
 

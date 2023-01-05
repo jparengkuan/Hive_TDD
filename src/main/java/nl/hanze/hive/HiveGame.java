@@ -34,12 +34,12 @@ public class HiveGame implements Hive {
     public void play(Tile tile, int q, int r) throws IllegalMove {
 
         if (isValidPlay(tile, q, r)) {
+            // Plaats de steen vanuit de spelers deck op het bord
+            this.playTileFromDeck(tile);
+            this.hiveBoard.placeTile(tile, this.getCurrenPlayer(), q, r);
+
             // Wissel van speler na een zet
             this.switchTurn();
-
-            // Plaatst de steen vanuit de spelers deck op het bord
-            this.playTileFromDeck(tile);
-            this.hiveBoard.placeTile(tile, q, r);
 
             // Increment de turnCounter
             this.turnCounter++;
