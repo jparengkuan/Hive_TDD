@@ -21,6 +21,7 @@ public class HivePlayTests {
     void whenPlayerDoesNotPlacesAnTileNextToAnotherOneThrowError() throws Hive.IllegalMove {
         HiveGame hiveGame = new HiveGame();
         hiveGame.play(Hive.Tile.QUEEN_BEE, 0, 0); // White
+        hiveGame.play(Hive.Tile.QUEEN_BEE, 0, 0); // White
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.play(Hive.Tile.GRASSHOPPER, 2, 0));
     }
 

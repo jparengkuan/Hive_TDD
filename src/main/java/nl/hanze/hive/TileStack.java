@@ -22,4 +22,9 @@ public class TileStack {
     public Hive.Tile remove(){
         return this.tiles.pop();
     }
+
+    public Stack<Hive.Tile> getTiles()
+    {
+        return this.tiles;
+    }
 }

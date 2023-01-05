@@ -1,5 +1,7 @@
 package nl.hanze.hive;
 
+import java.util.ArrayList;
+
 public class Hexagon {
 
     /**
@@ -22,6 +24,17 @@ public class Hexagon {
         else if (!(o instanceof Hexagon)) return false;
 
         return this.q == ((Hexagon) o).q && this.r == ((Hexagon) o).r;
+    }
+
+    public ArrayList<Hexagon> getAllNeighBours(){
+        ArrayList<Hexagon> neighbours = new ArrayList<Hexagon>();
+        neighbours.add(new Hexagon(q + 1, r));
+        neighbours.add(new Hexagon(q, r + 1));
+        neighbours.add(new Hexagon(q - 1, r + 1));
+        neighbours.add(new Hexagon(q - 1, r));
+        neighbours.add(new Hexagon(q, r - 1));
+        neighbours.add(new Hexagon(q + 1, r - 1));
+        return neighbours;
     }
 
 }
