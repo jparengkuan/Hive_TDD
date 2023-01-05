@@ -23,11 +23,14 @@ public class HiveGame implements Hive {
 
     @Override
     public void play(Tile tile, int q, int r) throws IllegalMove {
-        // Wissel van speler na een zet
-        this.switchTurn();
 
-        // Plaatst de steen vanuit de spelers deck op het bord
-        this.playTileFromDeck(tile);
+        if (isValidPlay(tile, q, r)) {
+            // Wissel van speler na een zet
+            this.switchTurn();
+
+            // Plaatst de steen vanuit de spelers deck op het bord
+            this.playTileFromDeck(tile);
+        }
 
     }
 
@@ -95,7 +98,7 @@ public class HiveGame implements Hive {
         }
     }
 
-    public boolean playerMustPlayQueenBee(Hive.Tile tile) throws IllegalMove {
+    public boolean playerMustPlayQueenBee(Hive.Tile tile)  {
         if (getPlayersDeck(getCurrenPlayer()).get(Tile.QUEEN_BEE) == 1)
         {
             int tilesInDeck = 0;
@@ -109,6 +112,14 @@ public class HiveGame implements Hive {
             }
         }
         return false;
+    }
+
+    public boolean isValidPlay(Tile tile, int q, int r) throws IllegalMove {
+        if (playerMustPlayQueenBee(tile))
+        {
+            throw new IllegalMove("Je hebt al drie stenen gespeeld, je kan momenteel alleen de bijenkoningnin spelen");
+        }
+        return true;
     }
 }
 

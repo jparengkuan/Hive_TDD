@@ -23,6 +23,6 @@ public class HivePlayTests {
         hiveGame.playTileFromDeck(Hive.Tile.GRASSHOPPER); // White
         hiveGame.playTileFromDeck(Hive.Tile.GRASSHOPPER); // White
         hiveGame.playTileFromDeck(Hive.Tile.SOLDIER_ANT); // White
-        assertThrows(Hive.IllegalMove.class, () -> hiveGame.play(Hive.Tile.QUEEN_BEE, 0, 0));
+        assertThrows(Hive.IllegalMove.class, () -> hiveGame.play(Hive.Tile.SOLDIER_ANT, 0, 0));
     }
 }
