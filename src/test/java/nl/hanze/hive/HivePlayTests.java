@@ -2,7 +2,11 @@ package nl.hanze.hive;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 public class HivePlayTests {
 
@@ -13,6 +17,21 @@ public class HivePlayTests {
         hiveGame.play(Hive.Tile.QUEEN_BEE, 0, 0); // White
         hiveGame.play(Hive.Tile.GRASSHOPPER, 1, 0); // Black
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.play(Hive.Tile.QUEEN_BEE, 2, 0));
+    }
+
+    @Test
+    void givenAPlayerDoesNotHaveACertainTileinPlayersDeckThrowError() throws Hive.IllegalMove {
+        HiveGame hiveGame = spy(HiveGame.class);
+        when(hiveGame.getPlayersDeck(hiveGame.getCurrenPlayer())).thenReturn(new HashMap<Hive.Tile, Integer>()
+        {{
+            put(Hive.Tile.QUEEN_BEE, 1);
+            put(Hive.Tile.SPIDER, 2);
+            put(Hive.Tile.BEETLE, 2);
+            put(Hive.Tile.SOLDIER_ANT, 3);
+            put(Hive.Tile.GRASSHOPPER, 0);
+        }});
+
+        assertThrows(Hive.IllegalMove.class, () -> hiveGame.playTileFromDeck(Hive.Tile.GRASSHOPPER));
     }
 
     //4c Als er al stenen op het bord liggen moet een naast een andere steen
