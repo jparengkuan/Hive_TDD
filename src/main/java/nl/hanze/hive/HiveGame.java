@@ -1,6 +1,9 @@
 package nl.hanze.hive;
 
+import javax.swing.text.Position;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Deze klasse representeert de Hive Game
@@ -127,8 +130,30 @@ public class HiveGame implements Hive {
         return false;
     }
 
+    public boolean stoneIsPlacedNextToOpponent(int q, int r){
+        Iterator neighbours = new Hexagon(q, r).getAllNeighBours().iterator();
+
+        while (neighbours.hasNext()){
+            TileStack neighbour = hiveBoard.getHiveboard().get(neighbours.next());
+
+            if (neighbour != null &&
+                    neighbour.getTiles().peek() != null &&
+                    neighbour.getTiles().peek().getOwner() != this.getCurrenPlayer()
+            )
+                return true;
+
+        }
+
+        return false;
+    }
+
     public boolean playerMustPlayNextToAnotherTile(int q, int r){
         if (turnCounter > 0 && !this.hiveBoard.givenCoordinateHasNeighbours(q, r)) return true;
+        else return false;
+    }
+
+    public boolean playerCannotPlayNextToOpponentTile(int q, int r){
+        if (turnCounter > 2 && stoneIsPlacedNextToOpponent(q, r)) return true;
         else return false;
     }
 
@@ -140,6 +165,10 @@ public class HiveGame implements Hive {
         if (playerMustPlayNextToAnotherTile(q, r))
         {
             throw new IllegalMove("De steen kan alleen gespeeld worden, naast een steen op het bord");
+        }
+        if (playerCannotPlayNextToOpponentTile(q, r))
+        {
+            throw new IllegalMove("De steen kan niet naast en tegenstander worden gespeeld");
         }
         return true;
     }
