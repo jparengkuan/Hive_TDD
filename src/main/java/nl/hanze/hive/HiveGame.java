@@ -43,7 +43,6 @@ public class HiveGame implements Hive {
 
             // Increment de turnCounter
             this.turnCounter++;
-
         }
 
     }

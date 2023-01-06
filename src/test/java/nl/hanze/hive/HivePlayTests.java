@@ -15,13 +15,23 @@ public class HivePlayTests {
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.play(Hive.Tile.QUEEN_BEE, 2, 0));
     }
 
-    //c. Als er al stenen op het bord liggen moet een naast een andere steen
+    //4c Als er al stenen op het bord liggen moet een naast een andere steen
     // gespeeld worden
     @Test
     void whenPlayerDoesNotPlacesAnTileNextToAnotherOneThrowError() throws Hive.IllegalMove {
         HiveGame hiveGame = new HiveGame();
         hiveGame.play(Hive.Tile.QUEEN_BEE, 0, 0); // White
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.play(Hive.Tile.QUEEN_BEE, 0, 2));
+    }
+
+    //Als er stenen van beide spelers op het bord liggen mag een steen niet naast
+    //een steen van de tegenstander geplaatst worden
+    @Test
+    void whenPlayerTriesToPlayATileNextToAnOpponentThrowError() throws Hive.IllegalMove {
+        HiveGame hiveGame = new HiveGame();
+        hiveGame.play(Hive.Tile.QUEEN_BEE, 0, 0); // White
+        hiveGame.play(Hive.Tile.GRASSHOPPER, 1, 0); // Black
+        assertThrows(Hive.IllegalMove.class, () -> hiveGame.play(Hive.Tile.QUEEN_BEE, 1, 1));
     }
 
     //4e Als een speler al drie stenen gespeeld heeft maar zijn bijenkoningin nog niet,
