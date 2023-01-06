@@ -153,7 +153,7 @@ public class HiveGame implements Hive {
     }
 
     public boolean playerCannotPlayNextToOpponentTile(int q, int r){
-        if (turnCounter > 2 && stoneIsPlacedNextToOpponent(q, r)) return true;
+        if (turnCounter >= 2 && stoneIsPlacedNextToOpponent(q, r)) return true;
         else return false;
     }
 

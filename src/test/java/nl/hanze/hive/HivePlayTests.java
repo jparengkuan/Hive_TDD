@@ -31,8 +31,7 @@ public class HivePlayTests {
         HiveGame hiveGame = new HiveGame();
         hiveGame.play(Hive.Tile.QUEEN_BEE, 0, 0); // White
         hiveGame.play(Hive.Tile.GRASSHOPPER, 1, 0); // Black
-        hiveGame.play(Hive.Tile.GRASSHOPPER, 1, 1);
-        assertThrows(Hive.IllegalMove.class, () -> hiveGame.play(Hive.Tile.QUEEN_BEE, 1, 1));
+        assertThrows(Hive.IllegalMove.class, () -> hiveGame.play(Hive.Tile.GRASSHOPPER, 1, 1));
     }
 
     //4e Als een speler al drie stenen gespeeld heeft maar zijn bijenkoningin nog niet,
