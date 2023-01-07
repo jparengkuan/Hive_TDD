@@ -167,7 +167,8 @@ public class HiveGame implements Hive {
     }
 
     public boolean playerHasNotPlayedQueenBee(){
-        return true;
+        if (getPlayersDeck(getCurrenPlayer()).get(Tile.QUEEN_BEE) == 1) return true;
+        return false;
     }
 
     public boolean playerMustPlayNextToAnotherTile(int q, int r){
