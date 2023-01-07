@@ -142,6 +142,8 @@ public class HiveGame implements Hive {
             hiveBoard.getHiveboard().put(new Hexagon(fromQ, fromR), tileStack);
             return true;
         }
+        hiveBoard.getHiveboard().remove(new Hexagon(toQ, toR));
+        hiveBoard.getHiveboard().put(new Hexagon(fromQ, fromR), tileStack);
         return false;
     }
 
