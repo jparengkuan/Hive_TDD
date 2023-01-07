@@ -166,6 +166,10 @@ public class HiveGame implements Hive {
         return false;
     }
 
+    public boolean playerHasNotPlayedQueenBee(){
+        return true;
+    }
+
     public boolean playerMustPlayNextToAnotherTile(int q, int r){
         if (turnCounter > 0 && !this.hiveBoard.givenCoordinateHasNeighbours(q, r)) return true;
         else return false;
@@ -200,6 +204,10 @@ public class HiveGame implements Hive {
         if (playerTriesToMoveOpponentsTile(fromQ, fromR))
         {
             throw new IllegalMove("Het is niet toegestaan om een steen van de tegenstander te verplaatsen");
+        }
+        if (playerHasNotPlayedQueenBee())
+        {
+            throw new IllegalMove("Voordat je een verplaatsing kan doen, moet je eerst de QueenBee spelen");
         }
         return true;
     }

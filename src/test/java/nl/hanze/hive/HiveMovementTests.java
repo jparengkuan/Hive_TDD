@@ -31,7 +31,6 @@ public class HiveMovementTests {
         hiveGame.play(Hive.Tile.GRASSHOPPER, 0, 0); //white
         hiveGame.play(Hive.Tile.GRASSHOPPER, 0, 1); //black;
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(0, 0, 1, 0));
-
     }
 
 }
