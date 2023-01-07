@@ -39,23 +39,20 @@ public class HiveMovementTests {
 
     //5c. Een steen moet na het verplaatsen in contact zijn met minstens één andere steen.
     @Test
-    void whenPlayerMovesATileToAnLocationWithNoNeighboursThrowError()
-    {
+    void whenPlayerMovesATileToAnLocationWithNoNeighboursThrowError() throws Hive.IllegalMove {
         HiveGame hiveGame = spy(HiveGame.class);
-        when(hiveGame.hiveBoard.getHiveboard()).thenReturn(new HashMap<Hexagon, TileStack>() {{
-        put(new Hexagon(0, 0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
-        put(new Hexagon(1, 0), new TileStack(new HiveTile(Hive.Player.BLACK, Hive.Tile.QUEEN_BEE)));
-        put(new Hexagon(-1, 0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.GRASSHOPPER)));
-        }});
-
         when(hiveGame.getPlayersDeck(hiveGame.getCurrenPlayer())).thenReturn(new HashMap<Hive.Tile, Integer>()
         {{
-            put(Hive.Tile.QUEEN_BEE, 0);
+            put(Hive.Tile.QUEEN_BEE, 1);
             put(Hive.Tile.SPIDER, 2);
             put(Hive.Tile.BEETLE, 2);
             put(Hive.Tile.SOLDIER_ANT, 3);
             put(Hive.Tile.GRASSHOPPER, 3);
         }});
+
+        hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.WHITE, 0, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.BLACK, 1, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.WHITE, -1, 0);
 
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(-1, 0, -5, -5));
     }
