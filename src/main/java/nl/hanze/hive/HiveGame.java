@@ -166,6 +166,11 @@ public class HiveGame implements Hive {
         return false;
     }
 
+    public boolean playerTriesToMoveATileToLocationWithNoNeighbours(int toQ, int toR){
+        if (!hiveBoard.givenCoordinateHasNeighbours(toQ, toR)) return true;
+        return false;
+    }
+
     public boolean playerHasNotPlayedQueenBee(){
         if (getPlayersDeck(getCurrenPlayer()).get(Tile.QUEEN_BEE) == 1) return true;
         return false;
@@ -197,7 +202,7 @@ public class HiveGame implements Hive {
         return true;
     }
 
-    public boolean isValidMove(int fromQ, int fromR, int toQ, int to) throws IllegalMove {
+    public boolean isValidMove(int fromQ, int fromR, int toQ, int toR) throws IllegalMove {
         if (playerTriesToMoveATileThatDoesntExist(fromQ, fromR))
         {
             throw new IllegalMove("Je probeert een steen te verplaatsen vanaf een locatie, dat niet bestaat");
@@ -209,6 +214,10 @@ public class HiveGame implements Hive {
         if (playerHasNotPlayedQueenBee())
         {
             throw new IllegalMove("Voordat je een verplaatsing kan doen, moet je eerst de QueenBee spelen");
+        }
+        if (playerTriesToMoveATileToLocationWithNoNeighbours(toQ, toR))
+        {
+            throw new IllegalMove("Een steen kan alleen verplaatst worden naar een locatie met buren");
         }
         return true;
     }
