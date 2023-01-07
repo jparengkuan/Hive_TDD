@@ -23,4 +23,15 @@ public class HiveMovementTests {
         hiveGame.play(Hive.Tile.GRASSHOPPER, 0, 1); //black;
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(1, 1, 1, 0));
     }
+
+    //5b. Een speler mag pas stenen verplaatsen als zijn bijenkoningin gespeeld is.
+    @Test
+    void whenPlayerHasNotPlayedQueenBeeAndDoesAMoveThrowError() throws Hive.IllegalMove {
+        HiveGame hiveGame = new HiveGame();
+        hiveGame.play(Hive.Tile.GRASSHOPPER, 0, 0); //white
+        hiveGame.play(Hive.Tile.GRASSHOPPER, 0, 1); //black;
+        assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(0, 0, 1, 0));
+
+    }
+
 }
