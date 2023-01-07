@@ -1,9 +1,7 @@
 package nl.hanze.hive;
 
 import javax.swing.text.Position;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 
 /**
  * Deze klasse representeert de Hive Game
@@ -134,6 +132,48 @@ public class HiveGame implements Hive {
         return false;
     }
 
+    public boolean hiveWouldSplitAfterMove(int fromQ, int fromR, int toQ, int toR){
+
+        TileStack tileStack = hiveBoard.getHiveboard().remove(new Hexagon(fromQ, fromR));
+        hiveBoard.getHiveboard().put(new Hexagon(toQ, toR), tileStack);
+
+        if(!hiveIsIntact()) {
+            hiveBoard.getHiveboard().remove(new Hexagon(toQ, toR));
+            hiveBoard.getHiveboard().put(new Hexagon(fromQ, fromR), tileStack);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean hiveIsIntact(){
+
+        Queue<Hexagon> queue = new LinkedList<>();
+        Set<Hexagon> visited = new HashSet<>();
+
+        Hexagon startPos = hiveBoard.getHiveboard().keySet().iterator().next();
+
+        queue.add(startPos);
+        visited.add(startPos);
+
+        while (!queue.isEmpty()){
+            Hexagon currentPos = queue.poll();
+            for (Hexagon neigbour : currentPos.getAllNeighBours()) {
+                if (visited.contains(neigbour)){
+                    return false;
+                } else {
+                    if (hiveBoard.getHiveboard().get(neigbour) != null
+                    && hiveBoard.getHiveboard().get(neigbour).getTiles() != null
+                    && !hiveBoard.getHiveboard().get(neigbour).getTiles().isEmpty()) {
+                        visited.add(neigbour);
+                        queue.add(neigbour);
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
     public boolean stoneIsPlacedNextToOpponent(int q, int r){
         Iterator neighbours = new Hexagon(q, r).getAllNeighBours().iterator();
 
@@ -218,6 +258,10 @@ public class HiveGame implements Hive {
         if (playerTriesToMoveATileToLocationWithNoNeighbours(toQ, toR))
         {
             throw new IllegalMove("Een steen kan alleen verplaatst worden naar een locatie met buren");
+        }
+        if (hiveWouldSplitAfterMove(fromQ, fromR, toQ, toR))
+        {
+            throw new IllegalMove("Door het verplaatsen van de steen zijn er twee niet onderling verbonden groepen stenen ontstaan");
         }
         return true;
     }
