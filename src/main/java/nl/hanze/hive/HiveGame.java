@@ -14,7 +14,7 @@ public class HiveGame implements Hive {
     private Player currenPlayer;
     private HashMap<Player, HashMap<Hive.Tile, Integer>> playerDeck;
 
-    private HiveBoard hiveBoard;
+    public HiveBoard hiveBoard;
 
     private int turnCounter;
 
@@ -212,6 +212,7 @@ public class HiveGame implements Hive {
         }
         return true;
     }
+
 }
 
 
