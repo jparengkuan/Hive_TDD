@@ -57,4 +57,16 @@ public class HiveMovementTests {
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(-1, 0, -5, -5));
     }
 
+    //5d. Een steen mag niet verplaatst worden als er door het weghalen van de steen
+    // twee niet onderling verbonden groepen stenen ontstaan.
+    @Test
+    void WhenAPlayerMakesAMoveAndSplitsTheHiveThrowError() throws Hive.IllegalMove {
+        HiveGame hiveGame = new HiveGame();
+        hiveGame.play(Hive.Tile.QUEEN_BEE, 0, 0); //white
+        hiveGame.play(Hive.Tile.QUEEN_BEE, -1, 0); //black;
+        hiveGame.play(Hive.Tile.GRASSHOPPER, 1, 0); //white
+        hiveGame.play(Hive.Tile.GRASSHOPPER, -2, 0); //black;
+        assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(0, 0, 1, -1));
+    }
+
 }
