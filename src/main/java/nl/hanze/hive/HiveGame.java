@@ -53,6 +53,10 @@ public class HiveGame implements Hive {
     @Override
     public void move(int fromQ, int fromR, int toQ, int toR) throws IllegalMove {
 
+        if (isValidMove(fromQ, fromR, toQ, toR)){
+
+        }
+
     }
 
     @Override
@@ -147,6 +151,15 @@ public class HiveGame implements Hive {
         return false;
     }
 
+    public boolean playerTriesToMoveOpponentsTile(int fromQ, int fromR){
+        TileStack tileStack = this.hiveBoard.getHiveboard().get(new Hexagon(fromQ, fromR));
+        if (tileStack.getTiles().peek() == null ||
+                tileStack.getTiles().peek().getOwner() != getCurrenPlayer())
+            return true;
+
+        return false;
+    }
+
     public boolean playerMustPlayNextToAnotherTile(int q, int r){
         if (turnCounter > 0 && !this.hiveBoard.givenCoordinateHasNeighbours(q, r)) return true;
         else return false;
@@ -169,6 +182,14 @@ public class HiveGame implements Hive {
         if (playerCannotPlayNextToOpponentTile(q, r))
         {
             throw new IllegalMove("De steen kan niet naast en tegenstander worden gespeeld");
+        }
+        return true;
+    }
+
+    public boolean isValidMove(int fromQ, int fromR, int toQ, int to) throws IllegalMove {
+        if (playerTriesToMoveOpponentsTile(fromQ, fromR))
+        {
+            throw new IllegalMove("Het is niet toegestaan om een steen van de tegenstander te verplaatsen");
         }
         return true;
     }
