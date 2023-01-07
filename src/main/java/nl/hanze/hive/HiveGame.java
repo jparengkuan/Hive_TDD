@@ -160,6 +160,12 @@ public class HiveGame implements Hive {
         return false;
     }
 
+    public boolean playerTriesToMoveATileThatDoesntExist(int fromQ, int fromR){
+        TileStack tileStack = this.hiveBoard.getHiveboard().get(new Hexagon(fromQ, fromR));
+        if (tileStack == null) return true;
+        return false;
+    }
+
     public boolean playerMustPlayNextToAnotherTile(int q, int r){
         if (turnCounter > 0 && !this.hiveBoard.givenCoordinateHasNeighbours(q, r)) return true;
         else return false;
@@ -187,6 +193,10 @@ public class HiveGame implements Hive {
     }
 
     public boolean isValidMove(int fromQ, int fromR, int toQ, int to) throws IllegalMove {
+        if (playerTriesToMoveATileThatDoesntExist(fromQ, fromR))
+        {
+            throw new IllegalMove("Je probeert een steen te verplaatsen vanaf een locatie, dat niet bestaat");
+        }
         if (playerTriesToMoveOpponentsTile(fromQ, fromR))
         {
             throw new IllegalMove("Het is niet toegestaan om een steen van de tegenstander te verplaatsen");
