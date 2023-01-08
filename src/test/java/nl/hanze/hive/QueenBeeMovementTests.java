@@ -25,4 +25,19 @@ public class QueenBeeMovementTests {
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(+2, 0, 0, 0));
     }
 
+    //8b De bijenkoningin mag alleen verplaatst worden naar een leeg veld
+    @Test
+    void WhenPlayerTriestoMoveQueenBeeToOccupiedPositionThrowError() throws Hive.IllegalMove {
+        HiveGame hiveGame = spy(HiveGame.class);
+        when(hiveGame.getPlayersDeck(hiveGame.getCurrenPlayer())).thenReturn(new HashMap<Hive.Tile, Integer>()
+        {{
+            put(Hive.Tile.QUEEN_BEE, 0);
+        }});
+
+        hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.WHITE, 0, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, -1, 0);
+
+        hiveGame.move(0, 0, -1, 0);
+    }
+
 }
