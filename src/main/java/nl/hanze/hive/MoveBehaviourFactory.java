@@ -10,7 +10,7 @@ public class MoveBehaviourFactory {
             case SPIDER:
                 break;
             case BEETLE:
-                break;
+                return new BeetleMoveBehaviour();
             case GRASSHOPPER:
                 break;
             case SOLDIER_ANT:
