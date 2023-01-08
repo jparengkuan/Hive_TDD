@@ -1,8 +1,6 @@
 package nl.hanze.hive;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -27,7 +25,7 @@ public class HiveMovementSlideTests {
         hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, 1, -1);
         hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, 1, 0);
 
-        hiveGame.move(-1, 1, 0, 1);
+        assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(-1, 1, 0, 1));
 
     }
 }
