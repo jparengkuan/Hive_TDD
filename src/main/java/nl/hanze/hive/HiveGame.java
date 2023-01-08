@@ -52,11 +52,21 @@ public class HiveGame implements Hive {
     public void move(int fromQ, int fromR, int toQ, int toR) throws IllegalMove {
 
         if (isValidMove(fromQ, fromR, toQ, toR)){
-            // Steen verplaatsen
-            this.hiveBoard.moveTile(fromQ, fromR, toQ, toR);
 
-            // Wissel van speler
-            this.switchTurn();
+            HiveTile tile = hiveBoard.getHiveboard().get(new Hexagon(fromQ, fromR)).getTiles().peek();
+
+            MoveBehaviourStrategy moveBehaviour = MoveBehaviourFactory.createMoveBehaviour(tile.getInsect());
+
+            if(moveBehaviour.moveIsPossible(this.hiveBoard, new Hexagon(fromQ, fromR), new Hexagon(toQ, toR))) {
+
+                // Steen verplaatsen
+                this.hiveBoard.moveTile(fromQ, fromR, toQ, toR);
+
+                // Wissel van speler
+                this.switchTurn();
+            }
+
+
         }
 
     }
@@ -265,10 +275,10 @@ public class HiveGame implements Hive {
         {
             throw new IllegalMove("Een steen kan alleen verplaatst worden naar een locatie met buren");
         }
-        if (hiveWouldSplitAfterMove(fromQ, fromR, toQ, toR))
-        {
-            throw new IllegalMove("Door het verplaatsen van de steen zijn er twee niet onderling verbonden groepen stenen ontstaan");
-        }
+//        if (hiveWouldSplitAfterMove(fromQ, fromR, toQ, toR))
+//        {
+//            throw new IllegalMove("Door het verplaatsen van de steen zijn er twee niet onderling verbonden groepen stenen ontstaan");
+//        }
         return true;
     }
 

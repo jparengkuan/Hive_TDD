@@ -1,6 +1,7 @@
 package nl.hanze.hive;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 
 public class Hexagon {
@@ -41,6 +42,12 @@ public class Hexagon {
         neighbours.add(new Hexagon(q, r - 1));
         neighbours.add(new Hexagon(q + 1, r - 1));
         return neighbours;
+    }
+
+    public ArrayList<Hexagon> getAllCommonNeighBours(Hexagon position){
+        ArrayList<Hexagon> commonNeighBours = getAllNeighBours();
+        commonNeighBours.retainAll(position.getAllNeighBours());
+        return commonNeighBours;
     }
 
 }

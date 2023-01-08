@@ -19,6 +19,10 @@ public class HiveBoard {
         return hiveboard;
     }
 
+    public void setHiveboard(HashMap<Hexagon, TileStack> hiveboard) {
+        this.hiveboard = hiveboard;
+    }
+
     public void placeTile(Hive.Tile tile, Hive.Player owner, int q, int r){
         TileStack tiles = this.hiveboard.get(new Hexagon(q, r));
 
