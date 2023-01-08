@@ -69,4 +69,5 @@ public class HiveMovementTests {
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(0, 0, 1, -1));
     }
 
+
 }

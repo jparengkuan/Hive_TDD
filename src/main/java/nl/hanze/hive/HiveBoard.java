@@ -27,6 +27,11 @@ public class HiveBoard {
 
     }
 
+    public void moveTile(int fromQ, int fromR, int toQ, int toR) {
+        HiveTile tile = this.hiveboard.get(new Hexagon(fromQ, fromR)).getTiles().pop();
+        this.placeTile(tile.getInsect(), tile.getOwner(), toQ, toR);
+    }
+
     public boolean givenCoordinateHasNeighbours(int q, int r){
         Hexagon position = new Hexagon(q, r);
 

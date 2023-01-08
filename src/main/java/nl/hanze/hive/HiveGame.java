@@ -52,7 +52,11 @@ public class HiveGame implements Hive {
     public void move(int fromQ, int fromR, int toQ, int toR) throws IllegalMove {
 
         if (isValidMove(fromQ, fromR, toQ, toR)){
+            // Steen verplaatsen
+            this.hiveBoard.moveTile(fromQ, fromR, toQ, toR);
 
+            // Wissel van speler
+            this.switchTurn();
         }
 
     }
