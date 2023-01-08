@@ -3,6 +3,7 @@ package nl.hanze.hive;
 import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
@@ -26,6 +27,24 @@ public class HiveMovementSlideTests {
         hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, 1, 0);
 
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(-1, 1, 0, 1));
+    }
+@Test
+    void WhenTileINotsLosingContactWithAnotherTileDuringASlideDontThrowError() throws Hive.IllegalMove {
+
+        HiveGame hiveGame = spy(HiveGame.class);
+        when(hiveGame.getPlayersDeck(hiveGame.getCurrenPlayer())).thenReturn(new HashMap<Hive.Tile, Integer>()
+        {{
+            put(Hive.Tile.QUEEN_BEE, 0);
+        }});
+
+        hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.WHITE, -1, 1);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.BLACK, -1, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.WHITE, 0, -1);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, 1, -1);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, 0, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, 1, 0);
+
+        assertDoesNotThrow(() -> hiveGame.move(-1, 1, 0, 1));
 
     }
 }
