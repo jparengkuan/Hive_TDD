@@ -6,9 +6,19 @@ public class SoldierAntMoveBehaviour extends GenericSlideBehaviour {
 
         if(slideIsPossible(hiveBoard, toPos, fromPos))
         {
+            if (isMovedToStartPosition(toPos, fromPos))
+            {
+                throw new Hive.IllegalMove("Een soldatenmier mag zich niet verplaatsen naar het veld waar hij al staat");
+            }
 
         }
         return false;
 
+    }
+
+    public boolean isMovedToStartPosition(Hexagon toPos, Hexagon fromPos)
+    {
+        if (toPos.equals(fromPos)) return true;
+        return false;
     }
 }
