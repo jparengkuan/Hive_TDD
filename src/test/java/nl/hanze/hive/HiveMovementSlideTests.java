@@ -50,7 +50,7 @@ public class HiveMovementSlideTests {
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(-1, 1, 0, 1));
     }
 @Test
-    void WhenTileINotsLosingContactWithAnotherTileDuringASlideDontThrowError() throws Hive.IllegalMove {
+    void WhenTileINotLosingContactWithAnotherTileDuringASlideDontThrowError() throws Hive.IllegalMove {
 
         HiveGame hiveGame = spy(HiveGame.class);
         when(hiveGame.getPlayersDeck(hiveGame.getCurrenPlayer())).thenReturn(new HashMap<Hive.Tile, Integer>()
