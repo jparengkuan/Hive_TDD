@@ -12,8 +12,7 @@ public class QueenBeeMovementTests {
 
     //8a De bijenkoningin verplaatst zich door precies één keer te verschuiven
     @Test
-    void WhenPlayerTriesToMoveQueenBeeMultiplePositionsThrowError()
-    {
+    void WhenPlayerTriesToMoveQueenBeeMultiplePositionsThrowError() throws Hive.IllegalMove {
         HiveGame hiveGame = spy(HiveGame.class);
         when(hiveGame.getPlayersDeck(hiveGame.getCurrenPlayer())).thenReturn(new HashMap<Hive.Tile, Integer>()
         {{
@@ -21,7 +20,9 @@ public class QueenBeeMovementTests {
         }});
 
         hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.WHITE, +2, 0);
-        hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, -2, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, -1, 0);
+
+        hiveGame.move(+2, 0, 0, 0);
 
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(+2, 0, 0, 0));
     }
