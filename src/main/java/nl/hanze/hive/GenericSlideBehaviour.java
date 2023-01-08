@@ -7,6 +7,11 @@ abstract public class GenericSlideBehaviour implements MoveBehaviourStrategy {
 
     public boolean slideIsPossible(HiveBoard hiveBoard, Hexagon toPos, Hexagon fromPos) throws Hive.IllegalMove {
 
+        if(!isAdjacent(toPos, fromPos))
+        {
+            throw new Hive.IllegalMove("Een verschijving is alleen mogelijk naar een aangrenzend veld");
+        }
+
         int commonNeighboursWithTiles = getCommonNeighboursWithTiles(hiveBoard, toPos, fromPos);
 
         if(commonNeighboursWithTiles == 0)
@@ -16,6 +21,11 @@ abstract public class GenericSlideBehaviour implements MoveBehaviourStrategy {
 
         return true;
 
+    }
+
+    public boolean isAdjacent(Hexagon toPos, Hexagon fromPos) {
+        if (fromPos.getAllCommonNeighBours(toPos).size() < 2) return false;
+        return true;
     }
 
     public int getCommonNeighboursWithTiles(HiveBoard hiveBoard, Hexagon toPos, Hexagon fromPos) {

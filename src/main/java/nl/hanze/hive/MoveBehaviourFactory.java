@@ -14,7 +14,7 @@ public class MoveBehaviourFactory {
             case GRASSHOPPER:
                 break;
             case SOLDIER_ANT:
-                break;
+                return new SoldierAntMoveBehaviour();
         }
         return null;
     }
