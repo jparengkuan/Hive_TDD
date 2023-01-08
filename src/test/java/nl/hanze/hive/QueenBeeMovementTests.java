@@ -22,8 +22,6 @@ public class QueenBeeMovementTests {
         hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.WHITE, +2, 0);
         hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, -1, 0);
 
-        hiveGame.move(+2, 0, 0, 0);
-
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(+2, 0, 0, 0));
     }
 
