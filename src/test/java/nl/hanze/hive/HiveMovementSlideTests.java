@@ -3,8 +3,7 @@ package nl.hanze.hive;
 import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class HiveMovementSlideTests {
@@ -16,56 +15,55 @@ public class HiveMovementSlideTests {
     //steen niet mee telt
 
     @Test
-    void whenTileIsNotSlideToAdjacentPositionThrowError() throws Hive.IllegalMove {
-        HiveGame hiveGame = spy(HiveGame.class);
-        when(hiveGame.getPlayersDeck(hiveGame.getCurrenPlayer())).thenReturn(new HashMap<Hive.Tile, Integer>()
-        {{
-            put(Hive.Tile.QUEEN_BEE, 0);
+    void whenTileIsNotSlideToAdjacentPositionReturnFalse() throws Hive.IllegalMove {
+        HiveBoard hiveBoard = spy(HiveBoard.class);
+
+        when(hiveBoard.getHiveboard()).thenReturn(new HashMap<Hexagon, TileStack>() {{
+            put(new Hexagon(+1,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+            put(new Hexagon(-2,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
         }});
 
-        hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, +1, 0);
-        hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, -2, 0);
+        QueenBeeMoveBehaviour queenBee = new QueenBeeMoveBehaviour();
 
-        assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(+1, 0, -1, 0));
+        assertFalse(queenBee.slideIsPossible(hiveBoard, new Hexagon(-1, 0), new Hexagon(+1, 0)));
 
     }
 
     //6c.Tijdens een verschuiving moet de steen continu in contact blijven met
     //minstens één andere steen.
     @Test
-    void WhenTileIsLosingContactWithAnotherTileDuringASlideThrowError() throws Hive.IllegalMove {
+    void WhenTileIsLosingContactWithAnotherTileDuringASlideReturnFalse() {
 
-        HiveGame hiveGame = spy(HiveGame.class);
-        when(hiveGame.getPlayersDeck(hiveGame.getCurrenPlayer())).thenReturn(new HashMap<Hive.Tile, Integer>()
-        {{
-            put(Hive.Tile.QUEEN_BEE, 0);
+        HiveBoard hiveBoard = spy(HiveBoard.class);
+        when(hiveBoard.getHiveboard()).thenReturn(new HashMap<Hexagon, TileStack>() {{
+            put(new Hexagon(-1,1), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+            put(new Hexagon(-1,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+            put(new Hexagon(0,-1), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+            put(new Hexagon(1,-1), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+            put(new Hexagon(1,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
         }});
 
-        hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.WHITE, -1, 1);
-        hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.BLACK, -1, 0);
-        hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.WHITE, 0, -1);
-        hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, 1, -1);
-        hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, 1, 0);
+        QueenBeeMoveBehaviour queenBee = new QueenBeeMoveBehaviour();
 
-        assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(-1, 1, 0, 1));
+        assertFalse(queenBee.slideIsPossible(hiveBoard, new Hexagon(0, 1), new Hexagon(-1, 1)));
+
     }
 @Test
-    void WhenTileINotLosingContactWithAnotherTileDuringASlideDontThrowError() throws Hive.IllegalMove {
+    void WhenTileINotLosingContactWithAnotherTileDuringASlideReturnTrue() {
 
-        HiveGame hiveGame = spy(HiveGame.class);
-        when(hiveGame.getPlayersDeck(hiveGame.getCurrenPlayer())).thenReturn(new HashMap<Hive.Tile, Integer>()
-        {{
-            put(Hive.Tile.QUEEN_BEE, 0);
-        }});
+    HiveBoard hiveBoard = spy(HiveBoard.class);
+    when(hiveBoard.getHiveboard()).thenReturn(new HashMap<Hexagon, TileStack>() {{
+        put(new Hexagon(-1,1), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+        put(new Hexagon(-1,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+        put(new Hexagon(0,-1), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+        put(new Hexagon(0,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+        put(new Hexagon(1,-1), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+        put(new Hexagon(1,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+    }});
 
-        hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.WHITE, -1, 1);
-        hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.BLACK, -1, 0);
-        hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.WHITE, 0, -1);
-        hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, 1, -1);
-        hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, 0, 0);
-        hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, 1, 0);
+    QueenBeeMoveBehaviour queenBee = new QueenBeeMoveBehaviour();
 
-        assertDoesNotThrow(() -> hiveGame.move(-1, 1, 0, 1));
+    assertTrue(queenBee.slideIsPossible(hiveBoard, new Hexagon(0, 1), new Hexagon(-1, 1)));
 
     }
 }
