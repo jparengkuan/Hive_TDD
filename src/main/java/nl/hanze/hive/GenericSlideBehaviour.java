@@ -40,13 +40,13 @@ abstract public class GenericSlideBehaviour implements MoveBehaviourStrategy {
         n1 = n2 = a = b = 0;
 
         TileStack t1 = hiveBoard.getHiveboard().get(commonNeighbours.get(0));
-        TileStack t2 = hiveBoard.getHiveboard().get(commonNeighbours.get(0));
+        TileStack t2 = hiveBoard.getHiveboard().get(commonNeighbours.get(1));
 
         TileStack ta = hiveBoard.getHiveboard().get(fromPos);
         TileStack tb = hiveBoard.getHiveboard().get(toPos);
 
         if(t1 != null && t1.getTiles() != null) n1 = t1.getTiles().size();
-        if(t2 != null && t2.getTiles() != null) n2 = t1.getTiles().size();
+        if(t2 != null && t2.getTiles() != null) n2 = t2.getTiles().size();
         if(ta != null && ta.getTiles() != null) a = ta.getTiles().size();
         if(tb != null && tb.getTiles() != null) b = tb.getTiles().size();
 
