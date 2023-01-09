@@ -4,12 +4,26 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
 public class SpiderMovementTests {
+
+    //8a Een spin verplaatst zich door precies drie keer te verschuiven
+    void WhenSpiderIsMovedMoreThenThreePositionsReturnFalse() throws Hive.IllegalMove {
+
+        HiveBoard hiveBoard = spy(HiveBoard.class);
+        when(hiveBoard.getHiveboard()).thenReturn(new HashMap<Hexagon, TileStack>() {{
+            put(new Hexagon(0, 0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+            put(new Hexagon(1, 0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+            put(new Hexagon(0, 1), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+        }});
+
+        SpiderMoveBehaviour spider = new SpiderMoveBehaviour();
+
+        assertFalse(spider.moveIsPossible(hiveBoard, new Hexagon(0, -1), new Hexagon(1,1)));
+    }
 
     //8b Een spin mag zich niet verplaatsen naar het veld waar hij al staat.
     @Test
