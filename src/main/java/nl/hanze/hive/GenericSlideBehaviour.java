@@ -5,18 +5,18 @@ import java.util.Iterator;
 
 abstract public class GenericSlideBehaviour implements MoveBehaviourStrategy {
 
-    public boolean slideIsPossible(HiveBoard hiveBoard, Hexagon toPos, Hexagon fromPos) throws Hive.IllegalMove {
+    public boolean slideIsPossible(HiveBoard hiveBoard, Hexagon toPos, Hexagon fromPos) {
 
         if(!isAdjacent(toPos, fromPos))
         {
-            throw new Hive.IllegalMove("Een verschijving is alleen mogelijk naar een aangrenzend veld");
+            return false;
         }
 
         int commonNeighboursWithTiles = getCommonNeighboursWithTiles(hiveBoard, toPos, fromPos);
 
         if(commonNeighboursWithTiles == 0)
         {
-            throw new Hive.IllegalMove("Tijdens een verschuiving moet de steen continu in contact blijven met minstens een andere steen");
+            return false;
         }
 
         return true;
