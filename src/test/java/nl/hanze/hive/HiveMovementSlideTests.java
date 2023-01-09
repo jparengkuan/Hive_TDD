@@ -15,7 +15,7 @@ public class HiveMovementSlideTests {
     //steen niet mee telt
 
     @Test
-    void whenTileIsNotSlideToAdjacentPositionReturnFalse() throws Hive.IllegalMove {
+    void whenTileIsNotSlideToAdjacentPositionReturnFalse() {
         HiveBoard hiveBoard = spy(HiveBoard.class);
 
         when(hiveBoard.getHiveboard()).thenReturn(new HashMap<Hexagon, TileStack>() {{
@@ -26,6 +26,22 @@ public class HiveMovementSlideTests {
         QueenBeeMoveBehaviour queenBee = new QueenBeeMoveBehaviour();
 
         assertFalse(queenBee.slideIsPossible(hiveBoard, new Hexagon(-1, 0), new Hexagon(+1, 0)));
+
+    }
+
+    //6b. Een verschuiving moet schuivend uitgevoerd kunnen worden.
+    @Test
+    void whenTileCannotSlideReturnFalse(){
+        HiveBoard hiveBoard = spy(HiveBoard.class);
+        when(hiveBoard.getHiveboard()).thenReturn(new HashMap<Hexagon, TileStack>() {{
+            put(new Hexagon(0,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+            put(new Hexagon(-1,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+            put(new Hexagon(0,1), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+        }});
+
+        QueenBeeMoveBehaviour queenBee = new QueenBeeMoveBehaviour();
+
+        assertFalse(queenBee.slideIsPossible(hiveBoard, new Hexagon(-1, 1), new Hexagon(0, 0)));
 
     }
 
@@ -66,4 +82,5 @@ public class HiveMovementSlideTests {
     assertTrue(queenBee.slideIsPossible(hiveBoard, new Hexagon(0, 1), new Hexagon(-1, 1)));
 
     }
+
 }
