@@ -42,6 +42,26 @@ public class SoldierAntMovementTests {
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(+2, 0, +2, 0));
     }
 
+    //8c Een soldatenmier mag alleen verplaatst worden over en naar lege velden.
+    @Test
+   public void WhenPlayerTriesToMoveSoldierAntOverOccupiedFieldThrowError() {
+        HiveBoard hiveBoard = spy(HiveBoard.class);
+        when(hiveBoard.getHiveboard()).thenReturn(new HashMap<Hexagon, TileStack>() {{
+            put(new Hexagon(0,-2), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+            put(new Hexagon(2,-2), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+            put(new Hexagon(0,-1), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+            put(new Hexagon(2,-1), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+            put(new Hexagon(0,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+            put(new Hexagon(1,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+            put(new Hexagon(-1,1), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+            put(new Hexagon(0,1), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+        }});
+
+        SoldierAntMoveBehaviour soldierAnt = new SoldierAntMoveBehaviour();
+
+        assertThrows(Hive.IllegalMove.class, () -> soldierAnt.moveIsPossible(hiveBoard, new Hexagon(1,-1), new Hexagon(1, 1)));
+    }
+
 
 
 }
