@@ -13,7 +13,7 @@ public class SoldierAntMovementTests {
 
     //8a Een soldatenmier verplaatst zich door een onbeperkt aantal keren te verschuiven
     @Test
-    void testSoldierAntMoveBehaviour(){
+    void testSoldierAntMoveBehaviour() {
         HiveBoard hiveBoard = spy(HiveBoard.class);
 
         when(hiveBoard.getHiveboard()).thenReturn(new HashMap<Hexagon, TileStack>() {{
@@ -29,7 +29,7 @@ public class SoldierAntMovementTests {
 
     //8b Een soldatenmier mag zich niet verplaatsen naar het veld waar hij al staat
     @Test
-    void WhenPlayerTriesToMoveSoldierAntToStartPositionThrowError() throws Hive.IllegalMove {
+    void WhenPlayerTriesToMoveSoldierAntToStartPositionThrowError() {
         HiveGame hiveGame = spy(HiveGame.class);
         when(hiveGame.getPlayersDeck(hiveGame.getCurrenPlayer())).thenReturn(new HashMap<Hive.Tile, Integer>()
         {{
