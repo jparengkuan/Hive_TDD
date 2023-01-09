@@ -8,7 +8,7 @@ public class MoveBehaviourFactory {
             case QUEEN_BEE:
                 return new QueenBeeMoveBehaviour();
             case SPIDER:
-                break;
+                return new SpiderMoveBehaviour();
             case BEETLE:
                 return new BeetleMoveBehaviour();
             case GRASSHOPPER:
