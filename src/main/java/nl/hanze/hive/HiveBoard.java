@@ -49,4 +49,8 @@ public class HiveBoard {
         }
         return false;
     }
+
+    public boolean givenCoordinateHasTiles(int q, int r){
+        return getHiveboard().get(new Hexagon(q, r)) != null && !getHiveboard().get(new Hexagon(q, r)).getTiles().isEmpty();
+    }
 }
