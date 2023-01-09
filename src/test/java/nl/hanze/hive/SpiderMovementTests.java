@@ -20,7 +20,7 @@ public class SpiderMovementTests {
             put(Hive.Tile.QUEEN_BEE, 0);
         }});
 
-        hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, +2, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.SPIDER, Hive.Player.WHITE, +2, 0);
         hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, +1, 0);
 
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(+2, 0, +2, 0));
