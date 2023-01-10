@@ -26,6 +26,21 @@ public class SpiderMovementTests {
         assertThrows(Hive.IllegalMove.class, () -> spider.moveIsPossible(hiveBoard, new Hexagon(-1, 0), new Hexagon(1,1)));
     }
 
+    @Test
+    void WhenSpiderIsMovedThreePositionsReturnTrue() throws Hive.IllegalMove {
+
+        HiveBoard hiveBoard = spy(HiveBoard.class);
+        when(hiveBoard.getHiveboard()).thenReturn(new HashMap<Hexagon, TileStack>() {{
+            put(new Hexagon(0, 0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+            put(new Hexagon(1, 0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+            put(new Hexagon(0, 1), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+        }});
+
+        SpiderMoveBehaviour spider = new SpiderMoveBehaviour();
+
+        assertTrue(spider.moveIsPossible(hiveBoard, new Hexagon(-1, 1), new Hexagon(1,1)));
+    }
+
     //8b Een spin mag zich niet verplaatsen naar het veld waar hij al staat.
     @Test
     void WhenPlayerTriesToMoveSpiderToStartPositionThrowError() {
