@@ -7,7 +7,7 @@ public class SpiderMoveBehaviour extends GenericSlideBehaviour {
     private int moveCounter = 0;
     private int moveLimit = 3;
 
-    private  HashSet<Hexagon> visitedSet;
+    private  HashSet<Hexagon> visitedSet = new HashSet<>();
 
 
 
@@ -18,7 +18,9 @@ public class SpiderMoveBehaviour extends GenericSlideBehaviour {
             throw new Hive.IllegalMove("Een spin mag zich niet verplaatsen naar het veld waar hij al staat");
         }
 
-        if (findPath(hiveBoard, fromPos, new HashSet<>()).contains(toPos)) {
+        findPath(hiveBoard, fromPos, new HashSet<>());
+
+        if (visitedSet.contains(toPos)) {
             return true;
         } else {
             throw new Hive.IllegalMove("De spin kan de eindpositie niet bereiken");
@@ -35,14 +37,16 @@ public class SpiderMoveBehaviour extends GenericSlideBehaviour {
                     && hiveBoard.givenCoordinateHasNeighbours(neighbour.q, neighbour.r)
                     && !hiveBoard.givenCoordinateHasTiles(neighbour.q, neighbour.r)
             ) {
+                this.moveCounter++;
+
                 if (this.moveCounter >= this.moveLimit) {
+                    this.visitedSet.add(neighbour);
+                    this.moveCounter = 0;
                     continue;
                 }
-                this.moveCounter++;
                 visitedSet.addAll(findPath(hiveBoard, neighbour, visitedSet));
             }
         }
-        this.visitedSet = visitedSet;
         return visitedSet;
     }
 
