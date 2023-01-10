@@ -78,6 +78,22 @@ public class HiveGame implements Hive {
 
     @Override
     public boolean isWinner(Player player) {
+
+        for (Map.Entry<Hexagon, TileStack> pos : this.hiveBoard.getHiveboard().entrySet()) {
+            if (!this.hiveBoard.givenCoordinateHasTiles(pos.getKey().q, pos.getKey().r)
+                    || pos.getValue().getTiles().peek().getOwner() == player) {
+                continue;
+            }
+
+            for (HiveTile tile : pos.getValue().getTiles()) {
+                if (tile.getInsect() == Tile.QUEEN_BEE) {
+                    for (Hexagon neighbour : pos.getKey().getAllNeighBours()) {
+                        if (!hiveBoard.givenCoordinateHasTiles(neighbour.q, neighbour.r)) return false;
+                    }
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
