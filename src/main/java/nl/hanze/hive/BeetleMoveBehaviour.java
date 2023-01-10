@@ -13,11 +13,11 @@ public class BeetleMoveBehaviour extends GenericSlideBehaviour {
         }
 
 
-        if(slideIsPossible(hiveBoard, toPos, fromPos))
+        if(!slideIsPossible(hiveBoard, toPos, fromPos))
         {
-
+            throw new Hive.IllegalMove("De kever kan zich niet verplaatsen");
         }
-        return false;
+        return true;
 
     }
 

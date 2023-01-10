@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.spy;
 
 public class HiveGameLogic {
 
@@ -38,6 +39,25 @@ public class HiveGameLogic {
         HiveGame hiveGame = new HiveGame();
         hiveGame.play(Hive.Tile.GRASSHOPPER, 0,0);
         assertEquals(Hive.Player.BLACK, hiveGame.getCurrenPlayer());
+    }
+
+    // 3c Een speler wint als alle zes velden naast de bijenkoningin van de
+    //tegenstander bezet zijn
+
+    @Test
+    void whenPlayerBlacksQueenHisBeeIsSurroundedThenPlayerWhiteWins()
+    {
+        HiveGame hiveGame = spy(HiveGame.class);
+
+        hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.BLACK, 0, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.BLACK, 0, -1);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.WHITE, 1, -1);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.BLACK, -1, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.WHITE, 1, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.BLACK, -1, +1);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.WHITE, 0, 1);
+
+        assertTrue(hiveGame.isWinner(Hive.Player.WHITE));
     }
 
 

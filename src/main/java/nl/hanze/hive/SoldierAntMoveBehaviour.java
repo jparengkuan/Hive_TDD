@@ -24,7 +24,6 @@ public class SoldierAntMoveBehaviour extends GenericSlideBehaviour {
 
         for (Hexagon neighbour : position.getAllNeighBours()) {
             if (!visitedSet.contains(neighbour)
-                    //toPos fromPos
                     && slideIsPossible(hiveBoard, neighbour, position)
                     && hiveBoard.givenCoordinateHasNeighbours(neighbour.q, neighbour.r)
                     && !hiveBoard.givenCoordinateHasTiles(neighbour.q, neighbour.r)
