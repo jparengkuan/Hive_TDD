@@ -62,7 +62,7 @@ public class BeetleMovementTests {
         hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.WHITE, 0, 1);
         hiveGame.hiveBoard.placeTile(Hive.Tile.BEETLE, Hive.Player.WHITE, 1, 0);
 
-        assertDoesNotThrow(() -> hiveGame.move(1, 0, 0, 0));
+        assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(1, 0, 0, 0));
 
     }
 
