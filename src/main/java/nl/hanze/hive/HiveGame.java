@@ -156,8 +156,10 @@ public class HiveGame implements Hive {
 
         chainCountAfter = this.hiveBoard.getConnectedTilesCount(new Hexagon(toQ, toQ));
 
+        this.hiveBoard.moveTile(toQ, toR, fromQ, fromR);
+        this.hiveBoard.getHiveboard().remove(new Hexagon(toQ, toR));
+
         if (chainCountBefore > chainCountAfter){
-            this.hiveBoard.moveTile(toQ, toR, fromQ, fromR);
             return true;
         }
 
