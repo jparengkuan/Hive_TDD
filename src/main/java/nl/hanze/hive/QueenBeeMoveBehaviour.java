@@ -1,6 +1,6 @@
 package nl.hanze.hive;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class QueenBeeMoveBehaviour extends GenericSlideBehaviour {
     @Override
@@ -24,5 +24,10 @@ public class QueenBeeMoveBehaviour extends GenericSlideBehaviour {
         }
         return false;
 
+    }
+
+    @Override
+    public HashSet<Hexagon> getAllEndPositions(HiveBoard hiveBoard, Hexagon toPos) {
+        return null;
     }
 }

@@ -1,5 +1,7 @@
 package nl.hanze.hive;
 
+import java.util.HashSet;
+
 public class BeetleMoveBehaviour extends GenericSlideBehaviour {
     @Override
     public boolean moveIsPossible(HiveBoard hiveBoard, Hexagon toPos, Hexagon fromPos) throws Hive.IllegalMove {
@@ -17,5 +19,10 @@ public class BeetleMoveBehaviour extends GenericSlideBehaviour {
         }
         return false;
 
+    }
+
+    @Override
+    public HashSet<Hexagon> getAllEndPositions(HiveBoard hiveBoard, Hexagon fromPos) {
+        return null;
     }
 }

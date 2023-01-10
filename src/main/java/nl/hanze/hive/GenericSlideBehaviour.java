@@ -2,6 +2,7 @@ package nl.hanze.hive;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 
 abstract public class GenericSlideBehaviour implements MoveBehaviourStrategy {
@@ -70,5 +71,6 @@ abstract public class GenericSlideBehaviour implements MoveBehaviourStrategy {
 
         return commonNeighboursWithTiles;
     }
+
 }
 

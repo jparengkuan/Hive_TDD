@@ -55,4 +55,10 @@ public class SpiderMoveBehaviour extends GenericSlideBehaviour {
         return false;
     }
 
+    @Override
+    public HashSet<Hexagon> getAllEndPositions(HiveBoard hiveBoard, Hexagon fromPos) {
+        findPath(hiveBoard, fromPos, new HashSet<>());
+        return this.visitedSet;
+    }
+
 }
