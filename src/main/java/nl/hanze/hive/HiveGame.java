@@ -99,7 +99,7 @@ public class HiveGame implements Hive {
 
     @Override
     public boolean isDraw() {
-        return false;
+        return isWinner(Player.WHITE) && isWinner(Player.BLACK);
     }
 
     public void switchTurn() {
@@ -164,6 +164,8 @@ public class HiveGame implements Hive {
 
     public boolean hiveWouldSplitAfterMove(int fromQ, int fromR, int toQ, int toR){
 
+        if (hiveBoard.givenCoordinateHasTiles(toQ, toR)) return false; //edge case
+
         int chainCountBefore, chainCountAfter;
 
         chainCountBefore = this.hiveBoard.getConnectedTilesCount(new Hexagon(fromQ, fromR));
@@ -173,7 +175,6 @@ public class HiveGame implements Hive {
         chainCountAfter = this.hiveBoard.getConnectedTilesCount(new Hexagon(toQ, toQ));
 
         this.hiveBoard.moveTile(toQ, toR, fromQ, fromR);
-        this.hiveBoard.getHiveboard().remove(new Hexagon(toQ, toR));
 
         if (chainCountBefore > chainCountAfter){
             return true;

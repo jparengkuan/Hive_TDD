@@ -35,10 +35,12 @@ public class BeetleMovementTests {
             put(Hive.Tile.QUEEN_BEE, 0);
         }});
 
-        hiveGame.hiveBoard.placeTile(Hive.Tile.BEETLE, Hive.Player.WHITE, -1, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.BEETLE, Hive.Player.WHITE, 1, -1);
         hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.WHITE, 0, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.WHITE, 0, 1);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.BEETLE, Hive.Player.WHITE, 1, 0);
 
-        assertDoesNotThrow(() -> hiveGame.move(-1, 0, 0, 0));
+        assertDoesNotThrow(() -> hiveGame.move(1, 0, 0, 0));
 
     }
 

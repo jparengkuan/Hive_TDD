@@ -93,6 +93,13 @@ public class HiveGameLogic {
             assertFalse(hiveGame.isWinner(player));
 
         }
+    }
+
+    // 3d. Als beide spelers tegelijk zouden winnen is het in plaats daarvan een
+    //gelijkspel.
+
+    @Test
+    void whenBothPlayersHaveASurroundedQueenBeeThenItsADraw(){
 
     }
 
