@@ -117,5 +117,21 @@ public class HiveGameLogic {
         assertTrue(hiveGame.isDraw());
     }
 
+    @Test
+    void whenOnlyPlayerWhiteIsSurroundedThenItsNotaDraw()
+    {
+        HiveGame hiveGame = spy(HiveGame.class);
+
+        hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.WHITE, -2, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.BLACK, 1, 0);
+
+        for (Hexagon neighbour: new Hexagon(-2,0).getAllNeighBours()){
+            hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, neighbour.q, neighbour.r);
+        }
+
+        assertFalse(hiveGame.isDraw());
+
+    }
+
 
 }
