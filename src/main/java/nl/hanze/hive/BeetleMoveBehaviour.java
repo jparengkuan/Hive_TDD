@@ -12,6 +12,12 @@ public class BeetleMoveBehaviour extends GenericSlideBehaviour {
             throw new Hive.IllegalMove("De kever verplaatst zich alleen door precies een keer te verschuiven");
         }
 
+        if(hiveBoard.getHiveboard().get(toPos) != null
+                && hiveBoard.getHiveboard().get(toPos).getTiles().size() >= 4)
+        {
+            throw new Hive.IllegalMove("De beetle kan zich niet verplaatsen er staan al vier tiles op deze positie");
+        }
+
 
         if(!slideIsPossible(hiveBoard, toPos, fromPos))
         {
