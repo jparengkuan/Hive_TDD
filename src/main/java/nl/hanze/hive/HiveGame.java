@@ -57,7 +57,7 @@ public class HiveGame implements Hive {
 
             MoveBehaviourStrategy moveBehaviour = MoveBehaviourFactory.createMoveBehaviour(tile.getInsect());
 
-            if(moveBehaviour.moveIsPossible(this.hiveBoard, new Hexagon(fromQ, fromR), new Hexagon(toQ, toR))) {
+            if(moveBehaviour.moveIsPossible(this.hiveBoard, new Hexagon(toQ, toR), new Hexagon(fromQ, fromR))) {
 
                 // Steen verplaatsen
                 this.hiveBoard.moveTile(fromQ, fromR, toQ, toR);
