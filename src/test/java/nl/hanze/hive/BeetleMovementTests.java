@@ -44,4 +44,26 @@ public class BeetleMovementTests {
 
     }
 
+    //7a Een kever kan zich niet verplaatsen op een veld waar al vier stenen op staan
+    //Bron
+    @Test
+    void WhenPlayerTriesToMoveBeetleToAnOccupiedFieldWithFourTilesThrowError() {
+        HiveGame hiveGame = spy(HiveGame.class);
+        when(hiveGame.getPlayersDeck(hiveGame.getCurrenPlayer())).thenReturn(new HashMap<Hive.Tile, Integer>()
+        {{
+            put(Hive.Tile.QUEEN_BEE, 0);
+        }});
+
+        hiveGame.hiveBoard.placeTile(Hive.Tile.BEETLE, Hive.Player.WHITE, 1, -1);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.WHITE, 0, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.BEETLE, Hive.Player.WHITE, 0, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.BEETLE, Hive.Player.WHITE, 0, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.BEETLE, Hive.Player.WHITE, 0, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.WHITE, 0, 1);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.BEETLE, Hive.Player.WHITE, 1, 0);
+
+        assertDoesNotThrow(() -> hiveGame.move(1, 0, 0, 0));
+
+    }
+
 }
