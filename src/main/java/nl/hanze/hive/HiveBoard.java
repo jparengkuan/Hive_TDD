@@ -1,7 +1,9 @@
 package nl.hanze.hive;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 public class HiveBoard {
 
@@ -52,5 +54,24 @@ public class HiveBoard {
 
     public boolean givenCoordinateHasTiles(int q, int r){
         return getHiveboard().get(new Hexagon(q, r)) != null && !getHiveboard().get(new Hexagon(q, r)).getTiles().isEmpty();
+    }
+
+    public int getConnectedTilesCount(Hexagon startPos){
+        return this.getAllConnectedTiles(startPos, new HashSet<>()).size();
+    }
+
+    public HashSet<Hexagon> getAllConnectedTiles(Hexagon pos, HashSet<Hexagon> visited){
+        visited.add(pos);
+
+        for(Hexagon neighbour : pos.getAllNeighBours())
+        {
+            if(!visited.contains(neighbour) &&
+                    this.givenCoordinateHasNeighbours(neighbour.q, neighbour.r) &&
+                    this.givenCoordinateHasTiles(neighbour.q, neighbour.r))
+            {
+                visited.addAll(getAllConnectedTiles(neighbour, visited));
+            }
+        }
+        return visited;
     }
 }
