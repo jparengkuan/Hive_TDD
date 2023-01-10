@@ -11,7 +11,8 @@ import static org.mockito.Mockito.when;
 public class SpiderMovementTests {
 
     //8a Een spin verplaatst zich door precies drie keer te verschuiven
-    void WhenSpiderIsMovedMoreThenThreePositionsReturnFalse() throws Hive.IllegalMove {
+    @Test
+    void WhenSpiderIsMovedMoreThenThreePositionsThrowError() {
 
         HiveBoard hiveBoard = spy(HiveBoard.class);
         when(hiveBoard.getHiveboard()).thenReturn(new HashMap<Hexagon, TileStack>() {{
@@ -22,7 +23,7 @@ public class SpiderMovementTests {
 
         SpiderMoveBehaviour spider = new SpiderMoveBehaviour();
 
-        assertFalse(spider.moveIsPossible(hiveBoard, new Hexagon(0, -1), new Hexagon(1,1)));
+        assertThrows(Hive.IllegalMove.class, () -> spider.moveIsPossible(hiveBoard, new Hexagon(-1, 0), new Hexagon(1,1)));
     }
 
     //8b Een spin mag zich niet verplaatsen naar het veld waar hij al staat.
