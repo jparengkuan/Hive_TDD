@@ -44,8 +44,8 @@ public class BeetleMovementTests {
 
     }
 
-    //7a Een kever kan zich niet verplaatsen op een veld waar al vier stenen op staan
-    //Bron
+    //7a Een kever kan zich niet verplaatsen naar een veld waar al vier stenen op staan
+    //Bron HiveGame by BlueLines Gamestudios
     @Test
     void WhenPlayerTriesToMoveBeetleToAnOccupiedFieldWithFourTilesThrowError() {
         HiveGame hiveGame = spy(HiveGame.class);
