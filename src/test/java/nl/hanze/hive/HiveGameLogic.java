@@ -25,8 +25,7 @@ public class HiveGameLogic {
 
     // 3. Spelverloop Wit heeft de eerste beurt.
     @Test
-    void whenGameStartThenPlayersItsWhiteturn()
-    {
+    void whenGameStartThenPlayersItsWhiteturn() {
         HiveGame hiveGame = new HiveGame();
         Hive.Player player = hiveGame.getCurrenPlayer();
         assertEquals(Hive.Player.WHITE, player);
@@ -37,7 +36,7 @@ public class HiveGameLogic {
     @Test
     void whenPlayerMakesAMoveThenGiveTurntoOppositePlayer() throws Hive.IllegalMove {
         HiveGame hiveGame = new HiveGame();
-        hiveGame.play(Hive.Tile.GRASSHOPPER, 0,0);
+        hiveGame.play(Hive.Tile.GRASSHOPPER, 0, 0);
         assertEquals(Hive.Player.BLACK, hiveGame.getCurrenPlayer());
     }
 
@@ -45,8 +44,7 @@ public class HiveGameLogic {
     //tegenstander bezet zijn
 
     @Test
-    void whenPlayerBlacksQueenHisBeeIsSurroundedThenPlayerWhiteWins()
-    {
+    void whenPlayerBlacksQueenHisBeeIsSurroundedThenPlayerWhiteWins() {
         HiveGame hiveGame = spy(HiveGame.class);
 
         hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.BLACK, 0, 0);
@@ -61,8 +59,7 @@ public class HiveGameLogic {
     }
 
     @Test
-    void whenPlayerWhiteQueenHisBeeIsSurroundedThenPlayerBlackWins()
-    {
+    void whenPlayerWhiteQueenHisBeeIsSurroundedThenPlayerBlackWins() {
         HiveGame hiveGame = spy(HiveGame.class);
 
         hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.WHITE, 0, 0);
@@ -77,12 +74,10 @@ public class HiveGameLogic {
     }
 
     @Test
-    void whenQueenBeeisNotSurroundedThereIsNoWinner()
-    {
+    void whenQueenBeeisNotSurroundedThereIsNoWinner() {
         HiveGame hiveGame = spy(HiveGame.class);
 
-        for (Hive.Player player : Hive.Player.values())
-        {
+        for (Hive.Player player : Hive.Player.values()) {
             hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, player, 0, 0);
             hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.BLACK, 0, -1);
             hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.WHITE, 1, -1);
@@ -99,18 +94,18 @@ public class HiveGameLogic {
     //gelijkspel.
 
     @Test
-    void whenBothPlayersHaveASurroundedQueenBeeThenItsADraw(){
+    void whenBothPlayersHaveASurroundedQueenBeeThenItsADraw() {
 
         HiveGame hiveGame = spy(HiveGame.class);
 
         hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.WHITE, -2, 0);
         hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.BLACK, 1, 0);
 
-        for (Hexagon neighbour: new Hexagon(-2,0).getAllNeighBours()){
+        for (Hexagon neighbour : new Hexagon(-2, 0).getAllNeighBours()) {
             hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, neighbour.q, neighbour.r);
         }
 
-        for (Hexagon neighbour: new Hexagon(1,0).getAllNeighBours()){
+        for (Hexagon neighbour : new Hexagon(1, 0).getAllNeighBours()) {
             hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.BLACK, neighbour.q, neighbour.r);
         }
 
@@ -118,14 +113,13 @@ public class HiveGameLogic {
     }
 
     @Test
-    void whenOnlyPlayerWhiteIsSurroundedThenItsNotaDraw()
-    {
+    void whenOnlyPlayerWhiteIsSurroundedThenItsNotaDraw() {
         HiveGame hiveGame = spy(HiveGame.class);
 
         hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.WHITE, -2, 0);
         hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, Hive.Player.BLACK, 1, 0);
 
-        for (Hexagon neighbour: new Hexagon(-2,0).getAllNeighBours()){
+        for (Hexagon neighbour : new Hexagon(-2, 0).getAllNeighBours()) {
             hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, neighbour.q, neighbour.r);
         }
 
