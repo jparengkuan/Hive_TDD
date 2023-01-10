@@ -74,4 +74,23 @@ public class SpiderMovementTests {
         assertThrows(Hive.IllegalMove.class, () -> spider.moveIsPossible(hiveBoard, new Hexagon(0, 0), new Hexagon(-1,-1)));
     }
 
+    //8d Een spin mag tijdens zijn verplaatsing geen stap maken naar een veld waar hij
+    //tijdens de verplaatsing al is geweest.
+
+    @Test
+    void whenPlayerTriesToMoveSpiderOverVisitedFieldThrowError()  {
+
+        HiveBoard hiveBoard = spy(HiveBoard.class);
+        when(hiveBoard.getHiveboard()).thenReturn(new HashMap<Hexagon, TileStack>() {{
+            put(new Hexagon(0, 0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+            put(new Hexagon(1, 0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+            put(new Hexagon(0, 1), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+        }});
+
+        SpiderMoveBehaviour spider = new SpiderMoveBehaviour();
+
+        assertThrows(Hive.IllegalMove.class, () -> spider.moveIsPossible(hiveBoard, new Hexagon(1, 2), new Hexagon(-1,1)));
+
+    }
+
 }
