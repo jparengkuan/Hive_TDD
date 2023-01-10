@@ -76,5 +76,25 @@ public class HiveGameLogic {
         assertTrue(hiveGame.isWinner(Hive.Player.BLACK));
     }
 
+    @Test
+    void whenQueenBeeisNotSurroundedThereIsNoWinner()
+    {
+        HiveGame hiveGame = spy(HiveGame.class);
+
+        for (Hive.Player player : Hive.Player.values())
+        {
+            hiveGame.hiveBoard.placeTile(Hive.Tile.QUEEN_BEE, player, 0, 0);
+            hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.BLACK, 0, -1);
+            hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.WHITE, 1, -1);
+            hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.BLACK, -1, 0);
+            hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.BLACK, -1, +1);
+            hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.WHITE, 0, 1);
+
+            assertFalse(hiveGame.isWinner(player));
+
+        }
+
+    }
+
 
 }
