@@ -148,8 +148,20 @@ public class HiveGame implements Hive {
 
     public boolean hiveWouldSplitAfterMove(int fromQ, int fromR, int toQ, int toR){
 
+        int chainCountBefore, chainCountAfter;
 
-        return true;
+        chainCountBefore = this.hiveBoard.getConnectedTilesCount(new Hexagon(fromQ, fromR));
+
+        this.hiveBoard.moveTile(fromQ, fromR, toQ, toR);
+
+        chainCountAfter = this.hiveBoard.getConnectedTilesCount(new Hexagon(toQ, toQ));
+
+        if (chainCountBefore > chainCountAfter){
+            this.hiveBoard.moveTile(toQ, toR, fromQ, fromR);
+            return true;
+        }
+
+        return false;
 
 
     }
