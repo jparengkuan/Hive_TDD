@@ -1,10 +1,12 @@
 package nl.hanze.hive;
 
+import com.sun.source.tree.AssertTree;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
@@ -55,6 +57,20 @@ public class HiveMovementTests {
         hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.WHITE, -1, 0);
 
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(-1, 0, -5, -5));
+    }
+
+    @Test
+    void WhenChainLengthIsThreeAssertTrue()
+    {
+        HiveBoard hiveBoard = spy(HiveBoard.class);
+        when(hiveBoard.getHiveboard()).thenReturn(new HashMap<Hexagon, TileStack>() {{
+            put(new Hexagon(-1,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+            put(new Hexagon(0,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+            put(new Hexagon(1,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+        }});
+
+        assertTrue(hiveBoard.getConnectedTilesCount(new Hexagon(0,0)) == 3);
+
     }
 
     //5d. Een steen mag niet verplaatst worden als er door het weghalen van de steen
