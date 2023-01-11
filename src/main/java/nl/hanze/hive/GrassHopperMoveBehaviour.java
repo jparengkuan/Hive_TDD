@@ -15,6 +15,10 @@ public class GrassHopperMoveBehaviour extends GenericSlideBehaviour {
             throw new Hive.IllegalMove("Een sprinkhaan mag zich niet verplaatsen naar het veld waar hij al staat");
         }
 
+        if (hiveBoard.givenCoordinateHasTiles(toPos.q, toPos.r)) {
+            throw new Hive.IllegalMove("Een sprinkhaan mag zich niet verplaatsen naar een bezet veld");
+        }
+
         return true;
 
     }
