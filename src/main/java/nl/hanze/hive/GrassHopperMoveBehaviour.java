@@ -25,41 +25,30 @@ public class GrassHopperMoveBehaviour extends GenericSlideBehaviour {
             throw new Hive.IllegalMove("De sprinkhaan kan niet springen naar de eindpositie");
         }
 
+
         return true;
 
     }
 
     private Hexagon findPath(HiveBoard hiveBoard, Hexagon fromPos, Hexagon toPos) {
         Hexagon neighbour = new Hexagon(fromPos.q + toPos.q, fromPos.r + toPos.r);
-        System.out.printf("Checking if neighbour has tiles (%d, %d)%n", neighbour.q, neighbour.r);
-        if (!hiveBoard.givenCoordinateHasTiles(neighbour.q, neighbour.r)){
-            return neighbour;
-        }
-        else {
-            System.out.printf("Has Tiles!%n");
-            return findPath(hiveBoard, neighbour, toPos);
-        }
+        if (!hiveBoard.givenCoordinateHasTiles(neighbour.q, neighbour.r)) return neighbour;
+        return findPath(hiveBoard, neighbour, toPos);
     }
 
     public boolean isMovedToStartPosition(Hexagon toPos, Hexagon fromPos) {
-        if (toPos.equals(fromPos)) return true;
-        return false;
+        return toPos.equals(fromPos);
     }
 
     @Override
     public HashSet<Hexagon> getAllEndPositions(HiveBoard hiveBoard, Hexagon fromPos) {
         HashSet<Hexagon> endPositions = new HashSet<>();
 
-        Iterator directions = new Hexagon(0,0).getAllNeighBours().iterator();
-        System.out.printf("Moving from (%d, %d)%n",fromPos.q, fromPos.r);
+        Iterator directions = new Hexagon(0, 0).getAllNeighBours().iterator();
 
-        while (directions.hasNext()){
+        while (directions.hasNext()) {
             Hexagon toPos = (Hexagon) directions.next();
-            System.out.printf("Direction (%d, %d) %n",toPos.q, toPos.r);
-            if (!hiveBoard.givenCoordinateHasTiles(fromPos.q + toPos.q, fromPos.r + toPos.r))
-                continue;
-            System.out.printf("Coordinate (%d, %d) has Tiles!%n", fromPos.q + toPos.q, fromPos.r + toPos.r);
-            System.out.printf("Finding path from (%d, %d) to (%d, %d)%n", fromPos.q, fromPos.r, toPos.q, toPos.r);
+            if (!hiveBoard.givenCoordinateHasTiles(fromPos.q + toPos.q, fromPos.r + toPos.r)) continue;
             endPositions.add(findPath(hiveBoard, fromPos, toPos));
         }
 
