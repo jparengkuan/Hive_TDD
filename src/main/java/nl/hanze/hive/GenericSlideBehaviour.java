@@ -2,36 +2,27 @@ package nl.hanze.hive;
 
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Iterator;
 
 abstract public class GenericSlideBehaviour implements MoveBehaviourStrategy {
 
     public boolean slideIsPossible(HiveBoard hiveBoard, Hexagon toPos, Hexagon fromPos) {
 
-        if(!isAdjacent(toPos, fromPos))
-        {
+        if (!isAdjacent(toPos, fromPos)) {
             return false;
         }
 
         int commonNeighboursWithTiles = getCommonNeighboursWithTiles(hiveBoard, toPos, fromPos);
 
-        if(commonNeighboursWithTiles == 0)
-        {
+        if (commonNeighboursWithTiles == 0) {
             return false;
         }
-        if (cannotSlideBetweenNeighbours(hiveBoard, toPos, fromPos))
-        {
-            return false;
-        }
-
-        return true;
+        return !cannotSlideBetweenNeighbours(hiveBoard, toPos, fromPos);
 
     }
 
     public boolean isAdjacent(Hexagon toPos, Hexagon fromPos) {
-        if (fromPos.getAllCommonNeighBours(toPos).size() < 2) return false;
-        return true;
+        return fromPos.getAllCommonNeighBours(toPos).size() >= 2;
     }
 
     public boolean cannotSlideBetweenNeighbours(HiveBoard hiveBoard, Hexagon toPos, Hexagon fromPos) {
@@ -46,12 +37,12 @@ abstract public class GenericSlideBehaviour implements MoveBehaviourStrategy {
         TileStack ta = hiveBoard.getHiveboard().get(fromPos);
         TileStack tb = hiveBoard.getHiveboard().get(toPos);
 
-        if(t1 != null && t1.getTiles() != null) n1 = t1.getTiles().size();
-        if(t2 != null && t2.getTiles() != null) n2 = t2.getTiles().size();
-        if(ta != null && ta.getTiles() != null) a = ta.getTiles().size();
-        if(tb != null && tb.getTiles() != null) b = tb.getTiles().size();
+        if (t1 != null && t1.getTiles() != null) n1 = t1.getTiles().size();
+        if (t2 != null && t2.getTiles() != null) n2 = t2.getTiles().size();
+        if (ta != null && ta.getTiles() != null) a = ta.getTiles().size();
+        if (tb != null && tb.getTiles() != null) b = tb.getTiles().size();
 
-        return !(Math.min(n1, n2) <= Math.max(a -1, b));
+        return !(Math.min(n1, n2) <= Math.max(a - 1, b));
 
     }
 
@@ -62,8 +53,7 @@ abstract public class GenericSlideBehaviour implements MoveBehaviourStrategy {
 
         while (commonNeighbours.hasNext()) {
             TileStack tiles = hiveBoard.getHiveboard().get(commonNeighbours.next());
-            if (tiles != null && tiles.getTiles() != null && !tiles.getTiles().isEmpty())
-            {
+            if (tiles != null && tiles.getTiles() != null && !tiles.getTiles().isEmpty()) {
                 commonNeighboursWithTiles++;
             }
 

@@ -1,7 +1,8 @@
 package nl.hanze.hive;
 
-import javax.swing.text.Position;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 /**
  * Deze klasse representeert de Hive Game
@@ -9,11 +10,9 @@ import java.util.*;
 
 public class HiveGame implements Hive {
 
+    public HiveBoard hiveBoard;
     private Player currenPlayer;
     private HashMap<Player, HashMap<Hive.Tile, Integer>> playerDeck;
-
-    public HiveBoard hiveBoard;
-
     private int turnCounter;
 
     public HiveGame() {
@@ -151,9 +150,7 @@ public class HiveGame implements Hive {
             if (tile != Tile.QUEEN_BEE) {
                 tilesInDeck = getPlayersDeck(getCurrenPlayer()).values().stream().reduce(0, Integer::sum);
 
-                if (tilesInDeck <= 8) {
-                    return true;
-                }
+                return tilesInDeck <= 8;
             }
         }
         return false;
@@ -173,11 +170,7 @@ public class HiveGame implements Hive {
 
         this.hiveBoard.moveTile(toQ, toR, fromQ, fromR);
 
-        if (chainCountBefore > chainCountAfter) {
-            return true;
-        }
-
-        return false;
+        return chainCountBefore > chainCountAfter;
 
 
     }
@@ -202,37 +195,33 @@ public class HiveGame implements Hive {
 
     public boolean playerTriesToMoveOpponentsTile(int fromQ, int fromR) {
         TileStack tileStack = this.hiveBoard.getHiveboard().get(new Hexagon(fromQ, fromR));
-        if (tileStack.getTiles().peek() == null ||
-                tileStack.getTiles().peek().getOwner() != getCurrenPlayer())
-            return true;
-
-        return false;
+        return tileStack.getTiles().peek() == null ||
+                tileStack.getTiles().peek().getOwner() != getCurrenPlayer();
     }
 
     public boolean playerTriesToMoveATileThatDoesntExist(int fromQ, int fromR) {
         TileStack tileStack = this.hiveBoard.getHiveboard().get(new Hexagon(fromQ, fromR));
-        if (tileStack == null) return true;
-        return false;
+        return tileStack == null;
     }
 
     public boolean playerTriesToMoveATileToLocationWithNoNeighbours(int toQ, int toR) {
-        if (!hiveBoard.givenCoordinateHasNeighbours(toQ, toR)) return true;
-        return false;
+        return !hiveBoard.givenCoordinateHasNeighbours(toQ, toR);
     }
 
     public boolean playerHasNotPlayedQueenBee() {
-        if (getPlayersDeck(getCurrenPlayer()).get(Tile.QUEEN_BEE) == 1) return true;
-        return false;
+        return getPlayersDeck(getCurrenPlayer()).get(Tile.QUEEN_BEE) == 1;
     }
 
     public boolean playerMustPlayNextToAnotherTile(int q, int r) {
-        if (turnCounter > 0 && !this.hiveBoard.givenCoordinateHasNeighbours(q, r)) return true;
-        else return false;
+        return turnCounter > 0 && !this.hiveBoard.givenCoordinateHasNeighbours(q, r);
     }
 
     public boolean playerCannotPlayNextToOpponentTile(int q, int r) {
-        if (turnCounter >= 2 && stoneIsPlacedNextToOpponent(q, r)) return true;
-        else return false;
+        return turnCounter >= 2 && stoneIsPlacedNextToOpponent(q, r);
+    }
+
+    public boolean playerCannotPlayStoneOnOccupiedField(int q, int r){
+        return this.hiveBoard.givenCoordinateHasTiles(q, r);
     }
 
     public boolean isValidPlay(Tile tile, int q, int r) throws IllegalMove {
@@ -244,6 +233,9 @@ public class HiveGame implements Hive {
         }
         if (playerCannotPlayNextToOpponentTile(q, r)) {
             throw new IllegalMove("De steen kan niet naast en tegenstander worden gespeeld");
+        }
+        if (playerCannotPlayStoneOnOccupiedField(q, r)){
+            throw new IllegalMove("Een steen kan niet gespeeld worden op een locatie waar al een steen ligt");
         }
         return true;
     }
