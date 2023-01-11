@@ -4,8 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
@@ -14,7 +13,7 @@ public class GrassHopperMovementTests {
     //11a Een sprinkhaan verplaatst zich door in een rechte lijn een sprong te maken
     //naar een veld meteen achter een andere steen in de richting van de sprong.
     @Test
-    public void WhenPlayerMovesGrashopperInStraightDirectionReturnTrue() {
+    public void WhenPlayerMovesGrashopperInStraightDirectionReturnTrue() throws Hive.IllegalMove {
         HiveBoard hiveBoard = spy(HiveBoard.class);
         when(hiveBoard.getHiveboard()).thenReturn(new HashMap<Hexagon, TileStack>() {{
             put(new Hexagon(-1,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
@@ -24,7 +23,7 @@ public class GrassHopperMovementTests {
 
         GenericSlideBehaviour grassHopper = new GrassHopperMoveBehaviour();
 
-        assertThrows(Hive.IllegalMove.class, () -> grassHopper.moveIsPossible(hiveBoard, new Hexagon(1,0), new Hexagon(-2, 0)));
+        assertTrue(grassHopper.moveIsPossible(hiveBoard, new Hexagon(2,0), new Hexagon(-2, 0)));
     }
 
     //11b Een sprinkhaan mag zich niet verplaatsen naar het veld waar hij al staat.
