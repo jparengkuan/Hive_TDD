@@ -12,7 +12,7 @@ public class MoveBehaviourFactory {
             case BEETLE:
                 return new BeetleMoveBehaviour();
             case GRASSHOPPER:
-                new GrassHopperMoveBehaviour();
+                return new GrassHopperMoveBehaviour();
             case SOLDIER_ANT:
                 return new SoldierAntMoveBehaviour();
         }
