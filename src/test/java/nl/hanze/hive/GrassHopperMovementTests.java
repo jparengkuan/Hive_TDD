@@ -65,7 +65,23 @@ public class GrassHopperMovementTests {
         hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, -1, 0);
         hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, 0, 0);
 
-        assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(-22, 0, 0, 0));
+        assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(-2, 0, 0, 0));
+    }
+
+    //11e Een sprinkhaan mag niet over lege velden springen.Dit betekent dat allevelden
+    // tussen de start- en eindpositie bezet moeten zijn.
+    @Test
+    void WhenPlayerTriesToMoveGrassHopperOverEmptyFieldsThrowError(){
+        HiveGame hiveGame = spy(HiveGame.class);
+        when(hiveGame.getPlayersDeck(hiveGame.getCurrenPlayer())).thenReturn(new HashMap<Hive.Tile, Integer>() {{
+            put(Hive.Tile.QUEEN_BEE, 0);
+        }});
+
+        hiveGame.hiveBoard.placeTile(Hive.Tile.GRASSHOPPER, Hive.Player.WHITE, -1, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, 0, 0);
+        hiveGame.hiveBoard.placeTile(Hive.Tile.SOLDIER_ANT, Hive.Player.WHITE, 2, 0);
+
+        assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(-2, 0, 3, 0));
     }
 
 
