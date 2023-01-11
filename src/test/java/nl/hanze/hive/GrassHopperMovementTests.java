@@ -11,7 +11,23 @@ import static org.mockito.Mockito.when;
 
 public class GrassHopperMovementTests {
 
-    //8b Een sprinkhaan mag zich niet verplaatsen naar het veld waar hij al staat.
+    //11a Een sprinkhaan verplaatst zich door in een rechte lijn een sprong te maken
+    //naar een veld meteen achter een andere steen in de richting van de sprong.
+    @Test
+    public void WhenPlayerMovesGrashopperInStraightDirectionReturnTrue() {
+        HiveBoard hiveBoard = spy(HiveBoard.class);
+        when(hiveBoard.getHiveboard()).thenReturn(new HashMap<Hexagon, TileStack>() {{
+            put(new Hexagon(-1,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+            put(new Hexagon(0,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+            put(new Hexagon(1,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.SOLDIER_ANT)));
+        }});
+
+        GenericSlideBehaviour grassHopper = new GrassHopperMoveBehaviour();
+
+        assertThrows(Hive.IllegalMove.class, () -> grassHopper.moveIsPossible(hiveBoard, new Hexagon(1,0), new Hexagon(-2, 0)));
+    }
+
+    //11b Een sprinkhaan mag zich niet verplaatsen naar het veld waar hij al staat.
     @Test
     void WhenPlayerTriesToMoveGrassHopperToStartPositionThrowError() {
         HiveGame hiveGame = spy(HiveGame.class);
@@ -26,7 +42,7 @@ public class GrassHopperMovementTests {
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.move(+2, 0, +2, 0));
     }
 
-    //8d Een sprinkhaan mag niet naar een bezet veld springen.
+    //11d Een sprinkhaan mag niet naar een bezet veld springen.
     @Test
     void WhenPlayerTriesToMoveGrassHopperToOccupiedFieldThrowError() {
         HiveGame hiveGame = spy(HiveGame.class);
