@@ -12,11 +12,15 @@ abstract public class GenericSlideBehaviour implements MoveBehaviourStrategy {
             return false;
         }
 
-        int commonNeighboursWithTiles = getCommonNeighboursWithTiles(hiveBoard, toPos, fromPos);
+        if (!hiveBoard.givenCoordinateHasTiles(toPos.q, toPos.r)){
+            int commonNeighboursWithTiles = getCommonNeighboursWithTiles(hiveBoard, toPos, fromPos);
 
-        if (commonNeighboursWithTiles == 0) {
-            return false;
+            if (commonNeighboursWithTiles == 0) {
+                return false;
+            }
+
         }
+
         return !cannotSlideBetweenNeighbours(hiveBoard, toPos, fromPos);
 
     }
