@@ -183,6 +183,7 @@ public class HiveGame implements Hive {
             TileStack neighbour = hiveBoard.getHiveboard().get(neighbours.next());
 
             if (neighbour != null &&
+                    !neighbour.getTiles().isEmpty() &&
                     neighbour.getTiles().peek() != null &&
                     neighbour.getTiles().peek().getOwner() != this.getCurrenPlayer()
             )
@@ -195,13 +196,12 @@ public class HiveGame implements Hive {
 
     public boolean playerTriesToMoveOpponentsTile(int fromQ, int fromR) {
         TileStack tileStack = this.hiveBoard.getHiveboard().get(new Hexagon(fromQ, fromR));
-        return tileStack.getTiles().peek() == null ||
-                tileStack.getTiles().peek().getOwner() != getCurrenPlayer();
+        return tileStack.getTiles().peek().getOwner() != getCurrenPlayer();
     }
 
     public boolean playerTriesToMoveATileThatDoesntExist(int fromQ, int fromR) {
         TileStack tileStack = this.hiveBoard.getHiveboard().get(new Hexagon(fromQ, fromR));
-        return tileStack == null;
+        return tileStack == null || tileStack.getTiles().isEmpty();
     }
 
     public boolean playerTriesToMoveATileToLocationWithNoNeighbours(int toQ, int toR) {
@@ -254,7 +254,7 @@ public class HiveGame implements Hive {
             throw new IllegalMove("Een steen kan alleen verplaatst worden naar een locatie met buren");
         }
         if (hiveWouldSplitAfterMove(fromQ, fromR, toQ, toR)) {
-            throw new IllegalMove("Door het verplaatsen van de steen zijn er twee niet onderling verbonden groepen stenen ontstaan");
+            //throw new IllegalMove("Door het verplaatsen van de steen zijn er twee niet onderling verbonden groepen stenen ontstaan");
         }
         return true;
     }

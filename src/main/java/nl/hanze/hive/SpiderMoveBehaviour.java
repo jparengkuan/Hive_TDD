@@ -4,10 +4,9 @@ import java.util.HashSet;
 
 public class SpiderMoveBehaviour extends GenericSlideBehaviour {
 
-    private int moveCounter = 0;
     private int moveLimit = 3;
 
-    private  HashSet<Hexagon> visitedSet = new HashSet<>();
+    private  HashSet<Hexagon> endPositions = new HashSet<>();
 
 
 
@@ -18,9 +17,10 @@ public class SpiderMoveBehaviour extends GenericSlideBehaviour {
             throw new Hive.IllegalMove("Een spin mag zich niet verplaatsen naar het veld waar hij al staat");
         }
 
-        findPath(hiveBoard, fromPos, new HashSet<>());
+        endPositions = new HashSet<>();
+        findPath(hiveBoard, fromPos, new HashSet<>(), 1);
 
-        if (visitedSet.contains(toPos)) {
+        if (endPositions.contains(toPos)) {
             return true;
         } else {
             throw new Hive.IllegalMove("De spin kan de eindpositie niet bereiken");
@@ -28,23 +28,23 @@ public class SpiderMoveBehaviour extends GenericSlideBehaviour {
 
     }
 
-    private HashSet<Hexagon> findPath(HiveBoard hiveBoard, Hexagon position, HashSet<Hexagon> visitedSet) {
-        visitedSet.add(position);
+    private HashSet<Hexagon> findPath(HiveBoard hiveBoard, Hexagon fromPos, HashSet<Hexagon> visitedSet, int depth) {
+        visitedSet.add(fromPos);
 
-        for (Hexagon neighbour : position.getAllNeighBours()) {
-            if (!visitedSet.contains(neighbour)
-                    && slideIsPossible(hiveBoard, neighbour, position)
-                    && hiveBoard.givenCoordinateHasNeighbours(neighbour.q, neighbour.r)
-                    && !hiveBoard.givenCoordinateHasTiles(neighbour.q, neighbour.r)
+        for (Hexagon toPos : fromPos.getAllNeighBours()) {
+            if (!visitedSet.contains(toPos)
+                    && slideIsPossible(hiveBoard, toPos, fromPos)
+                    && hiveBoard.givenCoordinateHasNeighbours(toPos.q, toPos.r)
+                    && !hiveBoard.givenCoordinateHasTiles(toPos.q, toPos.r)
             ) {
-                this.moveCounter++;
 
-                if (this.moveCounter >= this.moveLimit) {
-                    this.visitedSet.add(neighbour);
-                    this.moveCounter = 0;
+                if (depth >= this.moveLimit) {
+                    this.endPositions.add(toPos);
                     continue;
                 }
-                visitedSet.addAll(findPath(hiveBoard, neighbour, visitedSet));
+                HashSet<Hexagon> depthVisited = findPath(hiveBoard, toPos, visitedSet, depth + 1);
+                visitedSet.addAll(depthVisited);
+
             }
         }
         return visitedSet;
@@ -57,8 +57,9 @@ public class SpiderMoveBehaviour extends GenericSlideBehaviour {
 
     @Override
     public HashSet<Hexagon> getAllEndPositions(HiveBoard hiveBoard, Hexagon fromPos) {
-        findPath(hiveBoard, fromPos, new HashSet<>());
-        return this.visitedSet;
+        endPositions = new HashSet<>();
+        findPath(hiveBoard, fromPos, new HashSet<>(), 1);
+        return this.endPositions;
     }
 
 }
