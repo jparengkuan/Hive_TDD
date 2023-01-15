@@ -253,9 +253,9 @@ public class HiveGame implements Hive {
         if (playerTriesToMoveATileToLocationWithNoNeighbours(toQ, toR)) {
             throw new IllegalMove("Een steen kan alleen verplaatst worden naar een locatie met buren");
         }
-        if (hiveWouldSplitAfterMove(fromQ, fromR, toQ, toR)) {
-            //throw new IllegalMove("Door het verplaatsen van de steen zijn er twee niet onderling verbonden groepen stenen ontstaan");
-        }
+//        if (hiveWouldSplitAfterMove(fromQ, fromR, toQ, toR)) {
+//            //throw new IllegalMove("Door het verplaatsen van de steen zijn er twee niet onderling verbonden groepen stenen ontstaan");
+//        }
         return true;
     }
 

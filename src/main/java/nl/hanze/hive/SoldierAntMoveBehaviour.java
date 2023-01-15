@@ -41,7 +41,9 @@ public class SoldierAntMoveBehaviour extends GenericSlideBehaviour {
 
     @Override
     public HashSet<Hexagon> getAllEndPositions(HiveBoard hiveBoard, Hexagon fromPos) {
-        return findPath(hiveBoard, fromPos, new HashSet<>());
+        HashSet<Hexagon> endPositions = findPath(hiveBoard, fromPos, new HashSet<>());
+        endPositions.remove(fromPos);
+        return endPositions;
     }
 
 }
