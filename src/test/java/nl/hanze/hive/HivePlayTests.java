@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -63,4 +64,22 @@ public class HivePlayTests {
         hiveGame.playTileFromDeck(Hive.Tile.SOLDIER_ANT); // White
         assertThrows(Hive.IllegalMove.class, () -> hiveGame.play(Hive.Tile.SOLDIER_ANT, 0, 0));
     }
+
+    //4 Een speler kan niet bovenop bestaande stenen spelen
+    @Test
+   void whenPlayerTriesToPlayOnTopOfExistingTileThrowError() {
+        HiveGame hiveGame = new HiveGame();
+
+        HiveBoard hiveBoard = spy(HiveBoard.class);
+        when(hiveBoard.getHiveboard()).thenReturn(new HashMap<Hexagon, TileStack>() {{
+            put(new Hexagon(0,0), new TileStack(new HiveTile(Hive.Player.WHITE, Hive.Tile.QUEEN_BEE)));
+            put(new Hexagon(1,1), new TileStack());
+        }});
+
+        hiveGame.hiveBoard.setHiveboard(hiveBoard.getHiveboard());
+        assertThrows(Hive.IllegalMove.class, () -> hiveGame.play(Hive.Tile.BEETLE, 0,0));
+        assertDoesNotThrow(() -> hiveGame.play(Hive.Tile.BEETLE, 1,1));
+
+    }
+
 }
