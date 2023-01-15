@@ -50,12 +50,16 @@ public class HiveGame implements Hive {
     @Override
     public void move(int fromQ, int fromR, int toQ, int toR) throws IllegalMove {
 
+        // Eerst kijken we of we een steen mogen verplaatsen volgens de basis regels
         if (isValidMove(fromQ, fromR, toQ, toR)) {
 
+            // Haal het type insect op, van de locatie
             HiveTile tile = hiveBoard.getHiveboard().get(new Hexagon(fromQ, fromR)).getTiles().peek();
 
+            // Op basis van het insect maken we de juiste behaviour strategie aan
             MoveBehaviourStrategy moveBehaviour = MoveBehaviourFactory.createMoveBehaviour(tile.getInsect());
 
+            // Vervolgens kijken we op basis van de steen, of de zet geldig is
             if (moveBehaviour.moveIsPossible(this.hiveBoard, new Hexagon(toQ, toR), new Hexagon(fromQ, fromR))) {
 
                 // Steen verplaatsen
